@@ -1392,6 +1392,8 @@ html.has-sbg body{background:transparent}html.has-sbg{background:var(--bg)}
   .up-lists .panel>.sec-h{display:none}
   .up-lists .up-cat-p .inp{height:38px}
 }
+.dep-custom{display:flex;flex-direction:column;gap:4px}.dep-custom .inp{height:44px;font-size:18px;text-align:center}
+.amts{grid-template-columns:repeat(4,1fr)!important}
 
 </style>
 </head>
@@ -1632,7 +1634,7 @@ const toItem=x=>x&&({id:+x.id||0,n:x.n,w:x.w==null?null:+x.w,f:x.f==null?null:+x
 function applyState(st){
   if(!st||!st.profile)return;
   const p=st.profile;
-  S.bal=+p.bal;S.nick=p.nick;S.col=p.col||S.col;S.ava=p.ava&&(SK[p.ava]||/^(em|ab|rf|ex):/.test(p.ava))?p.ava:null;S.frame=p.frame||null;S.pbg=p.pbg||null;S.evPts=+p.ev_pts||0;S.evOwned=p.ev_owned||[];S.hot=+p.hot_left||0;S.bad=+p.bad_streak||0;S.upB=+p.up_bonus||0;S.pub=p.pub;S.theme=p.theme||null;S.cstats=p.cstats||[];S.won=p.won==null?null:+p.won;S.won_sum=p.won_sum==null?null:+p.won_sum;S.opened=+p.opened||0;S.best=p.best?toItem(p.best):null;S.daily_at=p.daily_at;S.broke_at=p.broke_at;S.is_admin=!!p.is_admin;S.email=p.email||'';
+  S.bal=+p.bal;S.nick=p.nick;S.col=p.col||S.col;S.ava=p.ava&&(SK[p.ava]||/^(em|ab|rf|ex):/.test(p.ava))?p.ava:null;S.frame=p.frame||null;S.pbg=p.pbg||null;S.evPts=+p.ev_pts||0;S.evOwned=p.ev_owned||[];S.hot=+p.hot_left||0;S.depLeft=p.dep_left==null?null:+p.dep_left;S.bad=+p.bad_streak||0;S.upB=+p.up_bonus||0;S.pub=p.pub;S.theme=p.theme||null;S.cstats=p.cstats||[];S.won=p.won==null?null:+p.won;S.won_sum=p.won_sum==null?null:+p.won_sum;S.opened=+p.opened||0;S.best=p.best?toItem(p.best):null;S.daily_at=p.daily_at;S.broke_at=p.broke_at;S.is_admin=!!p.is_admin;S.email=p.email||'';
   S.inv=(st.inv||[]).map(toItem).filter(i=>SK[i.n]);
   S.vault=(st.vault||[]).map(toItem).filter(i=>SK[i.n]);
   if(typeof tryRef==='function')setTimeout(tryRef,500);
@@ -2620,11 +2622,16 @@ let DEP={amt:1000,m:0};
 function openDeposit(){
   const bonus=a=>a>=5000?.15:a>=2000?.1:a>=1000?.05:0;
   const draw=sh=>{const b=bonus(DEP.amt);
-    $('#depBody',sh).innerHTML=`<div class="amts" id="amts">${[100,300,500,1000,2000,3000,4000,5000].map(a=>`<button type="button" data-a="${a}" aria-pressed="${DEP.amt===a}">${a.toLocaleString('ru-RU')}</button>`).join('')}</div>
+    $('#depBody',sh).innerHTML=`<div class="amts" id="amts">${[1000,5000,10000,25000,50000,100000,250000,650000].map(a=>`<button type="button" data-a="${a}" aria-pressed="${DEP.amt===a}">${a.toLocaleString('ru-RU')}</button>`).join('')}</div>
+    <div class="dep-custom"><input class="inp mono" id="depAmt" inputmode="numeric" placeholder="Своя сумма" value="${DEP.amt}"><small class="mute">Можно ещё: <b>${fmt0(S.depLeft??650000)}</b> за 12 часов</small></div>
     <span class="label">Способ</span><div class="methods">${METHODS.map(([t,d],i)=>`<button type="button" data-m="${i}" aria-pressed="${DEP.m===i}"><b>${t}</b><span>${d}</span></button>`).join('')}</div>
-    <div class="rtp"><span>Зачислим${b?` <span class="pos">(+${b*100}% бонус)</span>`:''}</span><b class="pos">${fmt2(DEP.amt*(1+b))}</b></div>
-    <button class="btn acc" type="button" id="depGo" style="width:100%">Пополнить на ${fmt0(DEP.amt)}</button>`};
-  openModal(`<h3 style="font-size:20px">Пополнение баланса</h3><p class="mute" style="margin:0;font-size:14px">Деньги игровые, лимит 5 000 ₽ за 30 минут, чтобы никто не накручивал. Карты и банки не подключаются.</p><div id="depBody" style="display:flex;flex-direction:column;gap:12px"></div>`,sh=>{
+    <div class="rtp" id="depRtp"></div>
+    <button class="btn acc" type="button" id="depGo" style="width:100%"></button>`;
+    const upd=()=>{const b=bonus(DEP.amt),ok=DEP.amt>=50&&DEP.amt<=(S.depLeft??650000);
+      $('#depRtp',sh).innerHTML=`<span>Зачислим${b?` <span class="pos">(+${b*100}% бонус)</span>`:''}</span><b class="pos">${fmt2(DEP.amt*(1+b))}</b>`;
+      const g=$('#depGo',sh);g.textContent=DEP.amt<50?'Минимум 50 ₽':DEP.amt>(S.depLeft??650000)?'Больше лимита':'Пополнить на '+fmt0(DEP.amt);g.disabled=!ok};
+    upd();$('#depAmt',sh).oninput=e=>{const v=parseInt(String(e.target.value).replace(/\D/g,''))||0;DEP.amt=Math.min(v,650000);$$('#amts button',sh).forEach(x=>x.setAttribute('aria-pressed',+x.dataset.a===DEP.amt));upd()}};
+  openModal(`<h3 style="font-size:20px">Пополнение баланса</h3><p class="mute" style="margin:0;font-size:14px">Деньги игровые, лимит 650 000 ₽ за 12 часов, чтобы никто не накручивал. Карты и банки не подключаются.</p><div id="depBody" style="display:flex;flex-direction:column;gap:12px"></div>`,sh=>{
     draw(sh);
     sh.onclick=(async e=>{
       const a=e.target.closest('[data-a]');if(a){DEP.amt=+a.dataset.a;SFX.click();draw(sh);return}
@@ -3633,7 +3640,7 @@ const FAQ=[
   ['Что за «Флаппи»?','Мини-игра в разделе «Ещё». Лети сквозь трубы, приз растёт с каждой трубой, максимум 10 000 ₽ за игру. 8 попыток в час, до 30 000 ₽ в сутки.'],
   ['Админ видит, что я делаю?','Админ видит ник, почту, устройство, раздел сайта и действия на сайте (дропы, продажи, пополнения). Если админ включил демонстрацию экрана, он видит то же, что и ты на сайте (кейсы, апгрейды, битвы), а у тебя в углу горит значок 👁.'],
   ['Деньги настоящие?','Нет. Всё на фантиках: пополнение, вывод и скины игровые. Ни карты, ни Steam не подключаются, вывести реальные деньги или скины нельзя.'],
-  ['Как пополнить баланс?','Кнопка «+» возле баланса. Это игровое пополнение до 5 000 ₽ за 30 минут. Ещё есть ежедневный бонус, бомж-бонус, когда всё слил, и промокоды в «Халяве».'],
+  ['Как пополнить баланс?','Кнопка «+» возле баланса. Это игровое пополнение до 650 000 ₽ за 12 часов. Ещё есть ежедневный бонус, бомж-бонус, когда всё слил, и промокоды в «Халяве».'],
   ['Почему мне то везёт, то нет?','Удача идёт полосами, как на настоящих кейс-сайтах: то густо, то пусто. Шансы на странице кейса показаны для обычной полосы. Всё считает сервер, подкрутить с телефона нельзя.'],
   ['Как работает апгрейд?','Ставишь до 6 скинов и (или) часть баланса, выбираешь скин дороже. Чем больше множитель, тем уже зелёная полоса на кольце. Максимальный шанс 75%.'],
   ['Как работают контракты?','Сдаёшь от 3 до 10 скинов и получаешь один: от четверти до четырёх стоимостей сданного.'],
@@ -3975,7 +3982,7 @@ function mirrorSend(key){
     const html=sec.outerHTML+mHtml;
     const hk=html.replace(/ style="[^"]*"/g,'');if(hk===MS.lastKey&&!MS.force)return;MS.force=false;MS.lastKey=hk;
     if(html.length>230000){MS.ch.send({type:'broadcast',event:'s',payload:{big:true,view:cur==='case'?'case:'+((location.hash||'').slice(6)):cur,w:innerWidth,h:innerHeight}});MS.lastHtml=html;return}
-    MS.lastHtml=html;MS.ch.send({type:'broadcast',event:'s',payload:{st:sec.getBoundingClientRect().top+scrollY,html,view:cur==='case'?'case:'+((location.hash||'').slice(6)):cur,w:innerWidth,h:innerHeight,sy:scrollY,th:S.theme||ST3.theme,bal:S.bal}});
+    const hd=$('header.hdr'),nb=$('#navBot');MS.lastHtml=html;MS.ch.send({type:'broadcast',event:'s',payload:{st:sec.getBoundingClientRect().top+scrollY,mc:(sec.parentElement&&sec.parentElement.className)||'',bc:document.body.className,hdr:hd?hd.outerHTML:'',nav:nb&&getComputedStyle(nb).display!=='none'?nb.outerHTML:'',html,view:cur==='case'?'case:'+((location.hash||'').slice(6)):cur,w:innerWidth,h:innerHeight,sy:scrollY,th:S.theme||ST3.theme,bal:S.bal}});
   };
   const tfs=()=>{
     const sec=$('main>section:not([hidden])');if(!sec)return;
@@ -3995,7 +4002,7 @@ function mirrorView(key,nick){
   document.body.insertAdjacentHTML('beforeend',`<div id="mirror" class="mirror"><div class="mir-h"><span class="wb-dot"></span><b>Экран: ${esc(nick)}</b><small id="mirNow">ждём картинку…</small><button class="icbtn" type="button" id="mirMin" aria-label="Свернуть">—</button></div><div class="mir-body" id="mirBody"><iframe id="mirF" title="Экран игрока" sandbox="allow-same-origin"></iframe></div><div class="wb-acts" id="wbActs"></div></div>`);
   $('#mirMin').onclick=()=>$('#mirror').classList.toggle('min');
   const f=$('#mirF'),css=[...document.querySelectorAll('style')].map(s=>s.textContent).join('\n');
-  f.srcdoc=`<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>${css}\nbody{overflow:hidden!important}main>section{display:block!important}.mir-wait{display:grid;place-items:center;height:100vh;color:#9799c9;font:600 16px system-ui}</style></head><body><main id="mroot"><div class="mir-wait">Ждём, когда игрок что-нибудь откроет…</div></main></body></html>`;
+  f.srcdoc=`<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>${css}\nbody{overflow:hidden!important}#mroot{padding-bottom:150vh!important}.mir-wait{display:grid;place-items:center;height:100vh;color:#9799c9;font:600 16px system-ui}</style></head><body><div id="mhdr"></div><main id="mroot"><div class="mir-wait">Ждём, когда игрок что-нибудь откроет…</div></main><div id="mnav"></div></body></html>`;
   f.onload=()=>{MV.doc=f.contentDocument;fit()};
   const fit=()=>{const b=$('#mirBody');if(!b)return;const s=Math.min(b.clientWidth/MV.w,b.clientHeight/MV.h);f.style.width=MV.w+'px';f.style.height=MV.h+'px';f.style.transform=`scale(${s})`};
   addEventListener('resize',fit);
@@ -4006,7 +4013,10 @@ function mirrorView(key,nick){
     if(p.w&&p.h&&(p.w!==MV.w||p.h!==MV.h)){MV.w=p.w;MV.h=p.h;fit()}
     if(p.big){$('#mirNow').textContent=viewName(p.view)+' · страница слишком большая для показа';return}
     const t=THEMES[p.th]||THEMES.violet;for(const [k,val] of Object.entries(t.v))d.documentElement.style.setProperty('--'+k,val);
+    if(p.mc!=null)d.getElementById('mroot').className=p.mc;if(p.bc!=null)d.body.className=p.bc;
     d.getElementById('mroot').innerHTML=p.html.replace(/<script[\s\S]*?<\/script>/gi,'');
+    if(p.hdr!=null)d.getElementById('mhdr').outerHTML='<div id="mhdr" style="display:contents">'+p.hdr+'</div>';
+    if(p.nav!=null){const n=d.getElementById('mnav');if(n)n.innerHTML=p.nav}
     MV.st=p.st||0;mirScroll(d,p.sy);
     $('#mirNow').textContent=viewName(p.view)+(p.bal!=null?' · баланс '+fmt0(+p.bal):'')+' · LIVE';
   });
