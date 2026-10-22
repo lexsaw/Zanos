@@ -2,6 +2,9 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' https: data: blob:; media-src 'self' blob: data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://cdn.jsdelivr.net; frame-src 'self' blob: data: about:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>if(window.top!==window.self){try{window.top.location.replace(window.location.href)}catch(e){document.documentElement.style.display='none'}}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#08091a">
 <meta name="description" content="Кейсы, апгрейды и битвы с пацанами. Внутри промокод на +1000 ₽">
@@ -1394,6 +1397,42 @@ html.has-sbg body{background:transparent}html.has-sbg{background:var(--bg)}
 }
 .dep-custom{display:flex;flex-direction:column;gap:4px}.dep-custom .inp{height:44px;font-size:18px;text-align:center}
 .amts{grid-template-columns:repeat(4,1fr)!important}
+/* ---------- 1.3.4: админка ---------- */
+.adm{display:flex;flex-direction:column;gap:12px}
+.adm-quick{position:sticky;top:calc(var(--hdr-h,64px) + 6px);z-index:5;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:8px;border-radius:16px;background:color-mix(in srgb,var(--surf) 88%,transparent);border:1px solid var(--line);backdrop-filter:blur(10px)}
+.adm-quick .btn{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-inline:10px}
+.adm-log{margin:0;font-size:14px}
+.adm-tabs{flex-wrap:wrap}.adm-tabs b{opacity:.7;font-size:12px;margin-left:4px}
+#admPane{display:flex;flex-direction:column;gap:12px}
+.heat{display:inline-flex;margin-left:6px;padding:1px 8px;border-radius:999px;font-size:11px;font-weight:800;white-space:nowrap;vertical-align:middle;background:var(--surf-2);color:var(--mute)}
+.heat.h-hot{background:rgba(255,120,40,.16);color:#ffa45c}.heat.h-cold{background:rgba(80,170,255,.16);color:#8ccaff}
+.luck.cool{background:rgba(80,170,255,.14);color:#9fd3ff;border:1px solid rgba(80,170,255,.4)}
+.adm-ua{flex-wrap:wrap}.adm-ua .btn{flex:1;min-width:90px}
+.adm-bal{display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:14px;background:var(--surf-2)}
+.adm-bal-r{display:grid;grid-template-columns:56px 1fr 56px;gap:8px}
+.adm-bal-r .btn{font-size:24px;font-weight:900;padding:0;height:48px}
+.adm-bal-r .inp{height:48px;text-align:center;font-size:18px;font-weight:800;min-width:0}
+.adm-chips{display:flex;flex-wrap:wrap;gap:6px}.adm-chips .chip{cursor:pointer;border:0;font:inherit;font-size:13px}
+.adm-it{position:relative}
+.adm-del{position:absolute;top:4px;right:4px;z-index:3;min-width:28px;height:28px;padding:0 8px;border-radius:999px;border:0;background:rgba(0,0,0,.6);color:#fff;font-weight:900;font-size:16px;cursor:pointer}
+.adm-del:hover{background:#e23b4a}.adm-del.arm{background:#e23b4a;font-size:12px;box-shadow:0 0 0 3px rgba(226,59,74,.35)}
+.adm-sk{display:flex;flex-direction:column;gap:4px;max-height:38vh;overflow:auto;margin-top:8px}
+.adm-skr{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:10px;padding:6px 10px;border-radius:10px;border:1px solid transparent;background:var(--surf-2);color:inherit;font:inherit;font-size:13px;text-align:left;cursor:pointer}
+.adm-skr.on{border-color:var(--acc-2)}.adm-skr .t{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.adm-pi{display:inline-flex;width:44px;height:34px;align-items:center;justify-content:center}.adm-pi img,.adm-pi svg{max-width:100%;max-height:100%;object-fit:contain}
+.adm-pick{display:flex;flex-direction:column;gap:10px;margin-top:10px;padding:12px;border-radius:14px;border:1px solid var(--acc-2);background:var(--surf)}
+.adm-pick .seg{flex-wrap:wrap}
+@media (max-width:640px){.adm-quick{grid-template-columns:repeat(2,minmax(0,1fr));top:calc(var(--hdr-h,56px) + 4px)}}
+.adm-u .stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.adm-u .stats .stat{padding:10px 12px;min-width:0}.adm-u .stats .stat b{font-size:16px;overflow-wrap:anywhere}
+.adm-u .stats .hb{font-size:13px!important}.hb.h-hot{color:#ffa45c}.hb.h-cold{color:#8ccaff}
+.adm-u .stats small{font-size:11px;line-height:1.25}
+.adm-chips .chip{background:var(--surf);border:1px solid var(--line);padding:6px 10px;border-radius:999px;color:inherit}
+.adm-chips .chip:active{transform:scale(.96)}
+.adm-u .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+.adm-u .stats .stat:nth-child(3){grid-column:1/-1}
+.adm-u .stats .hb{font-size:15px!important}
+@media (max-width:640px){.adm-quick{position:static}}
 
 </style>
 </head>
@@ -1634,7 +1673,7 @@ const toItem=x=>x&&({id:+x.id||0,n:x.n,w:x.w==null?null:+x.w,f:x.f==null?null:+x
 function applyState(st){
   if(!st||!st.profile)return;
   const p=st.profile;
-  S.bal=+p.bal;S.nick=p.nick;S.col=p.col||S.col;S.ava=p.ava&&(SK[p.ava]||/^(em|ab|rf|ex):/.test(p.ava))?p.ava:null;S.frame=p.frame||null;S.pbg=p.pbg||null;S.evPts=+p.ev_pts||0;S.evOwned=p.ev_owned||[];S.hot=+p.hot_left||0;S.depLeft=p.dep_left==null?null:+p.dep_left;S.bad=+p.bad_streak||0;S.upB=+p.up_bonus||0;S.pub=p.pub;S.theme=p.theme||null;S.cstats=p.cstats||[];S.won=p.won==null?null:+p.won;S.won_sum=p.won_sum==null?null:+p.won_sum;S.opened=+p.opened||0;S.best=p.best?toItem(p.best):null;S.daily_at=p.daily_at;S.broke_at=p.broke_at;S.is_admin=!!p.is_admin;S.email=p.email||'';
+  S.bal=+p.bal;S.nick=p.nick;S.col=p.col||S.col;S.ava=p.ava&&(SK[p.ava]||/^(em|ab|rf|ex):/.test(p.ava))?p.ava:null;S.frame=p.frame||null;S.pbg=p.pbg||null;S.evPts=+p.ev_pts||0;S.evOwned=p.ev_owned||[];S.hot=+p.hot_left||0;S.cool=+p.cool||0;S.depLeft=p.dep_left==null?null:+p.dep_left;S.bad=+p.bad_streak||0;S.upB=+p.up_bonus||0;S.pub=p.pub;S.theme=p.theme||null;S.cstats=p.cstats||[];S.won=p.won==null?null:+p.won;S.won_sum=p.won_sum==null?null:+p.won_sum;S.opened=+p.opened||0;S.best=p.best?toItem(p.best):null;S.daily_at=p.daily_at;S.broke_at=p.broke_at;S.is_admin=!!p.is_admin;S.email=p.email||'';
   S.inv=(st.inv||[]).map(toItem).filter(i=>SK[i.n]);
   S.vault=(st.vault||[]).map(toItem).filter(i=>SK[i.n]);
   if(typeof tryRef==='function')setTimeout(tryRef,500);
@@ -1897,7 +1936,7 @@ const RF_LIST=Array.from({length:RFN},(_,k)=>'rf:'+(k+1));
 
 
 /* ================= v3 CORE: настройки, темы, экономика, звук, файлы ================= */
-const VER='1.3.3',VER_TAG='Alpha',VER_FULL=VER+' '+VER_TAG;
+const VER='1.3.4',VER_TAG='Alpha',VER_FULL=VER+' '+VER_TAG;
 const LS3='zanos.v3';
 const ST3=(()=>{let o={};try{o=JSON.parse(localStorage.getItem(LS3)||'{}')||{}}catch(e){}return Object.assign({theme:'violet',nav:'top',vol:.8,seenVer:'',view:'auto',up:'ring',lite:false},o)})();
 /* компьютерная версия на телефоне: страница рисуется шириной 1280, как на ПК */
@@ -2193,6 +2232,10 @@ async function skinModal(n,{w=null,st=false,item=null}={}){
 
 /* ---------- что нового ---------- */
 const NEWS=[
+  ['Честная удача','Сервер смотрит на твои последние игры. Если долго не прёт, шансы чуть подкручиваются вверх. Если после крупного заноса прёт слишком сильно, удача ненадолго немного остывает. Это видно на странице кейса.'],
+  ['Апгрейдер ровнее','Бонус удачи теперь умножает шанс (до ×1.15), а не прибавляется сверху. Шанс на экране всегда тот же, что считает сервер.'],
+  ['Защита сайта','Не больше 25 действий в секунду от одного аккаунта, на странице запрещены чужие скрипты, все деньги и дропы по-прежнему считает только сервер.']];
+const NEWS_133=[
   ['Новая экономика','После пополнения несколько открытий подряд сыпет щедрее. А если долго не везёт, с каждым неудачным дропом шанс на дорогой скин растёт, пока не окупишься. В апгрейдере бонус удачи до +15% к шансу после неудач.'],
   ['Мини-игра «Флаппи»','Лети ножом сквозь трубы. Чем дальше, тем больше приз: до 10 000 ₽ за одну игру. Есть топ недели.'],
   ['«Гунгнир или ничего»','Кейс за 90 000 ₽: внутри только AWP | Gungnir или скин за копейки. Шанс честно написан на странице кейса.'],
@@ -2223,7 +2266,7 @@ const NEWS_131=[['Окно выпадения починено','Кнопки «
   ['40 мемных аватарок','Новая категория «Мемы» в «Кастомизации»: молнии, лазерные глаза и подписи вроде «СУКА ТЫ НЕ ВЫКУПАЕШЬ». Боты тоже их носят.'],
   ['FAQ и правила','Новый раздел: ответы на частые вопросы и правила сайта.'],
   ['Пополнение','Лимит игрового пополнения теперь 5 000 ₽ за 30 минут.']];
-const NEWS_OLD=[...NEWS_132,...NEWS_131,
+const NEWS_OLD=[...NEWS_133,...NEWS_132,...NEWS_131,
   ['Темы','Семь тем: Угольный, Огненный, Розовый, Минимализм, Неоновый, Ледяной и Фиолетовый.'],
   ['Друзья по ID','Свой ID у каждого, заявки, кто в сети, рейтинг среди друзей.'],
   ['Чаты и группы','Личка и групповые чаты с фото и голосовыми.'],
@@ -2236,7 +2279,7 @@ function whatsNewModal(){openModal(`<h3 class="wn-t">Что нового в ${VE
 function newsBanner(){
   const el=$('#news');if(!el)return;
   if(ST3.seenVer===VER){el.hidden=true;return}
-  el.hidden=false;el.innerHTML=`<div class="news-in"><span class="news-tag">Обновление ${VER_FULL}</span><b>Новая экономика с бонусом удачи, мини-игра «Флаппи» до 10 000 ₽, Дурак вживую, кейс «Гунгнир или ничего» и 12 хэллоуинских кейсов</b><div class="news-act"><button class="btn acc sm" type="button" id="newsMore">Что нового</button><button class="icbtn" type="button" id="newsX" aria-label="Скрыть">×</button></div></div>`;
+  el.hidden=false;el.innerHTML=`<div class="news-in"><span class="news-tag">Обновление ${VER_FULL}</span><b>Честная удача, ровный апгрейдер и защита сайта</b><div class="news-act"><button class="btn acc sm" type="button" id="newsMore">Что нового</button><button class="icbtn" type="button" id="newsX" aria-label="Скрыть">×</button></div></div>`;
   $('#newsMore').onclick=()=>{SFX.click();whatsNewModal();ST3.seenVer=VER;save3();el.hidden=true};
   $('#newsMore').textContent='Что нового';
   $('#newsX').onclick=()=>{ST3.seenVer=VER;save3();el.hidden=true};
@@ -2743,8 +2786,8 @@ async function signContract(){
 /* ================= UPGRADE ================= */
 let U={sel:new Set(),bal:0,target:null,rot:0,q:''};
 const upStake=()=>r2(S.inv.filter(i=>U.sel.has(i.id)).reduce((a,i)=>a+i.p,0)+Math.min(U.bal,S.bal));
-const upChance=()=>{const s=upStake();return U.target&&s>0?Math.min(.9,Math.min(.75,s/U.target.p*.9)+(+S.upB||0)):0};
-function targetForChance(p){const st=upStake();if(!st)return null;const want=st*.9/Math.max(.01,p-(+S.upB||0));return CATALOG.find(t=>t.p>=want&&t.p>st*1.05)||CATALOG[CATALOG.length-1]}
+const upChance=()=>{const s=upStake();if(!U.target||!(s>0))return 0;const r=s/U.target.p;return Math.max(0,Math.min(.85,Math.min(.75,r*.9)*(1+(+S.upB||0)),.98*r))};
+function targetForChance(p){const st=upStake();if(!st)return null;const k=Math.min(.9*(1+(+S.upB||0)),.98),want=st*k/Math.max(.01,p);return CATALOG.find(t=>t.p>=want&&t.p>st*1.05)||CATALOG[CATALOG.length-1]}
 const GRENADE='<svg class="grenade" viewBox="0 0 24 24" fill="none" stroke="#9799c9" stroke-width="1.4"><circle cx="12" cy="14" r="7"/><path d="M5 14h14M12 7v14M8 8.5c1 3 1 8 0 11M16 8.5c-1 3-1 8 0 11M10 5h4v2h-4zM14 5.5c2-1 4 0 4 2"/></svg>';
 function renderUpgrade(){
   for(const id of U.sel)if(!S.inv.some(i=>i.id===id))U.sel.delete(id);
@@ -2775,7 +2818,7 @@ function renderUpgrade(){
     $('#upFrom').innerHTML=sel.length===1&&!useBal?card(sel[0],{cls:'big'}):(sel.length||useBal)?`<div class="stack">${sel.map(i=>card(i,{cls:'mini'})).join('')}${useBal?`<div class="balstake"><span class="coin">₽</span><b>${fmt0(useBal)}</b><small>с баланса</small></div>`:''}</div><div class="up-sum">Ставка: <b class="mono">${fmt2(st)}</b></div>`:`<div class="slot-empty"><span>Выбери до 6 скинов<br>в «Мои предметы»</span></div>`;
     $('#upTo').innerHTML=U.target?card(U.target,{cls:'big win'}):`<div class="slot-empty"><span>Выбери скин<br>в «Скины для апгрейда»</span></div>`;
     const a=$('#upArc');a.setAttribute('stroke-dasharray',`${ch*C} ${C}`);a.style.transform=`rotate(${90-arc/2}deg)`;
-    $('#wc').innerHTML=`<small>Шанс успеха</small><b>${(ch*100).toFixed(ch<.1&&ch>0?2:1)}%</b><small class="mono">${U.target&&st?'x'+(U.target.p/st).toFixed(2):'—'}</small>${+S.upB>0?`<small class="up-bonus">+${Math.round(S.upB*100)}% бонус удачи</small>`:''}`;
+    $('#wc').innerHTML=`<small>Шанс успеха</small><b>${(ch*100).toFixed(ch<.1&&ch>0?2:1)}%</b><small class="mono">${U.target&&st?'x'+(U.target.p/st).toFixed(2):'—'}</small>${+S.upB>0.004?`<small class="up-bonus">шанс ×${(1+ +S.upB).toFixed(2)} за удачу</small>`:''}`;
     $('#upGo').disabled=!(U.target&&st>0&&ch>0&&U.target.p>st*1.05);
     $('#upSelN').textContent=U.sel.size?`выбрано ${U.sel.size} из 6`:'до 6 штук';
   };
@@ -3083,56 +3126,109 @@ const viewName=v=>{v=String(v||'');const VN={faq:'FAQ',profile:'Профиль',
 let ADM={users:[],t:null};
 async function loadAdmin(){try{ADM.users=await rpc('zb_admin_users');if(cur==='admin'&&$('#modal').hidden)drawAdmin()}catch(e){toast(errMsg(e))}}
 function renderAdmin(){drawAdmin();loadAdmin();clearInterval(ADM.t);ADM.t=setInterval(()=>{if(cur!=='admin'){clearInterval(ADM.t);return}loadAdmin()},10000)}
+const heatInfo=x=>{const h=+x.heat||1,rs=+x.rs||0;if(x.rs!=null&&rs<1500)return{k:'n',t:'мало игр',h};if(h>1.5)return{k:'hot',t:'🔥 прёт · '+Math.round(h*100)+'%',h};if(h<0.6)return{k:'cold',t:'🧊 не прёт · '+Math.round(h*100)+'%',h};return{k:'ok',t:'ровно · '+Math.round(h*100)+'%',h}};
+const heatChip=x=>{const i=heatInfo(x);return i.k==='n'?'':`<span class="heat h-${i.k}" title="Возврат за последние игры: сколько выбил от потраченного">${esc(i.t)}</span>`};
 function drawAdmin(){
   const v=$('#v-admin'),now=Date.now()+clockSkew,u=ADM.users||[];
+  if(!$('#admShell',v)){
+    ADM.tab=ADM.tab||'online';ADM.pane=null;
+    v.innerHTML=`<div id="admShell" class="adm"><div class="sec-h"><h2>Админка</h2><span class="mute" style="font-size:13px">Видно только тебе</span></div>
+    <div class="adm-quick"><button class="btn acc" type="button" id="seedBtn">⬆ Загрузить кейсы</button><button class="btn acc" type="button" id="mktBtn">₽ Обновить цены</button><button class="btn ghost" type="button" id="evRestart">🎃 Ивент +7 дней</button><button class="btn ghost" type="button" data-go="forum">💬 Форум <b id="admForumN"></b></button></div>
+    <div class="note adm-log" id="admLog" hidden></div>
+    <div class="adm-top" id="admStats"></div>
+    <div class="seg adm-tabs" id="admTabs"><button type="button" data-t="online">Онлайн <b id="admOnN"></b></button><button type="button" data-t="players">Игроки <b id="admAllN"></b></button><button type="button" data-t="luck">Удача</button><button type="button" data-t="eco">Экономика</button></div>
+    <div id="admPane"></div></div>`;
+    const log=t=>{const l=$('#admLog');l.hidden=false;l.textContent=t};
+    $('#seedBtn').onclick=()=>seedCases(log);
+    $('#mktBtn').onclick=e=>{const l=$('#admLog');l.hidden=false;marketRebalance(e.currentTarget,l)};
+    $('#evRestart').onclick=async e=>{const b=e.currentTarget;b.disabled=true;try{EV.d=await rpc('zb_admin_event',{p_days:7});log('Ивент «Хэллоуин» идёт ещё 7 дней с этой минуты');toast('Ивент продлён')}catch(err){toast(errMsg(err))}b.disabled=false};
+    $('#admTabs').onclick=e=>{const b=e.target.closest('[data-t]');if(!b)return;ADM.tab=b.dataset.t;ADM.pane=null;drawAdmin()};
+  }
   const online=u.filter(x=>x.last_seen&&now-x.last_seen<70000),types={phone:0,tablet:0,desktop:0};online.forEach(x=>types[cleanDev(x.device).type]++);
-  const day=u.filter(x=>x.last_seen&&now-x.last_seen<864e5).length;
-  const devCard=x=>{const d=cleanDev(x.device),nk=String(x.nick||'Без ника').slice(0,24)||'Без ника',col=hexOk(x.col)?x.col:'#9799c9';
-    return `<div class="dev${x.id===S.uid?' me':''}" data-du="${esc(x.id)}" role="button" tabindex="0"><span class="dico">${DICO[d.type]}<i></i></span><div class="who"><b>${avaHTML(nk,col,x.ava,'sm')}<span>${esc(nk)}${x.id===S.uid?' (ты)':''}</span></b><small>${esc(d.model)} · ${esc(d.os)}</small><span class="acct">${esc(x.email||'')}</span><span class="pubid">ID ${x.pub||'—'}</span></div>
-    <dl><dt>Браузер</dt><dd>${esc(d.browser)}</dd><dt>Экран</dt><dd>${esc(d.scr||'—')}</dd><dt>Сейчас</dt><dd>${esc(viewName(x.view))}</dd><dt>Баланс</dt><dd>${fmt0(+x.bal)}</dd><dt>Скины</dt><dd>${fmt0(+x.inv)}</dd>${d.tz?`<dt>Пояс</dt><dd>${esc(d.tz)}</dd>`:''}</dl></div>`};
-  v.innerHTML=`<div class="sec-h"><h2>Админка</h2><span class="mute" style="font-size:13px">Видно только тебе</span></div>
-  <div class="adm-top"><div class="stat"><span class="label">Сейчас на сайте</span><b class="pos">${online.length}</b></div><div class="stat"><span class="label">Телефоны / ПК</span><b>${types.phone+types.tablet} / ${types.desktop}</b></div><div class="stat"><span class="label">За сутки</span><b>${day}</b></div><div class="stat"><span class="label">Всего игроков</span><b>${u.length}</b></div></div>
-  <div class="panel"><div class="sec-h"><h3 style="font-size:16px">Онлайн прямо сейчас</h3><span class="mute" style="font-size:12px">обновляется каждые 10 с</span></div>${online.length?`<div class="devs">${online.map(devCard).join('')}</div>`:'<div class="empty">Сейчас никого нет</div>'}</div>
-  <div class="panel"><div class="sec-h"><h3 style="font-size:16px">Все игроки</h3><input class="inp" id="admQ" type="search" placeholder="Ник, ID или почта" value="${esc(ADM.q||'')}" style="max-width:260px;height:40px"></div>${u.length?`<div class="htable"><table><thead><tr><th>Игрок</th><th>Устройство</th><th>Баланс</th><th>Был</th><th></th></tr></thead><tbody>${u.map(x=>{const d=cleanDev(x.device),nk=String(x.nick||'Без ника').slice(0,24)||'Без ника',col=hexOk(x.col)?x.col:'#9799c9';
-    return `<tr><td><b style="display:flex;align-items:center;gap:8px">${avaHTML(nk,col,x.ava,'sm')}${esc(nk)}${x.banned?' <span class="badge">БАН</span>':''}</b><span class="acct">${esc(x.email||'')}</span><span class="pubid">ID ${x.pub||'—'}</span></td><td><div class="dchips"><span><b>${esc(d.model)}</b> · ${esc(d.os)}</span><span>${esc(d.browser)}</span></div></td><td class="mono">${fmt0(+x.bal)}</td><td>${esc(ago(x.last_seen?x.last_seen-clockSkew:0))}</td><td><button class="btn ghost sm" type="button" data-uid="${esc(x.id)}">Открыть</button></td></tr>`}).join('')}</tbody></table></div>`:'<div class="mute">Пока никого</div>'}</div>
-  <div class="panel"><h3 style="font-size:16px">Кейсы на сервере</h3><p class="mute" style="margin:0;font-size:14px">Нажми один раз после установки или когда я пришлю новую версию сайта с другими кейсами. Цены и шансы берутся из этой версии сайта.</p><button class="btn acc" type="button" id="seedBtn" style="align-self:flex-start">Загрузить кейсы на сервер</button></div>
-  <div class="panel"><h3 style="font-size:16px">Реальные цены</h3><p class="mute" style="margin:0;font-size:14px">Сервер скачает весь прайс CS Market, поставит скинам рыночные цены по каждому износу и StatTrak и пересчитает шансы всех кейсов. Цены Steam подтягиваются отдельно, когда игрок открывает карточку скина. Нажимай раз в пару дней.</p><button class="btn acc" type="button" id="mktBtn" style="align-self:flex-start">Обновить цены с CS Market</button><div class="note" id="mktLog">Цен с рынка загружено: ${PRICE.size}</div><small class="mute" id="mktAuto">Автообновление: проверяю…</small></div>
-  <div class="panel"><h3 style="font-size:16px">Ивент «Хэллоуин»</h3><p class="mute" style="margin:0;font-size:14px">Ивент сам начался, когда ты выполнил SQL, и идёт 7 дней. Кнопка перезапускает его на 7 дней с этой минуты (очки и задания игроков сохранятся).</p><button class="btn ghost" type="button" id="evRestart" style="align-self:flex-start">Перезапустить ивент на 7 дней</button></div>
-  <div class="panel"><h3 style="font-size:16px">Форум</h3><p class="mute" style="margin:0;font-size:14px">Новых предложений: <b>${BADGE.forum}</b></p><button class="btn ghost" type="button" data-go="forum" style="align-self:flex-start">Открыть форум</button></div>`;
-  $$('[data-uid]',v).forEach(b=>b.onclick=()=>adminUser(b.dataset.uid));
-  $$('.devs .dev[data-du]',v).forEach(b=>b.onclick=()=>adminUser(b.dataset.du));
-  const aq=$('#admQ');if(aq){const f=()=>{const q=(ADM.q||'').trim().toLowerCase();$$('.htable tbody tr',v).forEach(tr=>{tr.hidden=!!q&&!tr.textContent.toLowerCase().includes(q)})};f();aq.oninput=e=>{ADM.q=e.target.value;f()}}
-  $('#seedBtn').onclick=seedCases;
-  $('#evRestart').onclick=async e=>{e.currentTarget.disabled=true;try{EV.d=await rpc('zb_admin_event',{p_days:7});toast('Ивент идёт ещё 7 дней')}catch(err){toast(errMsg(err))}e.currentTarget.disabled=false};
-  $('#mktBtn').onclick=e=>marketRebalance(e.currentTarget,$('#mktLog'));
-  rpc('zb_admin_market',{p_act:'status'}).then(r=>{const el=$('#mktAuto');if(el)el.textContent=r.cron?`Автообновление включено: каждые 6 часов цены скинов сами становятся как на CS Market${r.sync_at?'. Последнее: '+new Date(r.sync_at).toLocaleString('ru-RU'):''}`:'Автообновление выключено: в Supabase не включилось расширение pg_cron'}).catch(()=>{const el=$('#mktAuto');if(el)el.textContent=''});
+  const day=u.filter(x=>x.last_seen&&now-x.last_seen<864e5).length,hot=u.filter(x=>heatInfo(x).k==='hot').length;
+  $('#admStats').innerHTML=`<div class="stat"><span class="label">Сейчас на сайте</span><b class="pos">${online.length}</b></div><div class="stat"><span class="label">Телефоны / ПК</span><b>${types.phone+types.tablet} / ${types.desktop}</b></div><div class="stat"><span class="label">За сутки</span><b>${day}</b></div><div class="stat"><span class="label">Всего · прёт</span><b>${u.length} · ${hot}</b></div>`;
+  $('#admForumN').textContent=BADGE.forum?'('+BADGE.forum+')':'';$('#admOnN').textContent=online.length;$('#admAllN').textContent=u.length;
+  $$('#admTabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.t===ADM.tab));
+  const pane=$('#admPane'),first=ADM.pane!==ADM.tab;ADM.pane=ADM.tab;
+  const nkOf=x=>String(x.nick||'Без ника').slice(0,24)||'Без ника',colOf=x=>hexOk(x.col)?x.col:'#9799c9';
+  const devCard=x=>{const d=cleanDev(x.device),nk=nkOf(x);
+    return `<div class="dev${x.id===S.uid?' me':''}" data-du="${esc(x.id)}" role="button" tabindex="0"><span class="dico">${DICO[d.type]}<i></i></span><div class="who"><b>${avaHTML(nk,colOf(x),x.ava,'sm')}<span>${esc(nk)}${x.id===S.uid?' (ты)':''}</span></b><small>${esc(d.model)} · ${esc(d.os)}</small><span class="acct">${esc(x.email||'')}</span><span class="pubid">ID ${x.pub||'—'} ${heatChip(x)}</span></div>
+    <dl><dt>Браузер</dt><dd>${esc(d.browser)}</dd><dt>Сейчас</dt><dd>${esc(viewName(x.view))}</dd><dt>Баланс</dt><dd>${fmt0(+x.bal)}</dd><dt>Скины</dt><dd>${fmt0(+x.inv)}</dd></dl></div>`};
+  const rowHTML=x=>{const d=cleanDev(x.device),nk=nkOf(x);
+    return `<tr data-uid="${esc(x.id)}"><td><b style="display:flex;align-items:center;gap:8px">${avaHTML(nk,colOf(x),x.ava,'sm')}${esc(nk)}${x.banned?' <span class="badge">БАН</span>':''}</b><span class="acct">${esc(x.email||'')}</span><span class="pubid">ID ${x.pub||'—'} ${heatChip(x)}</span></td><td><div class="dchips"><span><b>${esc(d.model)}</b> · ${esc(d.os)}</span></div></td><td class="mono">${fmt0(+x.bal)}</td><td>${esc(ago(x.last_seen?x.last_seen-clockSkew:0))}</td><td><button class="btn ghost sm" type="button">Открыть</button></td></tr>`};
+  const bindOpen=()=>{$$('[data-uid],.dev[data-du]',pane).forEach(b=>b.onclick=()=>adminUser(b.dataset.uid||b.dataset.du))};
+  if(ADM.tab==='online'){
+    pane.innerHTML=online.length?`<div class="devs">${online.map(devCard).join('')}</div>`:'<div class="empty">Сейчас никого нет</div>';bindOpen();
+  }else if(ADM.tab==='players'){
+    if(first)pane.innerHTML=`<input class="inp" id="admQ" type="search" placeholder="Поиск: ник, ID или почта" value="${esc(ADM.q||'')}" style="height:44px"><div class="htable"><table><thead><tr><th>Игрок</th><th>Устройство</th><th>Баланс</th><th>Был</th><th></th></tr></thead><tbody id="admTb"></tbody></table></div>`;
+    const tb=$('#admTb');tb.innerHTML=u.map(rowHTML).join('')||'<tr><td colspan="5" class="mute">Пока никого</td></tr>';bindOpen();
+    const f=()=>{const q=(ADM.q||'').trim().toLowerCase();$$('tr',tb).forEach(tr=>{tr.hidden=!!q&&!tr.textContent.toLowerCase().includes(q)})};f();$('#admQ').oninput=e=>{ADM.q=e.target.value;f()};
+  }else if(ADM.tab==='luck'){
+    const L=u.filter(x=>heatInfo(x).k!=='n').sort((a,b)=>(+b.heat||1)-(+a.heat||1));
+    pane.innerHTML=`<div class="panel"><p class="mute" style="margin:0;font-size:14px">Сервер сам следит за каждым игроком: считает, сколько он выбил от потраченного за последние игры (старые игры постепенно забываются). Если человеку сильно прёт (возврат выше 150%), шансы на дорогой дроп и в апгрейде мягко остывают. Если долго не прёт (ниже 60%), чуть подкручиваются вверх. Ничего не надо нажимать.</p></div>
+    ${L.length?`<div class="htable"><table><thead><tr><th>Игрок</th><th>Возврат</th><th>Баланс</th><th></th></tr></thead><tbody>${L.map(x=>`<tr data-uid="${esc(x.id)}"><td><b style="display:flex;align-items:center;gap:8px">${avaHTML(nkOf(x),colOf(x),x.ava,'sm')}${esc(nkOf(x))}</b></td><td>${heatChip(x)}</td><td class="mono">${fmt0(+x.bal)}</td><td><button class="btn ghost sm" type="button">Открыть</button></td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">Пока никто не наиграл достаточно (нужно потратить от 1 500 ₽)</div>'}`;bindOpen();
+  }else if(first){
+    pane.innerHTML=`<div class="panel"><h3 style="font-size:16px">⬆ Загрузить кейсы</h3><p class="mute" style="margin:0;font-size:14px">Жми один раз после того, как залил новую версию сайта на GitHub. Сервер получает список кейсов и предметов из этой версии.</p></div>
+    <div class="panel"><h3 style="font-size:16px">₽ Обновить цены</h3><p class="mute" style="margin:0;font-size:14px">Сервер скачает прайс CS Market, поставит скинам рыночные цены по каждому износу и StatTrak и пересчитает шансы всех кейсов. Нажимай раз в пару дней.</p><div class="note">Цен с рынка загружено: ${PRICE.size}</div><small class="mute" id="mktAuto">Автообновление: проверяю…</small></div>
+    <div class="panel"><h3 style="font-size:16px">🎃 Ивент «Хэллоуин»</h3><p class="mute" style="margin:0;font-size:14px">Начался сам после SQL и идёт 7 дней. Кнопка вверху продлевает его на 7 дней с текущей минуты, очки и задания игроков сохраняются.</p></div>
+    <div class="panel"><h3 style="font-size:16px">🛡 Защита</h3><p class="mute" style="margin:0;font-size:14px">Все деньги, шансы и дропы считает сервер, сайт только показывает. Не больше 25 запросов в секунду от одного игрока, пополнение до 50 000 ₽ в час, на странице стоит запрет на чужие скрипты (CSP).</p></div>`;
+    rpc('zb_admin_market',{p_act:'status'}).then(r=>{const el=$('#mktAuto');if(el)el.textContent=r.cron?`Автообновление включено: каждые 6 часов${r.sync_at?'. Последнее: '+new Date(r.sync_at).toLocaleString('ru-RU'):''}`:'Автообновление выключено: в Supabase не включилось расширение pg_cron'}).catch(()=>{const el=$('#mktAuto');if(el)el.textContent=''});
+  }
 }
 VIEWS.admin=renderAdmin;
-const ACT_K={view:'Перешёл',drop:'Выбил',sold:'Продал',withdrawn:'В витрину',used:'Потратил',have:'Вернул',dep:'Пополнил',bonus:'Бонус',wd:'Вывод'};
+const ACT_K={view:'Перешёл',drop:'Выбил',sold:'Продал',withdrawn:'В витрину',used:'Потратил',have:'Вернул',dep:'Пополнил',bonus:'Бонус',wd:'Вывод',admin:'Админ'};
 const actLine=a=>{const k=ACT_K[a.k]||a.k;const n=a.k==='view'?viewName(a.n):String(a.n||'');return `<div class="act-r k-${esc(a.k)}"><span class="act-t">${new Date(a.t-clockSkew).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}</span><b>${esc(k)}</b><span class="act-n">${esc(n)}</span></div>`};
 async function adminUser(uid){
-  const x0=(ADM.users||[]).find(y=>y.id===uid)||{};
   openModal(`<div class="spin"></div>`,()=>{});
   let x;try{x=await rpc('zb_admin_user',{p_user:uid})}catch(e){closeModal();toast(errMsg(e));return}
-  const d=cleanDev(x.device),nk=String(x.nick||'Без ника').slice(0,24),col=hexOk(x.col)?x.col:'#9799c9';let tab='act';
-  const body=()=>tab==='act'?`<div class="act-l">${(x.act||[]).map(actLine).join('')||'<div class="mute">Действий пока нет</div>'}</div>`
-    :tab==='inv'?`<div class="grid sm">${(x.inv||[]).map(i=>card(toItem(i),{cls:'mini',lazy:true})).join('')||'<div class="mute">Пусто</div>'}</div>`
-    :tab==='vault'?`<div class="grid sm">${(x.vault||[]).map(i=>card(toItem(i),{cls:'mini',lazy:true})).join('')||'<div class="mute">Пусто</div>'}</div>`
-    :`<div class="hist">${(x.tx||[]).map(t=>`<div class="hrow"><b>${esc(t.note||t.type)}</b><span class="mono">${fmt2(+t.amount)}</span><small class="mute">${new Date(t.t-clockSkew).toLocaleString('ru-RU')}</small></div>`).join('')||'<div class="mute">Пусто</div>'}</div>`;
   if($('#modal').hidden)return;
+  const d=cleanDev(x.device),nk=String(x.nick||'Без ника').slice(0,24),col=hexOk(x.col)?x.col:'#9799c9';
+  const A={tab:'inv',q:'',sk:null,w:2,st:false,amt:1000,arm:null};
+  const stats=()=>{const hi=heatInfo(x);return `<div class="stat"><span class="label">Баланс</span><b>${fmt0(+x.bal)}</b></div><div class="stat"><span class="label">Скины · ${x.inv_n}</span><b>${fmt0(+x.inv_sum)}</b></div><div class="stat"><span class="label">Удача</span><b class="hb h-${hi.k}">${esc(hi.t)}</b><small class="mute">${+x.cool>0?'сервер остужает':+x.cool<0?'сервер подкручивает':'без поправки'}${+x.hot_left?' · после депа '+x.hot_left:''}${+x.bad_streak?' · мимо подряд '+x.bad_streak:''}</small></div>`};
+  const itemBox=(i,where)=>`<div class="adm-it">${card(toItem(i),{cls:'mini',lazy:true})}<button class="adm-del${A.arm===+i.id?' arm':''}" type="button" data-del="${+i.id}" aria-label="Удалить скин">${A.arm===+i.id?'Удалить?':'×'}</button></div>`;
+  const findSk=q=>{q=q.trim().toLowerCase();const all=Object.values(SK);const r=q?all.filter(s=>(s.name+' '+ruName(s).join(' ')).toLowerCase().includes(q)):all;return r.sort((a,b)=>b.base-a.base).slice(0,40)};
+  const addPane=()=>{const s=A.sk&&SK[A.sk],ag=s&&s.cls==='agent',gl=s&&s.cls==='gloves';
+    return `<input class="inp" id="admSkQ" type="search" placeholder="Найти скин: AWP Dragon Lore, нож, перчатки…" value="${esc(A.q)}" autocomplete="off">
+    <div class="adm-sk" id="admSkL">${skList()}</div>
+    ${s?`<div class="adm-pick"><div class="row" style="align-items:center;gap:10px"><span class="adm-pi">${icon(s,false)}</span><b style="flex:1;min-width:0">${esc(s.name)}</b></div>
+      ${ag?'':`<div class="seg" id="admW">${[0,1,2,3,4].map(w=>`<button type="button" data-w="${w}" aria-pressed="${A.w===w}">${WEARS[w][0]}</button>`).join('')}</div>${gl?'':`<label class="sw"><input type="checkbox" id="admST" ${A.st?'checked':''}>StatTrak™</label>`}`}
+      <button class="btn acc" type="button" id="admAdd">Выдать за ${fmt0(priceOf(s.name,ag?null:A.w,A.st&&!gl&&!ag))}</button></div>`:'<p class="mute" style="margin:0;font-size:13px">Выбери скин из списка, потом износ и StatTrak</p>'}`};
+  const skList=()=>findSk(A.q).map(s=>`<button type="button" class="adm-skr${A.sk===s.name?' on':''}" data-ask="${esc(s.name)}"><span class="adm-pi">${icon(s,false)}</span><span class="t">${esc(s.name)}</span><span class="mono">${fmt0(s.base)}</span></button>`).join('')||'<div class="mute">Ничего не нашлось</div>';
+  const body=()=>A.tab==='act'?`<div class="act-l">${(x.act||[]).map(actLine).join('')||'<div class="mute">Действий пока нет</div>'}</div>`
+    :A.tab==='inv'?((x.inv||[]).length?`<p class="mute" style="margin:0 0 8px;font-size:13px">Нажми × на скине, потом «Удалить?», чтобы забрать его у игрока${x.inv_n>(x.inv||[]).length?`. Показаны ${(x.inv||[]).length} самых дорогих из ${x.inv_n}`:''}</p><div class="grid sm">${x.inv.map(i=>itemBox(i)).join('')}</div>`:'<div class="mute">Инвентарь пуст</div>')
+    :A.tab==='vault'?((x.vault||[]).length?`<div class="grid sm">${x.vault.map(i=>itemBox(i)).join('')}</div>`:'<div class="mute">Витрина пуста</div>')
+    :A.tab==='add'?addPane()
+    :`<div class="hist">${(x.tx||[]).map(t=>`<div class="hrow"><b>${esc(t.note||t.type)}</b><span class="mono">${fmt2(+t.amount)}</span><small class="mute">${new Date(t.t-clockSkew).toLocaleString('ru-RU')}</small></div>`).join('')||'<div class="mute">Пусто</div>'}</div>`;
   openModal(`<div class="adm-u"><div class="frow big">${avaHTML(nk,col,x.ava)}<div class="fr-t"><b>${esc(nk)}${x.banned?' <span class="badge">БАН</span>':''}</b><small>${esc(x.email||'')} · ID ${x.pub||'—'}</small></div></div>
-    <div class="stats"><div class="stat"><span class="label">Баланс</span><b>${fmt0(+x.bal)}</b></div><div class="stat"><span class="label">Скины</span><b>${x.inv_n} · ${fmt0(+x.inv_sum)}</b></div><div class="stat"><span class="label">Кейсов</span><b>${x.opened}</b></div><div class="stat"><span class="label">Сейчас</span><b style="font-size:14px">${esc(viewName(x.view))}</b><small class="mute">${esc(ago(x.last_seen?x.last_seen-clockSkew:0))}</small></div></div>
-    <p class="mute" style="margin:0;font-size:13px">${esc(d.model)} · ${esc(d.os)} · ${esc(d.browser)} · ${esc(d.scr||'')}${x.ref_by?` · пришёл от <b>${esc(x.ref_by)}</b>`:''}${+x.ref_n?` · пригласил ${x.ref_n}`:''} · друзей ${x.friends} · с ${new Date(x.created).toLocaleDateString('ru-RU')}</p>
-    <div class="row"><button class="btn acc" type="button" id="admWatch">👁 Смотреть экран</button><button class="btn ghost" type="button" id="admProf">Профиль</button></div>
-    <div class="row"><input id="admAmt" class="inp" type="number" inputmode="numeric" placeholder="+1000 или -500" style="flex:1;min-width:0"><button class="btn ghost" type="button" id="admGive">Начислить</button><button class="btn ${x.banned?'ghost':'red'}" type="button" id="admBan">${x.banned?'Разбанить':'Бан'}</button></div>
-    <div class="seg" id="admTab"><button type="button" data-t="act" aria-pressed="true">Действия</button><button type="button" data-t="inv" aria-pressed="false">Инвентарь</button><button type="button" data-t="vault" aria-pressed="false">Витрина</button><button type="button" data-t="tx" aria-pressed="false">Деньги</button></div>
-    <div id="admBody">${body()}</div></div>`);
+    <div class="row adm-ua"><button class="btn acc" type="button" id="admWatch">👁 Экран</button><button class="btn ghost" type="button" id="admProf">Профиль</button><button class="btn ${x.banned?'ghost':'red'}" type="button" id="admBan">${x.banned?'Разбанить':'Бан'}</button></div>
+    <div class="stats" id="admUS">${stats()}</div>
+    <div class="adm-bal"><div class="adm-bal-r"><button class="btn red" type="button" id="admMinus" aria-label="Списать">−</button><input id="admAmt" class="inp" type="number" inputmode="numeric" min="1" value="${A.amt}" aria-label="Сумма"><button class="btn acc" type="button" id="admPlus" aria-label="Начислить">+</button></div>
+      <div class="adm-chips">${[100,1000,5000,10000,50000,100000].map(a=>`<button type="button" class="chip" data-amt="${a}">${fmt0(a)}</button>`).join('')}<button type="button" class="chip" data-amt="all">весь баланс</button></div></div>
+    <p class="mute" style="margin:0;font-size:12px">Сейчас: <b>${esc(viewName(x.view))}</b>, ${esc(ago(x.last_seen?x.last_seen-clockSkew:0))} · кейсов ${x.opened} · ${esc(d.model)} · ${esc(d.os)} · ${esc(d.browser)}${x.ref_by?` · пришёл от <b>${esc(x.ref_by)}</b>`:''}${+x.ref_n?` · пригласил ${x.ref_n}`:''} · друзей ${x.friends} · с ${new Date(x.created).toLocaleDateString('ru-RU')}</p>
+    <div class="seg" id="admTab"></div>
+    <div id="admBody"></div></div>`);
   const sh=$('#sheet');
-  $('#admTab',sh).onclick=e=>{const b=e.target.closest('[data-t]');if(!b)return;tab=b.dataset.t;$$('#admTab button',sh).forEach(z=>z.setAttribute('aria-pressed',z===b));$('#admBody',sh).innerHTML=body()};
+  const tabs=()=>{$('#admTab',sh).innerHTML=[['inv','Инвентарь '+x.inv_n],['add','+ Выдать скин'],['vault','Витрина '+((x.vault||[]).length)],['act','Действия'],['tx','Деньги']].map(([k,t])=>`<button type="button" data-t="${k}" aria-pressed="${A.tab===k}">${t}</button>`).join('')};
+  const paint=()=>{tabs();$('#admUS',sh).innerHTML=stats();$('#admBody',sh).innerHTML=body();bindBody()};
+  const upd=r=>{x=r;const i=(ADM.users||[]).find(y=>y.id===uid);if(i){i.bal=x.bal;i.inv=x.inv_sum}if(uid===S.uid)refreshState();paint()};
+  const bindBody=()=>{const b=$('#admBody',sh);
+    $$('[data-del]',b).forEach(z=>z.onclick=async e=>{e.stopPropagation();const id=+z.dataset.del;if(A.arm!==id){A.arm=id;$('#admBody',sh).innerHTML=body();bindBody();return}
+      z.disabled=true;try{A.arm=null;upd(await rpc('zb_admin_inv',{p_user:uid,p_act:'del',p_id:id}));toast('Скин удалён у игрока')}catch(err){toast(errMsg(err));z.disabled=false}});
+    const q=$('#admSkQ',b);if(q){q.oninput=()=>{A.q=q.value;$('#admSkL',b).innerHTML=skList();bindSk()};const bindSk=()=>$$('[data-ask]',b).forEach(z=>z.onclick=e=>{e.stopPropagation();A.sk=z.dataset.ask;A.st=false;$('#admBody',sh).innerHTML=body();bindBody();$('#admBody .adm-pick',sh)?.scrollIntoView({block:'nearest'})});bindSk()}
+    const w=$('#admW',b);if(w)w.onclick=e=>{const t=e.target.closest('[data-w]');if(!t)return;A.w=+t.dataset.w;$('#admBody',sh).innerHTML=body();bindBody()};
+    const st=$('#admST',b);if(st)st.onchange=()=>{A.st=st.checked;$('#admBody',sh).innerHTML=body();bindBody()};
+    const ad=$('#admAdd',b);if(ad)ad.onclick=async()=>{const s=SK[A.sk];if(!s)return;ad.disabled=true;try{upd(await rpc('zb_admin_inv',{p_user:uid,p_act:'add',p_skin:s.name,p_wear:s.cls==='agent'?null:A.w,p_st:!!A.st&&s.cls!=='gloves'&&s.cls!=='agent'}));toast('Выдал: '+s.name);SFX.cash()}catch(err){toast(errMsg(err));ad.disabled=false}};
+  };
+  $('#admTab',sh).onclick=e=>{const b=e.target.closest('[data-t]');if(!b)return;A.tab=b.dataset.t;A.arm=null;paint()};
+  const amtEl=$('#admAmt',sh);amtEl.oninput=()=>{A.amt=Math.abs(+amtEl.value||0)};
+  $$('[data-amt]',sh).forEach(c=>c.onclick=()=>{A.amt=c.dataset.amt==='all'?Math.floor(+x.bal):+c.dataset.amt;amtEl.value=A.amt});
+  const give=async(sign,btn)=>{const a=Math.abs(+amtEl.value||0);if(!a){toast('Введи сумму');return}if(sign<0&&a>+x.bal){toast('У игрока только '+fmt0(+x.bal));return}
+    btn.disabled=true;try{ADM.users=await rpc('zb_admin_act',{p_user:uid,p_act:'give',p_amount:sign*a});x.bal=+x.bal+sign*a;toast(sign>0?'Начислил '+fmt0(a):'Списал '+fmt0(a));if(uid===S.uid)refreshState();$('#admUS',sh).innerHTML=stats()}catch(e){toast(errMsg(e))}btn.disabled=false};
+  $('#admPlus',sh).onclick=e=>give(1,e.currentTarget);$('#admMinus',sh).onclick=e=>give(-1,e.currentTarget);
   $('#admWatch',sh).onclick=()=>{closeModal();startWatch(uid,nk)};
   $('#admProf',sh).onclick=()=>{if(!x.pub)return;closeModal();go('u-'+x.pub)};
-  $('#admGive',sh).onclick=async()=>{const a=+$('#admAmt',sh).value;if(!a){toast('Введи сумму');return}try{ADM.users=await rpc('zb_admin_act',{p_user:uid,p_act:'give',p_amount:a});toast('Готово');if(uid===S.uid)refreshState();closeModal()}catch(e){toast(errMsg(e))}};
   $('#admBan',sh).onclick=async()=>{try{ADM.users=await rpc('zb_admin_act',{p_user:uid,p_act:x.banned?'unban':'ban',p_amount:0});closeModal()}catch(e){toast(errMsg(e))}};
+  paint();
 }
 /* демонстрация: админ ходит по тем же разделам, что и игрок */
 const WT={uid:null,nick:'',last:0,view:null,t:null,acts:[]};
@@ -3151,11 +3247,11 @@ function startWatch(uid,nick){
   tick();WT.t=setInterval(tick,2000);toast('Экран игрока появится справа, как только он что-то откроет. Он видит значок 👁');
 }
 function stopWatch(silent){if(!WT.uid)return;const u=WT.uid;WT.uid=null;clearInterval(WT.t);$('#watchBar')?.remove();mirrorViewStop();rpc('zb_admin_watch',{p_user:u,p_on:false,p_after:0}).catch(()=>{});if(!silent)toast('Демонстрация остановлена')}
-async function seedCases(){
-  const btn=$('#seedBtn');btn.disabled=true;btn.textContent='Загружаем…';
+async function seedCases(log){
+  const btn=$('#seedBtn');if(btn)btn.disabled=true;const say=t=>{if(typeof log==='function')log(t)};say('Загружаем кейсы на сервер…');
   const data=seedData();if(PRICE.size){data.prices=[];PRICE.forEach((p,k)=>{const [n,w,st]=k.split('\t');data.prices.push([n,+w,st==='1',p])})}
-  try{const r=await rpc('zb_admin_seed',{p_data:data});toast(`Загружено: ${r.cases} кейсов, ${r.skins} предметов`);SFX.cash()}catch(e){toast(errMsg(e))}
-  btn.disabled=false;btn.textContent='Загрузить кейсы на сервер';
+  try{const r=await rpc('zb_admin_seed',{p_data:data});say(`Загружено: ${r.cases} кейсов, ${r.skins} предметов. Теперь можно обновить цены.`);toast(`Загружено: ${r.cases} кейсов`);SFX.cash()}catch(e){say('Ошибка: '+errMsg(e));toast(errMsg(e))}
+  if(btn)btn.disabled=false;
 }
 
 /* ================= PROFILE PAGE ================= */
@@ -3636,7 +3732,7 @@ const FAQ=[
   ['Что за ивент и очки?','Хэллоуин идёт 7 дней. За игру капают очки: 1 очко за каждые 100 ₽ в кейсах, апгрейдах и битвах. Очки не деньги: на них покупаются аватарки, обводки и живые фоны, и открываются 5 хэллоуинских кейсов. После конца ивента магазин работает ещё 3 дня.'],
   ['Куда деваются выведенные скины?','В витрину в профиле. Их видят все, их нельзя случайно продать или поставить в апгрейд, а вернуть в инвентарь можно в любой момент.'],
   ['Как работает «Дурак»?','Каждый дроп в битве становится картой. Масть от оружия, старше та, что дороже, козырь случайный. Ты ходишь сам: атакуешь, отбиваешься, подкидываешь карты того же ранга или берёшь. На ход 45 секунд, иначе сходит автоматически. Кто первым скинул карты, забирает весь банк.'],
-  ['Как работает удача?','После пополнения несколько открытий подряд «горячие». Если долго нет окупа, с каждым неудачным дропом шанс на дорогой скин растёт. В апгрейдере после неудач растёт бонус к шансу, до +15%. Всё это видно на странице кейса и в апгрейдере.'],
+  ['Как работает удача?','После пополнения несколько открытий подряд «горячие». Если долго нет окупа, с каждым неудачным дропом шанс на дорогой скин растёт. В апгрейдере после неудач шанс умножается на бонус, до ×1.15. Есть и обратная сторона, чтобы было честно: если тебе долго и сильно прёт (выбиваешь заметно больше, чем тратишь), удача на время немного остывает, а когда не прёт, наоборот, чуть подкручивается вверх. Всё это видно на странице кейса и в апгрейдере.'],
   ['Что за «Флаппи»?','Мини-игра в разделе «Ещё». Лети сквозь трубы, приз растёт с каждой трубой, максимум 10 000 ₽ за игру. 8 попыток в час, до 30 000 ₽ в сутки.'],
   ['Админ видит, что я делаю?','Админ видит ник, почту, устройство, раздел сайта и действия на сайте (дропы, продажи, пополнения). Если админ включил демонстрацию экрана, он видит то же, что и ты на сайте (кейсы, апгрейды, битвы), а у тебя в углу горит значок 👁.'],
   ['Деньги настоящие?','Нет. Всё на фантиках: пополнение, вывод и скины игровые. Ни карты, ни Steam не подключаются, вывести реальные деньги или скины нельзя.'],
@@ -3856,6 +3952,7 @@ setTimeout(()=>{if(authed)loadEvent().then(()=>{const b=$('#evBan');if(b&&cur===
 function luckChip(){
   const hot=+S.hot||0,bad=+S.bad||0;
   if(hot>0)return `<span class="luck hot">🔥 Горячая удача: ещё ${hot} ${hot===1?'открытие':hot<5?'открытия':'открытий'}</span>`;
+  if(+S.cool>0.05)return `<span class="luck cool">❄ После крупного заноса удача немного остывает, потом вернётся сама</span>`;
   if(bad>=3)return `<span class="luck up">📈 Удача растёт: ${bad} без окупа подряд, шанс на дорогое выше</span>`;
   return '';
 }
