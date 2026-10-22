@@ -1658,6 +1658,179 @@ html.ultra .livebar{margin-right:0}
 .adm-lk-r input[type=range]{accent-color:var(--acc-2);background:var(--bg-2)}
 .mirror.land:not(.big):not(.min){width:min(62vw,980px)!important;height:calc(min(62vw,980px) * .6 + 60px)!important}
 
+/* =================== 1.6: кейсы и ивент по наброскам =================== */
+.tiles.t16{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+@media (min-width:1440px){.tiles.t16{grid-template-columns:repeat(auto-fill,minmax(215px,1fr))}}
+@media (max-width:640px){.tiles.t16{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+.case-tile.t16{position:relative;display:flex;flex-direction:column;align-items:stretch;gap:0;padding:0;border-radius:16px;overflow:hidden;background:linear-gradient(180deg,color-mix(in srgb,var(--c2) 70%,var(--surf)),var(--surf));border:1px solid color-mix(in srgb,var(--c1) 26%,var(--line));text-align:left;cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s}
+.case-tile.t16:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--c1) 70%,transparent);box-shadow:0 10px 30px -10px color-mix(in srgb,var(--c1) 60%,transparent)}
+.case-tile.t16 .ct-art{position:relative;display:block;aspect-ratio:4/3;overflow:hidden}
+.case-tile.t16 .ct-art::after{content:"";position:absolute;inset:auto 0 0 0;height:55%;background:linear-gradient(transparent,rgba(5,5,14,.92));pointer-events:none}
+.caseart{position:absolute;inset:0;display:block}
+.caseart img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}
+.case-tile.t16:hover .caseart img{transform:scale(1.06)}
+.case-tile.t16 .badge{position:absolute;top:8px;right:8px;z-index:3;background:#7a3cff;color:#fff;font-size:11px;font-weight:800;padding:3px 8px;border-radius:7px;box-shadow:0 2px 10px rgba(122,60,255,.5)}
+.case-tile.t16 .ct-info{position:absolute;left:12px;right:12px;bottom:10px;z-index:2;display:flex;flex-direction:column;gap:2px}
+.case-tile.t16 .ct-n{color:#fff;font:800 15px/1.15 Rubik,system-ui;text-shadow:0 2px 6px rgba(0,0,0,.8);margin:0;text-align:left}
+.case-tile.t16 .ct-p{color:#fff;font:800 15px 'JetBrains Mono',monospace;text-shadow:0 0 12px rgba(169,77,255,.9),0 2px 4px rgba(0,0,0,.8)}
+.case-tile.t16 .ct-skins{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:8px}
+.ct-s{display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;border-radius:8px;background:radial-gradient(80% 80% at 50% 60%,color-mix(in srgb,var(--rc) 22%,transparent),transparent),var(--bg-2);border:1px solid var(--line);border-bottom:2px solid var(--rc);overflow:hidden}
+.ct-s img,.ct-s .skfb{width:92%;height:auto;max-height:90%;object-fit:contain}
+@media (max-width:640px){.case-tile.t16 .ct-n{font-size:13.5px}.case-tile.t16 .ct-p{font-size:13.5px}.case-tile.t16 .ct-skins{gap:4px;padding:6px}}
+/* официальные кейсы CS2: настоящая картинка + свечение */
+.case-tile.t16.off .ct-art{background:radial-gradient(70% 70% at 50% 55%,color-mix(in srgb,var(--c1) 45%,transparent),transparent 70%),linear-gradient(180deg,#0b0b1c,#05050e)}
+.caseimg.off16{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;background:none}
+.caseimg.off16 img{width:78%;height:auto;filter:drop-shadow(0 8px 20px color-mix(in srgb,var(--c1) 70%,transparent)) saturate(1.15);transition:transform .35s ease;position:relative;z-index:1}
+.case-tile.t16:hover .caseimg.off16 img{transform:scale(1.07) translateY(-3px)}
+.off-glow{position:absolute;inset:18%;border-radius:50%;background:var(--c1);filter:blur(34px);opacity:.45;animation:offPulse 3.5s ease-in-out infinite}
+.off-shine{position:absolute;inset:0;z-index:2;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.18) 50%,transparent 60%);transform:translateX(-120%);animation:offShine 5s ease-in-out infinite;pointer-events:none}
+@keyframes offPulse{0%,100%{opacity:.35;transform:scale(.95)}50%{opacity:.6;transform:scale(1.05)}}
+@keyframes offShine{0%,70%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+html.lite .off-glow,html.lite .off-shine{animation:none}html.lite .off-glow{filter:none;opacity:.18}
+.cases-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+.cases-feats{display:flex;gap:6px;flex-wrap:wrap;padding:8px;border-radius:14px;border:1px solid var(--line);background:var(--surf)}
+.cases-feats span{display:flex;align-items:center;gap:6px;padding:4px 10px;font-size:13px;color:var(--mute)}
+.cases-feats svg{width:18px;height:18px;stroke:var(--acc-2);fill:none;stroke-width:2}
+.cases-foot{text-align:center;color:var(--mute);font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:13px;padding:18px 0}
+/* hero слайды с артом */
+.caseart.hero{position:relative;inset:auto;width:100%;max-width:520px;aspect-ratio:4/3;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px -20px color-mix(in srgb,var(--c1) 70%,transparent);margin:0 auto}
+/* ---------- страница кейса ---------- */
+.case-top.v16{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.case-top.v16 .back{align-self:flex-start}
+.cp-hero{position:relative;width:100%;max-width:720px;aspect-ratio:16/9;border-radius:22px;overflow:hidden;border:1px solid color-mix(in srgb,var(--c1) 35%,var(--line));box-shadow:0 30px 80px -30px color-mix(in srgb,var(--c1) 80%,transparent);background:radial-gradient(60% 70% at 50% 50%,color-mix(in srgb,var(--c1) 35%,transparent),#05050e)}
+.cp-hero .cp-art{width:100%;height:100%;object-fit:cover;display:block}
+.cp-hero>.caseimg,.cp-hero>.crate{position:absolute;inset:0;height:100%}
+.cp-hero::after{content:"";position:absolute;inset:auto 0 0 0;height:35%;background:linear-gradient(transparent,rgba(5,5,14,.8));pointer-events:none}
+.cp-price{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:2;display:flex;align-items:center;gap:8px;padding:8px 18px;border-radius:999px;background:rgba(10,8,24,.75);border:1px solid color-mix(in srgb,var(--c1) 50%,transparent);font:900 22px 'JetBrains Mono',monospace;color:#fff;backdrop-filter:blur(6px)}
+.cp-price .coin{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:linear-gradient(#ffd23a,#e09a12);color:#3a2406;font-size:14px}
+.cp-hero.shake,.cp-art.shake{animation:csShake .5s ease-in-out 2}
+.case-top.v16 h1{margin:6px 0 0}
+.cp-feat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%;max-width:720px}
+.cp-f{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 8px;border-radius:14px;background:radial-gradient(80% 70% at 50% 40%,color-mix(in srgb,var(--rc) 25%,transparent),transparent),var(--surf);border:1px solid var(--line);color:inherit;font:inherit;cursor:pointer}
+.cp-f.on{border-color:color-mix(in srgb,var(--acc-2) 80%,transparent);box-shadow:0 0 0 2px color-mix(in srgb,var(--acc-2) 35%,transparent),0 10px 30px -12px var(--acc-2)}
+.cp-f-ic{height:64px;display:flex;align-items:center}.cp-f-ic img,.cp-f-ic .skfb{max-height:64px;width:auto;max-width:100%}
+.cp-f small{color:var(--mute);font-size:11.5px}.cp-f b{font-size:13px;line-height:1.15}
+#v-case .open-bar #openBtn{min-width:min(100%,360px);font-size:18px}
+/* ---------- ивент: шапка, баннер ---------- */
+.ev16-ban{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);grid-template-rows:1fr auto;gap:0 16px;border-radius:22px;overflow:hidden;background:radial-gradient(80% 90% at 80% 30%,rgba(122,40,255,.35),transparent 60%),linear-gradient(135deg,#140820,#0a0612);border:1px solid rgba(255,122,18,.35);margin:14px 0}
+.ev16-ban-art{grid-column:2;grid-row:1/3;position:relative;min-height:300px}
+.ev16-ban-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;-webkit-mask:linear-gradient(90deg,transparent,#000 30%);mask:linear-gradient(90deg,transparent,#000 30%)}
+.ev16-ban-t{grid-column:1;padding:26px 0 14px 26px;display:flex;flex-direction:column;gap:10px;align-items:flex-start;z-index:1}
+.ev16-ban-t p{margin:0;color:#e6dcff;font-size:15px;max-width:440px}
+.ev16-title{margin:0;font:900 italic 44px/1 Rubik,system-ui;color:#fff;text-transform:uppercase;text-shadow:0 4px 20px rgba(0,0,0,.6)}
+.ev16-title span{display:block;background:linear-gradient(90deg,#ffb43a,#ff5a1a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ev16-title.sm{font-size:24px;text-transform:none}.ev16-title.sm span{display:inline}
+.ev16-mini{grid-column:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:0 0 18px 26px;z-index:1}
+.ev16-mini button{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:8px;align-items:center;text-align:left;padding:10px;border-radius:14px;background:rgba(20,12,36,.85);border:1px solid rgba(255,140,40,.3);color:#fff;font:inherit;cursor:pointer}
+.ev16-mini span{grid-row:1/3;font-size:22px}.ev16-mini b{font-size:14px}.ev16-mini small{color:#bfb3d8;font-size:11.5px}
+@media (max-width:760px){.ev16-ban{grid-template-columns:1fr}.ev16-ban-art{grid-column:1;grid-row:1;min-height:0;position:absolute;inset:0;opacity:.55}.ev16-ban-art img{-webkit-mask:linear-gradient(180deg,#000,transparent);mask:linear-gradient(180deg,#000 30%,transparent)}.ev16-ban-t{padding:22px 18px 12px}.ev16-title{font-size:34px}.ev16-mini{padding:0 12px 14px;gap:6px}.ev16-mini button{grid-template-columns:1fr;text-align:center;justify-items:center;padding:8px 4px}.ev16-mini span{grid-row:auto}.ev16-mini small{display:none}}
+/* страница ивента */
+.ev16-head{position:relative;border-radius:22px;overflow:hidden;min-height:230px;display:flex;align-items:flex-end;border:1px solid rgba(255,122,18,.3)}
+.ev16-head-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ev16-head::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,4,16,.2),rgba(8,4,16,.85))}
+.ev16-head-in{position:relative;z-index:1;width:100%;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.ev16-head-in .back{align-self:flex-start}
+.ev16-clock-w small{color:#d8cff0;font-size:13px}
+.ev16-clock{display:flex;gap:8px;margin-top:4px}
+.ev16-clock span{display:flex;flex-direction:column;align-items:center;min-width:56px;padding:8px 6px;border-radius:12px;background:rgba(14,10,30,.85);border:1px solid rgba(255,255,255,.12)}
+.ev16-clock b{font:900 22px 'JetBrains Mono',monospace;color:#fff}.ev16-clock small{font-size:10.5px;color:#a99cc8}
+.ev16-prog{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;margin:14px 0;padding:14px 16px;border-radius:18px;background:linear-gradient(135deg,rgba(255,122,18,.12),rgba(122,60,255,.1)),var(--surf);border:1px solid rgba(255,140,40,.4)}
+.ev16-pk{font-size:34px;filter:drop-shadow(0 0 10px rgba(255,140,40,.6))}
+.ev16-pt{display:flex;flex-direction:column;gap:6px;min-width:0}.ev16-pt-h{display:flex;justify-content:space-between}
+.ev16-prog .ev-prog i{background:linear-gradient(90deg,#ff5a1a,#ffb43a)}
+@media (max-width:640px){.ev16-prog{grid-template-columns:auto 1fr}.ev16-prog .btn{grid-column:1/-1}}
+.ev16-tabs{width:100%;margin-bottom:12px}.ev16-tabs button{flex:1}
+.ev16-body{display:flex;flex-direction:column;gap:12px}
+.ev16-qs{display:flex;flex-direction:column;gap:8px}
+.ev16-q{display:grid;grid-template-columns:48px 1fr auto auto;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:var(--surf);border:1px solid var(--line)}
+.ev16-q.ready{border-color:rgba(255,140,40,.6);box-shadow:0 0 0 1px rgba(255,140,40,.25)}
+.ev16-q.done{opacity:.6}
+.ev16-qi{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:radial-gradient(circle at 50% 40%,rgba(122,60,255,.4),rgba(40,20,80,.6));font-size:24px}
+.ev16-qt{display:flex;flex-direction:column;gap:3px;min-width:0}.ev16-qt b{font-size:14.5px}.ev16-qt small{color:var(--mute)}
+.ev16-qr{color:#ffb43a;font-weight:800;font-size:13.5px;white-space:nowrap}
+.ev16-ok{color:#5affa8;font-weight:900;font-size:20px}
+@media (max-width:640px){.ev16-q{grid-template-columns:42px 1fr auto;gap:10px}.ev16-qi{width:42px;height:42px;font-size:20px}.ev16-qr{grid-column:2;grid-row:2;font-size:12.5px}.ev16-q>.btn,.ev16-q>.ev16-ok{grid-column:3;grid-row:1/3}}
+.ev16-king{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:14px;border-radius:16px;background:linear-gradient(135deg,rgba(255,210,58,.12),transparent),var(--surf);border:1px solid rgba(255,210,58,.4)}
+.ev16-king small{display:block;color:var(--mute)}
+.ev16-shopbar{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:14px 16px;border-radius:18px;background:linear-gradient(135deg,rgba(255,122,18,.14),transparent),var(--surf);border:1px solid rgba(255,140,40,.4)}
+.ev16-mypts{display:flex;flex-direction:column;align-items:flex-end;padding:8px 14px;border-radius:14px;border:1px solid rgba(255,140,40,.5);background:rgba(20,10,30,.6)}.ev16-mypts small{color:var(--mute);font-size:11px}.ev16-mypts b{font:900 20px 'JetBrains Mono',monospace;color:#ffb43a}
+.ev16-cats{width:100%}.ev16-cats button{flex:1}
+.ev16-shop{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.ev16-it{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 10px;border-radius:16px;background:radial-gradient(70% 60% at 50% 30%,rgba(255,122,18,.14),transparent),var(--surf);border:1px solid var(--line);text-align:center}
+.ev16-it.own{border-color:rgba(90,255,168,.45)}
+.ev16-it-pv{height:88px;display:grid;place-items:center}.ev16-it-pv .ava{width:76px;height:76px}.ev16-it-pv.k-bg .ev-bgprev{display:block;width:120px;height:80px;border-radius:12px;overflow:hidden}
+.ev16-it b{font-size:13.5px}.ev16-price{color:#ffb43a;font-weight:800}
+.ev16-it .btn{width:100%}
+@media (max-width:640px){.ev16-shop{grid-template-columns:repeat(2,minmax(0,1fr))}.ev16-shopbar{grid-template-columns:auto 1fr}.ev16-mypts{grid-column:1/-1;align-items:center}}
+.case-tile.t16 .badge{left:auto!important;width:auto!important;max-width:calc(100% - 16px)}
+@media (max-width:480px){.hdr:has(#backBtn:not([hidden])) #reloadBtn{display:none}.hdr:has(#backBtn:not([hidden])) .logo{transform:scale(.9)}}
+/* ---------- 1.6b: категории и плитки как на наброске ---------- */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,560px),1fr));gap:14px;margin:14px 0}
+.cat-panel{display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:20px;background:linear-gradient(180deg,rgba(30,20,70,.35),rgba(10,8,26,.6)),var(--surf);border:1px solid color-mix(in srgb,var(--acc-2) 30%,var(--line));min-width:0}
+.cat-panel.wide{grid-column:1/-1}
+.cat-panel.hw{border-color:rgba(255,122,18,.45);background:radial-gradient(80% 120% at 0% 0%,rgba(255,110,20,.16),transparent 60%),linear-gradient(180deg,rgba(40,14,40,.4),rgba(10,6,20,.6)),var(--surf)}
+.cat-h{display:flex;align-items:center;gap:10px}
+.cat-h h3{margin:0;font:800 19px Rubik,system-ui;flex:1}
+.cat-h small{color:var(--mute);font-size:12.5px}
+.cat-ic svg{width:26px;height:26px;fill:none;stroke:#ff5fd0;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px rgba(255,95,208,.6))}
+.cat-panel.hw .cat-ic svg{stroke:#ff8a1a;filter:drop-shadow(0 0 6px rgba(255,138,26,.6))}
+.cat-panel .tiles.t16{grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px}
+@media (max-width:640px){.cat-panel{padding:10px;border-radius:16px}.cat-panel .tiles.t16{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.cat-h h3{font-size:17px}}
+@media (max-width:380px){.cat-panel .tiles.t16{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.case-tile.t16 .ct-art{aspect-ratio:1/1;border-radius:12px;margin:6px 6px 0;background:radial-gradient(70% 70% at 50% 55%,color-mix(in srgb,var(--c1) 35%,transparent),transparent 70%),#07071a}
+.case-tile.t16 .ct-art::after{display:none}
+.case-tile.t16 .ct-info{position:static;align-items:center;text-align:center;padding:8px 6px 10px;gap:1px}
+.case-tile.t16 .ct-n{font-size:13.5px;text-align:center;text-shadow:none}
+.case-tile.t16 .ct-p{font-size:13.5px;color:#d9c8ff;text-shadow:0 0 10px rgba(169,77,255,.7)}
+.case-tile.t16 .ct-skins{display:none}
+.case-tile.t16{background:linear-gradient(180deg,color-mix(in srgb,var(--c2) 45%,#0c0b22),#0b0a1e);border-color:color-mix(in srgb,var(--c1) 22%,#2a2a5a)}
+.case-tile.t16.off .ct-art{background:radial-gradient(70% 70% at 50% 55%,color-mix(in srgb,var(--c1) 45%,transparent),transparent 70%),#07071a}
+@media (max-width:640px){.case-tile.t16 .ct-n,.case-tile.t16 .ct-p{font-size:12px}.case-tile.t16 .ct-art{margin:4px 4px 0;border-radius:10px}.case-tile.t16 .ct-info{padding:6px 4px 8px}}
+.cat-panel .tiles{content-visibility:visible;contain-intrinsic-size:none}.cat-panel{content-visibility:auto;contain-intrinsic-size:auto 420px}
+@media (max-width:640px){.case-tile.t16 .badge{font-size:9px;padding:2px 5px;top:4px;right:4px;border-radius:5px}}
+/* ---------- 1.5.1 ---------- */
+.pf-steam{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 16px 4px;padding:10px 12px;border-radius:14px;background:linear-gradient(90deg,rgba(23,26,33,.9),rgba(42,71,94,.55));border:1px solid rgba(102,192,244,.35)}
+.pf-steam.none{background:var(--surf-2);border-color:var(--line)}
+.pf-steam-ava{width:40px;height:40px;border-radius:10px;overflow:hidden;display:grid;place-items:center;background:#171a21;color:#c7d5e0}.pf-steam-ava img{width:100%;height:100%;object-fit:cover}
+.pf-steam-t{display:flex;flex-direction:column;flex:1;min-width:120px}.pf-steam-t small{color:#8fb8d8;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+.pf-steam .btn svg{vertical-align:-3px;margin-right:4px}
+.ann-bar{display:flex;align-items:center;gap:10px;padding:9px max(16px,env(safe-area-inset-left,0px));background:linear-gradient(90deg,rgba(255,180,58,.18),rgba(122,60,255,.18));border-bottom:1px solid rgba(255,180,58,.4);font-size:14px}
+.ann-bar b{flex:1}.ann-bar.static{border-radius:12px;border:1px solid rgba(255,180,58,.4)}
+.case-tile.t16.is-off{filter:grayscale(.85);opacity:.75}
+.case-tile.t16.is-off .ct-art img{filter:brightness(.5)}
+.ct-offtag{position:absolute;left:8px;right:8px;top:30%;z-index:4;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px;border-radius:10px;background:rgba(10,4,12,.85);border:1px solid #e23b4a;color:#ff8a94;font-weight:800;font-size:12.5px;text-align:center}
+.ct-offtag small{color:#d8c8d8;font-weight:600;font-size:11px}
+.case-tile.t16{position:relative}
+.item.skoff{opacity:.4;filter:grayscale(1)}
+.case-off{max-width:720px;width:100%}
+.mg-tabs{flex-wrap:wrap;margin-bottom:10px}
+#mgBody{display:flex;flex-direction:column;gap:10px}
+.mg-sec h4{margin:6px 0;font-size:15px}
+.mg-row{display:grid;grid-template-columns:56px 1fr auto;align-items:center;gap:10px;padding:6px 8px;border-radius:12px;background:var(--surf-2);border:1px solid var(--line);margin-bottom:6px;cursor:pointer}
+.mg-row:hover{border-color:var(--acc-2)}.mg-row.off{border-color:#e23b4a;opacity:.8}
+.mg-thumb{width:56px;height:56px;position:relative;border-radius:10px;overflow:hidden;display:block;background:#07071a}.mg-thumb.lg{width:72px;height:72px}
+.mg-thumb .caseart,.mg-thumb .caseimg{position:absolute;inset:0}.mg-thumb .crate{transform:scale(.5);transform-origin:top left;width:200%}
+.mg-thumb img{width:100%;height:100%;object-fit:cover}
+.mg-t{display:flex;flex-direction:column;min-width:0}.mg-t b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.mg-t small{color:var(--mute);font-size:12px}
+.mg-ord{display:flex;gap:4px}.mg-ord .icbtn{width:34px;height:34px}
+.mg-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0}
+.mg-dur{flex-wrap:wrap}
+.mg-case{display:flex;flex-direction:column;gap:10px}
+#mcB{display:flex;flex-direction:column;gap:8px}
+.mg-odds{display:flex;flex-direction:column;gap:6px;max-height:46vh;overflow:auto}
+.mg-o{display:grid;grid-template-columns:44px 1fr 92px auto 34px;align-items:center;gap:8px;padding:4px 6px;border-radius:10px;background:var(--surf-2);border-left:3px solid var(--rc)}
+.mg-o .inp{height:36px;min-height:36px;padding:0 8px;text-align:right}
+.mg-pi{width:44px;height:34px;display:flex;align-items:center;justify-content:center}.mg-pi img{max-width:100%;max-height:100%}
+@media (max-width:640px){.mg-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mg-o{grid-template-columns:36px 1fr 74px 30px}.mg-o>span:nth-of-type(3){display:none}}
+.caseart{position:relative;inset:auto;display:block;width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:10px}
+.ct-art>.caseart,.mg-thumb>.caseart{position:absolute;inset:0;width:auto;aspect-ratio:auto;border-radius:0}
+.caseart.hero{aspect-ratio:4/3;border-radius:20px}
+.caseimg.off16{position:relative;inset:auto;width:100%;aspect-ratio:4/3}
+.ct-art>.caseimg.off16,.mg-thumb>.caseimg{position:absolute;inset:0;width:auto;aspect-ratio:auto}
+.caseart.sm,.caseimg.off16.sm{max-width:110px;margin:0 auto}
+.caseimg.off16.sm .off-glow,.caseimg.off16.sm .off-shine{display:none}
+.pc .caseart,.pc .caseimg.off16{max-width:96px}
+
 </style>
 </head>
 <body>
@@ -1898,7 +2071,7 @@ const toItem=x=>x&&({id:+x.id||0,n:x.n,w:x.w==null?null:+x.w,f:x.f==null?null:+x
 function applyState(st){
   if(!st||!st.profile)return;
   const p=st.profile;
-  S.bal=+p.bal;S.nick=p.nick;S.col=p.col||S.col;S.ava=p.ava&&(SK[p.ava]||/^(em|ab|rf|ex):/.test(p.ava))?p.ava:null;S.frame=p.frame||null;S.pbg=p.pbg||null;S.evPts=+p.ev_pts||0;S.evOwned=p.ev_owned||[];S.hot=+p.hot_left||0;S.cool=+p.cool||0;S.nickBad=!!p.nick_bad;S.nickOld=p.nick_old||'';S.pk=p.pk||null;S.steam=p.steam||null;S.upCap=+p.up_cap||1;S.upMax=+p.up_max||.85;S.depLeft=p.dep_left==null?null:+p.dep_left;S.bad=+p.bad_streak||0;S.upB=+p.up_bonus||0;S.pub=p.pub;S.theme=p.theme||null;S.cstats=p.cstats||[];S.won=p.won==null?null:+p.won;S.won_sum=p.won_sum==null?null:+p.won_sum;S.opened=+p.opened||0;S.best=p.best?toItem(p.best):null;S.daily_at=p.daily_at;S.broke_at=p.broke_at;S.is_admin=!!p.is_admin;S.email=p.email||'';
+  S.bal=+p.bal;S.nick=p.nick;S.col=p.col||S.col;S.ava=p.ava&&(SK[p.ava]||/^(em|ab|rf|ex):/.test(p.ava))?p.ava:null;S.frame=p.frame||null;S.pbg=p.pbg||null;S.evPts=+p.ev_pts||0;S.evOwned=p.ev_owned||[];S.hot=+p.hot_left||0;S.cool=+p.cool||0;S.nickBad=!!p.nick_bad;S.nickOld=p.nick_old||'';S.pk=p.pk||null;S.steam=p.steam||null;S.upCap=+p.up_cap||1;S.upMax=+p.up_max||.85;S.depLimit=+p.dep_limit||50000;S.depLeft=p.dep_left==null?null:+p.dep_left;S.bad=+p.bad_streak||0;S.upB=+p.up_bonus||0;S.pub=p.pub;S.theme=p.theme||null;S.cstats=p.cstats||[];S.won=p.won==null?null:+p.won;S.won_sum=p.won_sum==null?null:+p.won_sum;S.opened=+p.opened||0;S.best=p.best?toItem(p.best):null;S.daily_at=p.daily_at;S.broke_at=p.broke_at;S.is_admin=!!p.is_admin;S.email=p.email||'';
   S.inv=(st.inv||[]).map(toItem).filter(i=>SK[i.n]);
   S.vault=(st.vault||[]).map(toItem).filter(i=>SK[i.n]);
   if(typeof tryRef==='function')setTimeout(tryRef,500);
@@ -2170,7 +2343,7 @@ const RF_LIST=Array.from({length:RFN},(_,k)=>'rf:'+(k+1));
 
 
 /* ================= v3 CORE: настройки, темы, экономика, звук, файлы ================= */
-const VER='1.5',VER_TAG='Alpha',VER_FULL=VER+' '+VER_TAG;
+const VER='1.5.1',VER_TAG='Alpha',VER_FULL=VER+' '+VER_TAG;
 const LS3='zanos.v3';
 const ST3=(()=>{let o={};try{o=JSON.parse(localStorage.getItem(LS3)||'{}')||{}}catch(e){}return Object.assign({theme:'violet',nav:'top',vol:.8,seenVer:'',view:'auto',up:'ring',lite:false},o)})();
 /* компьютерная версия на телефоне: страница рисуется шириной 1280, как на ПК */
@@ -2271,6 +2444,11 @@ CUSTOM.push(
   {id:'s-raid',name:'Рейд',sec:'stream',emo:'🚀',shape:'capsule',col:['#ff3a5a','#2a0410'],price:199,items:pickSk(/Fire|Flame|Inferno|Blaze|Serpent|Ember|Heat/)},
   {id:'s-chat',name:'Чат решает',sec:'stream',emo:'💬',shape:'gift',col:['#3ee08c','#04200f'],price:99,items:pickSk(/Redline|Vulcan|Bloodsport|Neo-Noir|Hyper Beast|Asiimov|Fade/)},
   {id:'s-subs',name:'Сабы на месте',sec:'stream',emo:'⭐',shape:'chest',col:['#ffe06a','#2a2004'],price:1499,items:pickSk(/Crown|King|Emperor|Royal|Gold|Lore|Howl|Gungnir/,16,2)});
+/* 1.6: ещё два тематических кейса с наброска и картинки для всех кейсов */
+CUSTOM.push(
+  {id:'th-football',name:'Футбол',sec:'theme',col:['#3ee08c','#04200f'],price:149,items:pickSk(/Field|Grass|Green|Kick|Goal|Turf|Jungle|Emerald|Lime/)},
+  {id:'th-premium',name:'Премиум',sec:'theme',col:['#d8dde8','#14161e'],price:999,items:pickSk(/Fade|Doppler|Lore|Howl|Gungnir|Printstream|Asiimov|Wild Lotus|Medusa/,18,2)});
+{const A=new Set(["agents", "ak", "awp", "bomzh", "global", "gloves", "graffiti", "hl-bat", "hl-blood", "hl-candy", "hl-crypt", "hl-death", "hl-demon", "hl-ghost", "hl-grave", "hl-mummy", "hl-pump", "hl-witch", "hl-zombie", "hw-ghost", "hw-pumpkin", "hw-reaper", "hw-vamp", "hw-witch", "knives", "lx-butterfly", "lx-dragon", "lx-elite", "lx-gloves", "lx-gungnir", "lx-karambit", "lx-sapphire", "m-alien", "m-dino", "m-duck", "m-robo", "m-shroom", "m-squid", "m4", "major", "oligarch", "pistol", "q-army", "q-classic", "q-classified", "q-covert", "q-restricted", "s-chat", "s-clutch", "s-donate", "s-night", "s-raid", "s-subs", "silver", "t-coal", "t-fire", "t-mini", "t-pink", "th-5050", "th-anime", "th-beast", "th-camo", "th-candy", "th-cyber", "th-deagle", "th-football", "th-glock", "th-gold", "th-horror", "th-ice", "th-knife", "th-kopeck", "th-new", "th-premium", "th-smg", "th-sniper", "th-space", "th-toxic", "usp"]);for(const o of CUSTOM){if(A.has(o.id))o.art='case-'+o.id+'.webp'}const q=CUSTOM.find(o=>o.id==='q-knife');if(q)q.art='case-knives.webp';const hp=CUSTOM.find(o=>o.id==='hl-pump');if(hp)hp.artBig='case-ev-pumpkin-big.webp'}
 
 /* ---------- экономика: реальные цены (если админ загрузил) или формула ---------- */
 const PRICE=new Map();   // "имя|износ|st" -> цена
@@ -2287,7 +2465,7 @@ function rebuildEconomy(){
     const names=[...new Set(o.items==='AGENTS'?AGENT_NAMES:o.items)].filter(n=>SK[n]);
     const P=o.price,target=P*(o.rtp||RTP);let lo=-8,hi=8;for(let i=0;i<60;i++){const m=(lo+hi)/2;evW2(names,P,m)<target?lo=m:hi=m}const mu=(lo+hi)/2;
     const ev=evW2(names,P,mu),price=Math.abs(ev-target)/target<.03?P:null;
-    CASES.push({id:o.id,name:o.name,sub:o.sec==='quick'?'Быстрый кейс':o.sec==='new'?'Новый кейс':o.sec==='lux'?'Дорогой кейс':o.sec==='hw'?'Хэллоуин · за очки ивента':o.sec==='hl'?'Хэллоуин · временный кейс':o.sec==='mult'?'Мульт-кейс · свой маскот':o.sec==='stream'?'Стрим-кейс':o.sec==='theme'?'Тематический кейс':o.id==='agents'?'Агенты CS2':'Кейс Занос',sec:o.sec,col:o.col,badge:o.badge,emo:o.emo,shape:o.shape,fixed:price,want:P,pts:o.pts,rtp:o.rtp,items:(ws=>names.map((n,i)=>({n,w:Math.max(1e-9,ws[i])})))(wsOf(names,P,mu))});
+    CASES.push({id:o.id,name:o.name,sub:o.sec==='quick'?'Быстрый кейс':o.sec==='new'?'Новый кейс':o.sec==='lux'?'Дорогой кейс':o.sec==='hw'?'Хэллоуин · за очки ивента':o.sec==='hl'?'Хэллоуин · временный кейс':o.sec==='mult'?'Мульт-кейс · свой маскот':o.sec==='stream'?'Стрим-кейс':o.sec==='theme'?'Тематический кейс':o.id==='agents'?'Агенты CS2':'Кейс Занос',sec:o.sec,col:o.col,badge:o.badge,emo:o.emo,shape:o.shape,art:o.art,artBig:o.artBig,fixed:price,want:P,pts:o.pts,rtp:o.rtp,items:(ws=>names.map((n,i)=>({n,w:Math.max(1e-9,ws[i])})))(wsOf(names,P,mu))});
   }
   for(const c of CASES){
     const tot=c.items.reduce((a,x)=>a+x.w,0);c.items.forEach(x=>x.w/=tot);
@@ -2314,7 +2492,15 @@ function applyCatalog(cat){
     c.ev=c.items.reduce((a,x)=>a+x.w*expP(SK[x.n]),0);c.top=[...c.items].sort((a,b)=>expP(SK[b.n])-expP(SK[a.n]))[0].n;
     c.groups=[...new Set(c.items.map(x=>SK[x.n].rar))].sort((a,b)=>RORD.indexOf(a)-RORD.indexOf(b));delete c.tease;
   }
+  /* 1.5.1: что админ поменял на сервере */
+  SKIN_OFF.clear();for(const x of cat.skin_off||[])SKIN_OFF.set(x.n,{until:+x.until||0,reason:x.reason||''});
+  CASE_SORT_DIRTY=true;
+  for(const o of cat.ovr||[]){const c=CBY[o.id];if(!c)continue;
+    if(o.name)c.name=o.name;if(o.badge!=null)c.badge=o.badge;if(o.sec)c.sec=o.sec;c.sort=o.sort==null?null:+o.sort;c.manual=!!o.manual;
+    c.off=o.off?{until:+o.until||0,reason:o.reason||''}:null}
+  ANNOUNCE=cat.announce&&cat.announce.t?cat.announce:null;if(typeof annSync==='function')annSync();
 }
+const SKIN_OFF=new Map();let CASE_SORT_DIRTY=false,ANNOUNCE=null;
 /* цены и каталог берём с сервера: на сайте ровно те цены и шансы, по которым считает сервер */
 async function loadPrices(){
   try{const l=await rpc('zb_prices');PRICE.clear();for(const [n,w,st,p] of l||[])PRICE.set(pKey(n,+w<0?null:+w,!!st),+p);rebuildEconomy()}catch(e){}
@@ -2485,7 +2671,17 @@ async function skinModal(n,{w=null,st=false,item=null}={}){
 
 /* ---------- что нового ---------- */
 const NEWS=[
-  ['Сайт быстрее','Меньше лагов при открытии кейсов пачкой, в чатах и на главной. На слабых компьютерах и на Linux без видеокарты сайт сам включает лёгкий режим.'],
+  ['Новый вид кейсов','У каждого кейса теперь своя картинка: сундуки, маскоты, хэллоуинская жуть и всё остальное.'],
+  ['Кейсы по категориям','Базовые, Популярные, Halloween, Тематические, Редкие, Маскоты, Стрим, Быстрые, Кейсы Занос и Официальные CS2.'],
+  ['Новая страница кейса','Большая картинка, три главных скина, крупная кнопка «Открыть кейс» и всё содержимое с шансами.'],
+  ['Хэллоуин в новом виде','Таймер до конца ивента, твой прогресс с кнопкой «Забрать награду», задания с кнопкой «Перейти» и новый магазин по разделам.'],
+  ['Halloween кейсы рядом с ивентом','На главной сразу под баннером ивента.'],
+  ['Два новых кейса','«Футбол» и «Премиум».'],
+  ['Официальные кейсы CS2','Остались настоящими, но теперь со свечением.'],
+  ['Steam в профиле','Если Steam привязан, прямо в шапке профиля есть кнопки «Инвентарь Steam» и «Профиль Steam». Чужой Steam видно, только если игрок сам разрешил.'],
+  ['Объявления','Важные новости сайта теперь появляются полоской сверху.'],
+  ['Временно недоступные кейсы','Если кейс на время выключен, он остаётся на месте серым, и видно почему и до какого времени.']];
+const NEWS_15=[  ['Сайт быстрее','Меньше лагов при открытии кейсов пачкой, в чатах и на главной. На слабых компьютерах и на Linux без видеокарты сайт сам включает лёгкий режим.'],
   ['Настоящие скины везде','Если один сервер картинок Steam не отвечает, сайт берёт запасной. Скачанные картинки запоминаются, второй раз грузятся мгновенно.'],
   ['Удобно на любом экране','Компьютерная версия на весь экран, на ультрашироких мониторах 21:9 и 32:9 справа своя колонка с лентой и статистикой. На телефоне всё крупнее.'],
   ['Апгрейдер в один экран','Колесо, ставка и списки скинов помещаются без прокрутки и на ПК, и на телефоне.'],
@@ -2532,7 +2728,7 @@ const NEWS_131=[['Окно выпадения починено','Кнопки «
   ['40 мемных аватарок','Новая категория «Мемы» в «Кастомизации»: молнии, лазерные глаза и подписи вроде «СУКА ТЫ НЕ ВЫКУПАЕШЬ». Боты тоже их носят.'],
   ['FAQ и правила','Новый раздел: ответы на частые вопросы и правила сайта.'],
   ['Пополнение','Лимит игрового пополнения теперь 5 000 ₽ за 30 минут.']];
-const NEWS_OLD=[...NEWS_134,...NEWS_133,...NEWS_132,...NEWS_131,
+const NEWS_OLD=[...NEWS_15,...NEWS_134,...NEWS_133,...NEWS_132,...NEWS_131,
   ['Темы','Семь тем: Угольный, Огненный, Розовый, Минимализм, Неоновый, Ледяной и Фиолетовый.'],
   ['Друзья по ID','Свой ID у каждого, заявки, кто в сети, рейтинг среди друзей.'],
   ['Чаты и группы','Личка и групповые чаты с фото и голосовыми.'],
@@ -2545,7 +2741,7 @@ function whatsNewModal(){openModal(`<h3 class="wn-t">Что нового в ${VE
 function newsBanner(){
   const el=$('#news');if(!el)return;
   if(ST3.seenVer===VER){el.hidden=true;return}
-  el.hidden=false;el.innerHTML=`<div class="news-in"><span class="news-tag">Обновление ${VER_FULL}</span><b>Большое обновление 1.5. Жми «Что нового» и узнай, что изменилось</b><div class="news-act"><button class="btn acc sm" type="button" id="newsMore">Что нового</button><button class="icbtn" type="button" id="newsX" aria-label="Скрыть">×</button></div></div>`;
+  el.hidden=false;el.innerHTML=`<div class="news-in"><span class="news-tag">Обновление ${VER_FULL}</span><b>Обновление 1.5.1: новый вид кейсов и Хэллоуина. Жми «Что нового»</b><div class="news-act"><button class="btn acc sm" type="button" id="newsMore">Что нового</button><button class="icbtn" type="button" id="newsX" aria-label="Скрыть">×</button></div></div>`;
   $('#newsMore').onclick=()=>{SFX.click();whatsNewModal();ST3.seenVer=VER;save3();el.hidden=true};
   $('#newsMore').textContent='Что нового';
   $('#newsX').onclick=()=>{ST3.seenVer=VER;save3();el.hidden=true};
@@ -2712,28 +2908,29 @@ const SVGI={crown:'<svg viewBox="0 0 24 24"><path d="M3 18 2 7l5 4 5-7 5 7 5-4-1
 function newTile(c){return `<button class="case-tile newt" type="button" data-case="${c.id}" style="--c1:${c.col[0]};--c2:${c.col[1]}"><span class="badge">${c.badge||'НОВЫЙ'}</span><span class="newt-art">${crate(c,{size:'',open:true})}</span><span class="newt-b"><b class="ct-n">Кейс «${esc(c.name)}»</b><span class="ct-p">${fmt0(c.price)}</span><span class="btn acc sm">Открыть</span></span></button>`}
 /* 9 плашек на главной */
 const HERO=[
-  {e:'Ивент 7 дней —',h:'Хэллоуин:',s:'Ночь Заноса',p:'Злые задания, очки за игру, эксклюзивные аватарки, обводки, живые фоны и 5 жутких кейсов, которые открываются только за очки.',b:'К ивенту ›',go:'event',col:['#ff7a12','#2a0a02'],top:'★ Karambit | Night'},
-  {e:'Открывай кейсы —',h:'Выигрывай',s:'легендарные скины',p:'Занос Battle — место, где удача на твоей стороне. Открывай кейсы, участвуй в битвах с друзьями и забирай топовые скины. Всё на фантиках.',b:'Открыть кейс ›',go:'cases',col:['#a94dff','#1a0a40']},
-  {e:'Мини-игра —',h:'Флаппи',s:'до 10 000 ₽',p:'Наш маскот Заносик летит сквозь 5 локаций: город, пустыня, льды, вулкан и космос. Каждая труба поднимает приз, 82 трубы дают 10 000 ₽.',b:'Играть ›',go:'games',col:['#2affd5','#04201c'],top:'★ Karambit | Fade'},
-  {e:'Ва-банк —',h:'Гунгнир',s:'или ничего',p:'Кейс за 90 000 ₽: либо AWP | Gungnir, либо скин за копейки. Шанс крошечный. Рискнёшь?',b:'Открыть ›',go:'case:lx-gungnir',col:['#7ad8ff','#04101c'],top:'AWP | Gungnir'},
-  {e:'Битвы —',h:'Рубись с друзьями',s:'победитель забирает всё',p:'Обычный режим, безумный, джекпот, раунды и карты. Зови друзей по ID или играй с ботами.',b:'В битвы ›',go:'battle',col:['#ff7a2a','#3a1206'],top:'AK-47 | Fire Serpent'},
-  {e:'Новый режим —',h:'Дурак',s:'на скинах из кейсов',p:'Каждый открывает кейсы, дропы превращаются в карты. Козырь случайный. Кто первым скинул все карты, тот забирает банк.',b:'Сыграть ›',go:'battle',col:['#3ee08c','#06281a'],top:'★ Karambit | Fade'},
-  {e:'Апгрейдер —',h:'Из дешёвого',s:'в легендарное',p:'Ставишь скины, выбираешь цель дороже. Теперь можно выбрать: крутится кольцо или стрелка.',b:'Апгрейд ›',go:'upgrade',col:['#3a8cff','#0a1a3a'],top:'AWP | Dragon Lore'},
-  {e:'Твоя витрина —',h:'Выведи и хвастайся',s:'скины в профиле',p:'Выведенные скины встают на полку в профиле. Друзья видят, продать случайно нельзя, вернуть можно всегда.',b:'Моя витрина ›',go:'vault',col:['#ffd23a','#2a1e04'],top:'★ Butterfly Knife | Fade'},
-  {e:'Приведи друга —',h:'Бонус тебе',s:'и другу',p:'Делись своей ссылкой. Друг получает +50% к первому пополнению, а ты 10% с каждого его пополнения.',b:'Моя ссылка ›',go:'ref',col:['#ff5fd0','#2a0828'],top:'★ Sport Gloves | Pandora\'s Box'},];
+  {art:'case-ev-banner.webp',e:'Ивент 7 дней —',h:'Хэллоуин:',s:'Ночь Заноса',p:'Злые задания, очки за игру, эксклюзивные аватарки, обводки, живые фоны и 5 жутких кейсов, которые открываются только за очки.',b:'К ивенту ›',go:'event',col:['#ff7a12','#2a0a02'],top:'★ Karambit | Night'},
+  {art:'case-lx-elite.webp',e:'Открывай кейсы —',h:'Выигрывай',s:'легендарные скины',p:'Занос Battle — место, где удача на твоей стороне. Открывай кейсы, участвуй в битвах с друзьями и забирай топовые скины. Всё на фантиках.',b:'Открыть кейс ›',go:'cases',col:['#a94dff','#1a0a40']},
+  {art:'case-th-new.webp',e:'Мини-игра —',h:'Флаппи',s:'до 10 000 ₽',p:'Наш маскот Заносик летит сквозь 5 локаций: город, пустыня, льды, вулкан и космос. Каждая труба поднимает приз, 82 трубы дают 10 000 ₽.',b:'Играть ›',go:'games',col:['#2affd5','#04201c'],top:'★ Karambit | Fade'},
+  {art:'case-lx-gungnir.webp',e:'Ва-банк —',h:'Гунгнир',s:'или ничего',p:'Кейс за 90 000 ₽: либо AWP | Gungnir, либо скин за копейки. Шанс крошечный. Рискнёшь?',b:'Открыть ›',go:'case:lx-gungnir',col:['#7ad8ff','#04101c'],top:'AWP | Gungnir'},
+  {art:'case-th-camo.webp',e:'Битвы —',h:'Рубись с друзьями',s:'победитель забирает всё',p:'Обычный режим, безумный, джекпот, раунды и карты. Зови друзей по ID или играй с ботами.',b:'В битвы ›',go:'battle',col:['#ff7a2a','#3a1206'],top:'AK-47 | Fire Serpent'},
+  {art:'case-knives.webp',e:'Новый режим —',h:'Дурак',s:'на скинах из кейсов',p:'Каждый открывает кейсы, дропы превращаются в карты. Козырь случайный. Кто первым скинул все карты, тот забирает банк.',b:'Сыграть ›',go:'battle',col:['#3ee08c','#06281a'],top:'★ Karambit | Fade'},
+  {art:'case-th-cyber.webp',e:'Апгрейдер —',h:'Из дешёвого',s:'в легендарное',p:'Ставишь скины, выбираешь цель дороже. Теперь можно выбрать: крутится кольцо или стрелка.',b:'Апгрейд ›',go:'upgrade',col:['#3a8cff','#0a1a3a'],top:'AWP | Dragon Lore'},
+  {art:'case-th-gold.webp',e:'Твоя витрина —',h:'Выведи и хвастайся',s:'скины в профиле',p:'Выведенные скины встают на полку в профиле. Друзья видят, продать случайно нельзя, вернуть можно всегда.',b:'Моя витрина ›',go:'vault',col:['#ffd23a','#2a1e04'],top:'★ Butterfly Knife | Fade'},
+  {art:'case-s-donate.webp',e:'Приведи друга —',h:'Бонус тебе',s:'и другу',p:'Делись своей ссылкой. Друг получает +50% к первому пополнению, а ты 10% с каждого его пополнения.',b:'Моя ссылка ›',go:'ref',col:['#ff5fd0','#2a0828'],top:'★ Sport Gloves | Pandora\'s Box'},];
 let heroT=0,heroI=0;
+const heroList=()=>EV.d?HERO.slice(1):HERO;
 function heroSlides(top){
   const [w1,w2]=ruName(SK[top]);
-  return `<div class="hero-wrap" id="heroWrap">${HERO.map((h,i)=>{const tp=h.top&&SK[h.top]?h.top:top,[a,b]=ruName(SK[tp]);return `<div class="hero slide${i===heroI?' on':''}" data-i="${i}" style="--hc1:${h.col[0]};--hc2:${h.col[1]}">
+  return `<div class="hero-wrap" id="heroWrap">${heroList().map((h,i)=>{const tp=h.top&&SK[h.top]?h.top:top,[a,b]=ruName(SK[tp]);return `<div class="hero slide${i===heroI?' on':''}" data-i="${i}" style="--hc1:${h.col[0]};--hc2:${h.col[1]}">
     <div class="hero-txt"><span class="eyebrow">${SVGI.crown}${h.e}</span><h1>${h.h}<span>${h.s}</span></h1><p>${h.p}</p>
     <div class="hero-cta"><button class="btn acc lg" type="button" data-hgo="${h.go}">${SVGI.box} ${h.b}</button>${i===0?`<button class="btn line lg" type="button" id="howBtn">${SVGI.play} Как это работает?</button>`:''}</div></div>
-    <div class="hero-art">${i===heroI||i===(heroI+1)%HERO.length?crate({col:h.col,top:tp},{size:'lg'}):''}<div class="toptag"><b>${esc(a)} | ${esc(b)}</b><span>${SVGI.crownS} ${i===0?'Топ выигрыш':'Можно выбить'}</span></div></div>
-  </div>`}).join('')}<div class="hero-dots" id="heroDots">${HERO.map((_,i)=>`<button type="button" data-hd="${i}" aria-label="Плашка ${i+1}" aria-pressed="${i===heroI}"></button>`).join('')}</div></div>`;
+    <div class="hero-art">${i===heroI||i===(heroI+1)%heroList().length?crate({col:h.col,top:tp,art:h.art,hero:1},{size:'lg'}):''}<div class="toptag"><b>${esc(a)} | ${esc(b)}</b><span>${SVGI.crownS} ${i===0?'Топ выигрыш':'Можно выбить'}</span></div></div>
+  </div>`}).join('')}<div class="hero-dots" id="heroDots">${heroList().map((_,i)=>`<button type="button" data-hd="${i}" aria-label="Плашка ${i+1}" aria-pressed="${i===heroI}"></button>`).join('')}</div></div>`;
 }
 function heroShow(i){
-  const w=$('#heroWrap');if(!w)return;heroI=(i+HERO.length)%HERO.length;
+  const w=$('#heroWrap');if(!w)return;heroI=(i+heroList().length)%heroList().length;
   w.querySelectorAll('.slide').forEach(x=>{const k=+x.dataset.i;x.classList.toggle('on',k===heroI);
-    const art=x.querySelector('.hero-art');if((k===heroI||k===(heroI+1)%HERO.length)&&!art.querySelector('.caseimg,.crate,svg')){const h=HERO[k];art.insertAdjacentHTML('afterbegin',crate({col:h.col,top:h.top&&SK[h.top]?h.top:'AWP | Fade'},{size:'lg'}))}});
+    const art=x.querySelector('.hero-art');if((k===heroI||k===(heroI+1)%heroList().length)&&!art.querySelector('.caseimg,.crate,.caseart,svg')){const h=heroList()[k];art.insertAdjacentHTML('afterbegin',crate({col:h.col,top:h.top&&SK[h.top]?h.top:'AWP | Fade',art:h.art,hero:1},{size:'lg'}))}});
   w.querySelectorAll('[data-hd]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.hd===heroI));
 }
 function heroBind(){
@@ -2750,32 +2947,28 @@ function renderHome(){
   const v=$('#v-home');
   const top=S.best&&SK[S.best.n]&&S.best.p>5000?S.best.n:'AWP | Fade';
   const [w1,w2]=ruName(SK[top]);
-  v.innerHTML=heroSlides(top)+evBannerHTML()+`
+  v.innerHTML=evBannerHTML()+(hlOn()&&EV.d?`<div class="cat-grid" id="hwCats">${catPanel('hw','🎃 Halloween кейсы',CASES.filter(c=>c.sec==='hl'),{wide:1,cls:'hw',more:'event'})}</div>`:'')+heroSlides(top)+`
   <div class="feats"><div class="feat">${SVGI.bolt}<span>Мгновенное<br>открытие кейсов</span></div><div class="feat">${SVGI.shield}<span>Всё считается<br>на сервере</span></div><div class="feat">${SVGI.crown}<span>Топовые скины<br>и редкие предметы</span></div><div class="feat">${SVGI.gift}<span>Ежедневные бонусы<br>и промокоды</span></div></div>
-  <div class="sec-h"><div><h2>Новые кейсы</h2><p class="mute sub">${CASES.filter(c=>c.sec==='new').length} новых кейса уже доступны. Успей открыть и забрать топовые скины</p></div><button class="lnk" type="button" data-go="cases">Смотреть все кейсы →</button></div>
-  <div class="tiles big">${CASES.filter(c=>c.sec==='new').map(c=>newTile(c)).join('')}</div>
-  ${hlOn()&&CASES.some(c=>c.sec==='hl')?`<div class="sec-h"><div><h2>🎃 Хэллоуин · временные кейсы</h2><p class="mute sub">Исчезнут, когда закончится ивент: <b data-evleft>${EV.d?evLeft(evEnd()-Date.now()):'скоро'}</b></p></div><button class="lnk" type="button" data-go="cases">Все →</button></div>
-  <div class="tiles hl">${CASES.filter(c=>c.sec==='hl').map(c=>caseTile(c)).join('')}</div>`:''}
-  <div class="sec-h"><div><h2>Дорогие кейсы</h2><p class="mute sub">Драгон Лор, Гунгнир, Хаул, доплеры и перчатки за сотни тысяч</p></div><button class="lnk" type="button" data-go="cases">Все кейсы →</button></div>
-  <div class="tiles lux">${CASES.filter(c=>c.sec==='lux').map(c=>caseTile(c)).join('')}</div>
-  <div class="sec-h"><div><h2>Мульт и стрим-кейсы</h2><p class="mute sub">Новое в 1.5: у каждого свой маскот и своя форма</p></div><button class="lnk" type="button" data-go="cases">Все кейсы →</button></div>
-  <div class="tiles">${CASES.filter(c=>c.sec==='mult'||c.sec==='stream').map(c=>caseTile(c)).join('')}</div>
-  <div class="sec-h"><h2>Тематические кейсы</h2><button class="lnk" type="button" data-go="cases">Все кейсы →</button></div>
-  <div class="tiles">${CASES.filter(c=>c.sec==='theme').slice(0,12).map(c=>caseTile(c)).join('')}</div>
-  <div class="sec-h"><h2>Популярные кейсы</h2><button class="lnk" type="button" data-go="cases">Смотреть все →</button></div>
-  <div class="tiles">${CASES.filter(c=>c.sec==='pop').map(c=>caseTile(c)).join('')}</div>
-  <div class="sec-h"><h2>Быстрые кейсы</h2><button class="lnk" type="button" data-go="cases">Все кейсы →</button></div>
-  <div class="tiles">${CASES.filter(c=>c.sec==='quick').map(c=>caseTile(c,true)).join('')}</div>
+  <div class="cat-grid">
+  ${catPanel('pop','Популярные кейсы',CASES.filter(c=>c.sec==='pop'),{more:'cases'})}${catPanel('base','Базовые кейсы',CASES.filter(c=>c.sec==='new'),{more:'cases'})}
+  ${catPanel('rare','Редкие кейсы',CASES.filter(c=>c.sec==='lux'),{more:'cases'})}${catPanel('mascot','Маскоты',CASES.filter(c=>c.sec==='mult'),{more:'cases'})}</div>
   <div class="live"><div class="live-h"><h2>${SVGI.fire}Сейчас выигрывают</h2><span class="live-dot"><i></i>LIVE<span>Только настоящие дропы: игроки и боты в битвах · последние открытия</span></span></div><div class="wins" id="wins">${LIVE.length?LIVE.slice(0,12).map(liveCard).join(''):'<div class="empty" style="grid-column:1/-1">Пока тихо. Открой кейс, и твой дроп появится здесь первым</div>'}</div></div>
   <div class="cta"><div><span class="eyebrow">${SVGI.crown}Занос Battle</span><h3>Твой занос<br>начинается здесь</h3><p>Открывай кейсы. Собирай коллекцию. Выигрывай.</p></div><button class="btn acc lg" type="button" data-go="cases">Открыть кейс сейчас →</button></div>`;
-  heroBind();loadEvent().then(()=>{const b=$('#evBan');if(b&&cur==='home')b.outerHTML=evBannerHTML()});
+  heroBind();loadEvent().then(()=>{const b=$('#evBan');if(b&&cur==='home'){const had=!!b.innerHTML;b.outerHTML=evBannerHTML();if(!had&&hlOn()&&!$('#hwCats')){const nb=$('#evBan');nb&&nb.insertAdjacentHTML('afterend',`<div class="cat-grid" id="hwCats">${catPanel('hw','🎃 Halloween кейсы',CASES.filter(c=>c.sec==='hl'),{wide:1,cls:'hw',more:'event'})}</div>`)}}});
   $('#howBtn').onclick=()=>openModal(`<h3 style="font-size:20px">Как это работает</h3><div class="note" style="display:flex;flex-direction:column;gap:8px"><span><b>Кейсы.</b> Платишь фантиками, лента крутится, выпадает скин. Его можно продать обратно в баланс.</span><span><b>Честно.</b> Что выпадет, решает сервер, а не телефон. Баланс подкрутить нельзя.</span><span><b>Апгрейд.</b> Ставишь скины и выбираешь дороже. Чем больше множитель, тем уже полоса на круге.</span><span><b>Контракты.</b> Сдаёшь от 3 до 10 скинов и получаешь один, от четверти до четырёх стоимостей.</span><span><b>Битвы.</b> Открываете одни кейсы с ботами или друзьями онлайн, кто выбил дороже, забирает всё.</span><span><b>Полосы удачи.</b> Как на настоящих кейс-сайтах: то густо, то пусто. Шансы на странице кейса показаны для обычной полосы.</span><span><b>Деньги ненастоящие.</b> Пополнение и вывод игровые, Steam и банки не подключаются.</span></div><button class="btn acc" type="button" data-close>Понятно</button>`);
 }
 VIEWS.home=renderHome;
 function renderCases(){
   const v=$('#v-cases');
-  const sec=(t,list,q)=>`<div class="sec-h"><h2>${t}</h2><span class="mute" style="font-size:13px">${list.length} кейсов</span></div><div class="tiles">${list.map(c=>caseTile(c,q)).join('')}</div>`;
-  v.innerHTML=`<div class="sec-h"><h2>Новые кейсы</h2></div><div class="tiles big">${CASES.filter(c=>c.sec==='new').map(c=>newTile(c)).join('')}</div>`+sec('Популярные кейсы',CASES.filter(c=>c.sec==='pop'))+(hlOn()?sec('🎃 Хэллоуин · временные',CASES.filter(c=>c.sec==='hl')):'')+sec('Дорогие кейсы',CASES.filter(c=>c.sec==='lux'))+sec('🦑 Мульт-кейсы · свои маскоты',CASES.filter(c=>c.sec==='mult'))+sec('🎙 Стрим-кейсы',CASES.filter(c=>c.sec==='stream'))+sec('Тематические кейсы',CASES.filter(c=>c.sec==='theme'))+sec('Быстрые кейсы',CASES.filter(c=>c.sec==='quick'),true)+sec('Кейсы Занос',CASES.filter(c=>c.sec==='z'))+sec('Официальные кейсы CS2',CASES.filter(c=>c.sec==='cs2'));
+  const sec=(t,list,q)=>list.length?`<div class="sec-h"><h2>${t}</h2><span class="mute" style="font-size:13px">${list.length} кейсов</span></div><div class="tiles t16">${list.map(c=>caseTile(c,q)).join('')}</div>`:'';
+  v.innerHTML=`<div class="cases-head"><div><h2>Кейсы</h2><p class="mute sub">Открывай кейсы, получай скины, забирай свои заносы!</p></div><div class="cases-feats"><span>${SVGI.bolt}Быстрое открытие</span><span>${SVGI.shield}Честные шансы</span><span>${SVGI.gift}Бонусы и акции</span></div></div>
+  <div class="cat-grid">${catPanel('base','Базовые кейсы',CASES.filter(c=>c.sec==='new'))}${catPanel('pop','Популярные кейсы',CASES.filter(c=>c.sec==='pop'))}
+  ${hlOn()?catPanel('hw','Halloween кейсы',CASES.filter(c=>c.sec==='hl'),{wide:1,cls:'hw',more:'event'}):''}
+  ${catPanel('theme','Тематические кейсы',CASES.filter(c=>c.sec==='theme'),{wide:1})}
+  ${catPanel('rare','Редкие кейсы',CASES.filter(c=>c.sec==='lux'))}${catPanel('mascot','Маскоты',CASES.filter(c=>c.sec==='mult'))}
+  ${catPanel('stream','Стрим-кейсы',CASES.filter(c=>c.sec==='stream'))}${catPanel('quick','Быстрые кейсы',CASES.filter(c=>c.sec==='quick'))}
+  ${catPanel('pop','Кейсы Занос',CASES.filter(c=>c.sec==='z'),{wide:1})}
+  ${catPanel('official','Официальные кейсы CS2',CASES.filter(c=>c.sec==='cs2'),{wide:1})}</div><div class="cases-foot">👑 Больше кейсов — больше шансов! 👑</div>`;
 }
 VIEWS.cases=renderCases;
 
@@ -2789,14 +2982,16 @@ function renderCase(c){
   const pct=w=>w>=.1?(w*100).toFixed(1)+'%':w>=.001?(w*100).toFixed(2)+'%':w>=.00001?(w*100).toFixed(3)+'%':'<0.001%';
   const okup=ws.reduce((a,x)=>a+(expP(SK[x.n])>=c.price?x.w:0),0);
   const top=items.slice(0,4),rest=items.slice(4);
-  const it=x=>card({n:x.n,p:r2(expP(SK[x.n])),w:null},{tag:'button',chance:pct(x.w),lazy:true,attr:`data-sk="${esc(x.n)}"`});
-  v.innerHTML=`<div class="case-top" style="--c1:${c.col[0]}">
+  const it=x=>card({n:x.n,p:r2(expP(SK[x.n])),w:null},{tag:'button',chance:SKIN_OFF.has(x.n)?'убран':pct(x.w),lazy:true,cls:SKIN_OFF.has(x.n)?'skoff':'',attr:`data-sk="${esc(x.n)}"`});
+  const feat=items.slice(0,3);
+  v.innerHTML=`<div class="case-top v16" style="--c1:${c.col[0]};--c2:${c.col[1]}">
     <button class="back" type="button" data-go="cases">← Назад к кейсам</button>
-    <div id="bigCrate" class="case-art">${crate(c,{size:'lg'})}</div>
-    <span class="label">${esc(c.sub)}</span>
-    <h1>${esc(c.name)}</h1>
-    <div class="case-pills"><span class="pill price">${c.pts?fmt0n(c.pts)+' очков':fmt0(c.price)}</span>${c.pts?`<span class="pill">У тебя <b>&nbsp;${fmt0n(S.evPts)}</b>&nbsp;очков</span>`:''}<span class="pill">Шанс окупа <b class="pos">&nbsp;${(okup*100).toFixed(1)}%</b></span><span class="pill">Возврат ${Math.round(evOf(c)/c.price*100)}%</span></div>
-    ${c.pts?'':luckChip()}<small class="mute luck-note">${c.pts?'Открывается за очки ивента':'После пополнения сыпет щедрее, а каждый неудачный дроп подряд поднимает шанс на дорогой скин, пока не повезёт'}</small>
+    <div class="cp-hero" id="bigCrate">${c.artBig||c.art?`<img class="cp-art" src="${esc(c.artBig||c.art)}" alt="" decoding="async">`:crate(c,{size:'lg'})}<span class="cp-price">${c.pts?'🎃 '+fmt0n(c.pts)+' очков':'<span class="coin">₽</span> '+fmt0(c.price)}</span></div>
+    <h1>${esc(c.name)}</h1><span class="label">${esc(c.sub)}</span>
+    <div class="cp-feat">${feat.map((x,i)=>`<button type="button" class="cp-f r-${SK[x.n].rar}${i===0?' on':''}" data-sk="${esc(x.n)}"><span class="cp-f-ic">${icon(SK[x.n],true,{lazy:true})}</span><small>${esc(ruName(SK[x.n])[0])}</small><b>${esc(ruName(SK[x.n])[1])}</b></button>`).join('')}</div>
+    <div class="case-pills">${c.pts?`<span class="pill">У тебя <b>&nbsp;${fmt0n(S.evPts)}</b>&nbsp;очков</span>`:''}<span class="pill">Шанс окупа <b class="pos">&nbsp;${(okup*100).toFixed(1)}%</b></span><span class="pill">Возврат ${Math.round(evOf(c)/c.price*100)}%</span></div>
+    ${c.pts?'':luckChip()}
+    ${c.off?`<div class="note bad case-off">⛔ Кейс временно недоступен${c.off.reason?': '+esc(c.off.reason):''}${c.off.until?` · вернётся ${new Date(c.off.until-clockSkew).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}`:''}</div>`:''}
   </div>
   <div class="rolls" id="rolls"></div>
   <div class="open-bar">
@@ -2804,27 +2999,28 @@ function renderCase(c){
     <button class="btn acc lg" type="button" id="openBtn"></button>
     <label class="sw"><input type="checkbox" id="fast" ${S.fast?'checked':''}>Быстрое открытие</label>
   </div>
-  <div class="sec-h"><h2>Возможные скины</h2><span class="mute" style="font-size:13px">${c.items.length} предм.</span></div>
+  <div class="sec-h"><h2>Содержимое кейса</h2><span class="mute" style="font-size:13px">${c.items.length} предм.</span></div>
   <div class="odds">${c.groups.map(k=>`<span class="odd r-${k}"><i></i>${RAR[k].n}<span class="mono">${pct(grp[k])}</span></span>`).join('')}</div>
   <div class="grid rare4">${top.map(it).join('')}</div>
   ${rest.length?`<div class="sec-h"><h2>Также могут выпасть</h2></div><div class="grid">${rest.map(it).join('')}</div>`:''}`;
   const idle=()=>{const n=Math.min(CS.n,5);$('#rolls').innerHTML=Array.from({length:n},()=>`<div class="roul${n>1?' compact':''}"><div class="track">${Array.from({length:14},()=>card(filler(c),{fx:false})).join('')}</div><i class="mark"></i></div>`).join('');
     $$('#rolls .roul').forEach(w=>{const t=w.querySelector('.track'),f=t.children[0],st=f.offsetWidth+8;t.style.transform=`translateX(${-(7*st+f.offsetWidth/2-w.clientWidth/2)}px)`})};
   if(c.pts&&CS.n>5)CS.n=1;
-  const btn=()=>{$('#openBtn').innerHTML=c.pts?`Открыть${CS.n>1?' ×'+CS.n:''} за <span class="mono">${fmt0n(c.pts*CS.n)} очков</span>`:`Открыть${CS.n>1?' ×'+CS.n:''} за <span class="mono">${fmt0(c.price*CS.n)}</span>`};
-  idle();btn();
+  const btn=()=>{$('#openBtn').innerHTML=c.pts?`Открыть кейс${CS.n>1?' ×'+CS.n:''} · <span class="mono">${fmt0n(c.pts*CS.n)} очков</span>`:`Открыть кейс${CS.n>1?' ×'+CS.n:''} · <span class="mono">${fmt0(c.price*CS.n)}</span>`};
+  idle();btn();if(c.off){const ob=$('#openBtn');ob.disabled=true;ob.innerHTML='⛔ Временно недоступен'}
   $('#cnt').onclick=e=>{const b=e.target.closest('[data-n]');if(!b||busy)return;SFX.click();CS.n=+b.dataset.n;$$('#cnt button').forEach(x=>x.setAttribute('aria-pressed',x===b));idle();btn()};
   $('#fast').onchange=e=>{S.fast=e.target.checked;save()};
   $('#openBtn').onclick=()=>openCase(c,CS.n);
 }
 async function openCase(c,n){
   if(busy)return;const cost=c.price*n;
+  if(c.off){toast('Кейс временно недоступен'+(c.off.reason?': '+c.off.reason:''));return}
   if(c.pts){if((S.evPts||0)<c.pts*n){toast('Не хватает очков ивента. Играй, и они накапают');return}}
   else if(S.bal<cost){toast('Не хватает фантиков. Пополни баланс');openDeposit();return}
   busy=true;$('#openBtn').disabled=true;
   let r;try{r=await rpc(c.pts?'zb_ev_open':'zb_open_case',{p_case:c.id,p_n:n})}catch(e){busy=false;$('#openBtn').disabled=false;toast(errMsg(e));SFX.lose();return}
   if(c.pts){S.evPts=+r.pts;if(EV.d)EV.d.pts=S.evPts}else{S.bal=r2(S.bal-cost);updBal()}SFX.open();
-  const bc=$('#bigCrate .crate')||$('#bigCrate .caseimg');if(bc){bc.classList.add('shake');setTimeout(()=>bc.classList.remove('shake'),1100)}
+  const bc=$('#bigCrate .crate')||$('#bigCrate .caseimg')||$('#bigCrate .cp-art');if(bc){bc.classList.add('shake');setTimeout(()=>bc.classList.remove('shake'),1100)}
   const drops=(r.items||[]).map(toItem);
   const Wn=n>1?34:44,show=drops.slice(0,5);
   $('#rolls').innerHTML=show.map(d=>`<div class="roul${n>1?' compact':''}"><div class="track">${reelItems(c,d,Wn+6,Wn).map(x=>card(x,{fx:false,sm:n>1})).join('')}</div><i class="mark"></i></div>`).join('');
@@ -2945,11 +3141,11 @@ function openDeposit(){
     <span class="label">Способ</span><div class="methods">${METHODS.map(([t,d],i)=>`<button type="button" data-m="${i}" aria-pressed="${DEP.m===i}"><b>${t}</b><span>${d}</span></button>`).join('')}</div>
     <div class="rtp" id="depRtp"></div>
     <button class="btn acc" type="button" id="depGo" style="width:100%"></button>`;
-    const upd=()=>{const b=bonus(DEP.amt),ok=DEP.amt>=50&&DEP.amt<=(S.depLeft??50000);
+    const upd=()=>{const b=bonus(DEP.amt),ok=DEP.amt>=50&&DEP.amt<=(S.depLeft??S.depLimit??50000);
       $('#depRtp',sh).innerHTML=`<span>Зачислим${b?` <span class="pos">(+${b*100}% бонус)</span>`:''}</span><b class="pos">${fmt2(DEP.amt*(1+b))}</b>`;
-      const g=$('#depGo',sh);g.textContent=DEP.amt<50?'Минимум 50 ₽':DEP.amt>(S.depLeft??50000)?'Больше лимита':'Пополнить на '+fmt0(DEP.amt);g.disabled=!ok};
-    upd();$('#depAmt',sh).oninput=e=>{const v=parseInt(String(e.target.value).replace(/\D/g,''))||0;DEP.amt=Math.min(v,50000);$$('#amts button',sh).forEach(x=>x.setAttribute('aria-pressed',+x.dataset.a===DEP.amt));upd()}};
-  openModal(`<h3 style="font-size:20px">Пополнение баланса</h3><p class="mute" style="margin:0;font-size:14px">Деньги игровые, лимит 50 000 ₽ в час, чтобы никто не накручивал. Карты и банки не подключаются.</p><div id="depBody" style="display:flex;flex-direction:column;gap:12px"></div>`,sh=>{
+      const g=$('#depGo',sh);g.textContent=DEP.amt<50?'Минимум 50 ₽':DEP.amt>(S.depLeft??S.depLimit??50000)?'Больше лимита':'Пополнить на '+fmt0(DEP.amt);g.disabled=!ok};
+    upd();$('#depAmt',sh).oninput=e=>{const v=parseInt(String(e.target.value).replace(/\D/g,''))||0;DEP.amt=Math.min(v,S.depLimit||50000);$$('#amts button',sh).forEach(x=>x.setAttribute('aria-pressed',+x.dataset.a===DEP.amt));upd()}};
+  openModal(`<h3 style="font-size:20px">Пополнение баланса</h3><p class="mute" style="margin:0;font-size:14px">Деньги игровые, лимит ${fmt0n(S.depLimit||50000)} ₽ в час, чтобы никто не накручивал. Карты и банки не подключаются.</p><div id="depBody" style="display:flex;flex-direction:column;gap:12px"></div>`,sh=>{
     draw(sh);
     sh.onclick=(async e=>{
       const a=e.target.closest('[data-a]');if(a){DEP.amt=+a.dataset.a;SFX.click();draw(sh);return}
@@ -3418,7 +3614,7 @@ function drawAdmin(){
     <div class="adm-quick"><button class="btn acc" type="button" id="seedBtn">⬆ Загрузить кейсы</button><button class="btn acc" type="button" id="mktBtn">₽ Обновить цены</button><button class="btn ghost" type="button" id="evRestart">🎃 Ивент +7 дней</button><button class="btn ghost" type="button" data-go="forum">💬 Форум <b id="admForumN"></b></button></div>
     <div class="note adm-log" id="admLog" hidden></div>
     <div class="adm-top" id="admStats"></div>
-    <div class="seg adm-tabs" id="admTabs"><button type="button" data-t="online">Онлайн <b id="admOnN"></b></button><button type="button" data-t="players">Игроки <b id="admAllN"></b></button><button type="button" data-t="luck">Удача</button><button type="button" data-t="stats">📊 Статистика</button><button type="button" data-t="alerts">🔔 Оповещения <b id="admAlN"></b></button><button type="button" data-t="eco">Экономика</button></div>
+    <div class="seg adm-tabs" id="admTabs"><button type="button" data-t="online">Онлайн <b id="admOnN"></b></button><button type="button" data-t="players">Игроки <b id="admAllN"></b></button><button type="button" data-t="luck">Удача</button><button type="button" data-t="manage">⚙ Управление</button><button type="button" data-t="stats">📊 Статистика</button><button type="button" data-t="alerts">🔔 Оповещения <b id="admAlN"></b></button><button type="button" data-t="eco">Экономика</button></div>
     <div id="admAlerts"></div>
     <div id="admPane"></div></div>`;
     const log=t=>{const l=$('#admLog');l.hidden=false;l.textContent=t};
@@ -3453,6 +3649,8 @@ function drawAdmin(){
     const L=u.filter(x=>heatInfo(x).k!=='n').sort((a,b)=>(+b.heat||1)-(+a.heat||1));
     pane.innerHTML=`<div class="panel"><p class="mute" style="margin:0;font-size:14px">Сервер сам следит за каждым игроком: считает, сколько он выбил от потраченного за последние игры (старые игры постепенно забываются). Если человеку сильно прёт (возврат выше 150%), шансы на дорогой дроп и в апгрейде мягко остывают. Если долго не прёт (ниже 60%), чуть подкручиваются вверх. Ничего не надо нажимать.</p></div>
     ${L.length?`<div class="htable"><table><thead><tr><th>Игрок</th><th>Возврат</th><th>Баланс</th><th></th></tr></thead><tbody>${L.map(x=>`<tr data-uid="${esc(x.id)}"><td><b style="display:flex;align-items:center;gap:8px">${avaHTML(nkOf(x),colOf(x),x.ava,'sm')}${esc(nkOf(x))}</b></td><td>${heatChip(x)}</td><td class="mono">${fmt0(+x.bal)}</td><td><button class="btn ghost sm" type="button">Открыть</button></td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">Пока никто не наиграл достаточно (нужно потратить от 1 500 ₽)</div>'}`;bindOpen();
+  }else if(ADM.tab==='manage'){
+    if(first)mgPane(pane);
   }else if(ADM.tab==='stats'){
     if(first){pane.innerHTML=ADM.st?adminStatsHTML(ADM.st):'<div class="panel"><div class="spin"></div></div>';
       rpc('zb_admin_stats').then(d=>{ADM.st=d;if(cur==='admin'&&ADM.tab==='stats'){pane.innerHTML=adminStatsHTML(d);bindOpen()}}).catch(e=>toast(errMsg(e)))}
@@ -3732,6 +3930,7 @@ function profileHTML(P,isMe){
         <div class="pf-name"><h2>${esc(P.nick)}</h2><div class="pf-sub"><button class="lnk mono" type="button" data-copy="${P.pub}">ID: ${P.pub} ${IC3.copy}</button><span class="rank">${rank}</span>${isMe?'':statusTxt(P)}</div></div>
         <div class="pf-btns">${isMe?`<button class="btn line sm" type="button" data-go="custom">${IC3.brush} Редактировать</button>`:P.rel==='friend'?`<button class="btn acc sm" type="button" data-pdm="${P.uid}">Написать</button><button class="btn ghost sm" type="button" data-pch="1">${IC3.sword} Вызвать</button>`:P.rel==='in'?`<button class="btn acc sm" type="button" data-padd="${P.pub}">Принять заявку</button>`:P.rel==='out'?`<span class="chip">Заявка отправлена</span>`:`<button class="btn acc sm" type="button" data-padd="${P.pub}">${IC3.plus} Добавить в друзья</button>`}</div>
       </div>
+      ${typeof steamRowHTML==='function'?steamRowHTML(P,isMe):''}
       <div class="lvl"><div class="lvl-n" style="--p:${Math.round(L.cur/L.need*100)}"><b>${L.L}</b></div><div class="lvl-b"><div class="lvl-top"><span>Уровень ${L.L}</span><small>${L.cur.toLocaleString('ru-RU')} / ${L.need.toLocaleString('ru-RU')} XP</small></div><div class="bar"><i style="width:${(L.cur/L.need*100).toFixed(1)}%"></i></div></div></div>
       <div class="pstats"><div class="pstat">${PI.box}<div><small>Открыто кейсов</small><b>${(+P.opened||0).toLocaleString('ru-RU')}</b></div></div><div class="pstat">${PI.trophy}<div><small>Выиграно скинов</small><b>${(+P.won||0).toLocaleString('ru-RU')}</b></div></div><div class="pstat">${PI.coins}<div><small>Общая стоимость</small><b>${fmt0(+P.won_sum||0)}</b></div></div></div>
     </div>
@@ -4054,7 +4253,7 @@ const FAQ=[
   ['Что за «Флаппи»?','Мини-игра в разделе «Ещё». Лети сквозь трубы, приз растёт с каждой трубой, максимум 10 000 ₽ за игру. 8 попыток в час, до 30 000 ₽ в сутки.'],
   ['Админ видит, что я делаю?','Админ видит ник, почту, устройство, раздел сайта и действия на сайте (дропы, продажи, пополнения). Если админ включил демонстрацию экрана, он видит то же, что и ты на сайте (кейсы, апгрейды, битвы), а у тебя в углу горит значок 👁.'],
   ['Деньги настоящие?','Нет. Всё на фантиках: пополнение, вывод и скины игровые. Ни карты, ни Steam не подключаются, вывести реальные деньги или скины нельзя.'],
-  ['Как пополнить баланс?','Кнопка «+» возле баланса. Это игровое пополнение до 50 000 ₽ в час. Ещё есть ежедневный бонус, бомж-бонус, когда всё слил, и промокоды в «Халяве».'],
+  ['Как пополнить баланс?','Кнопка «+» возле баланса. Это игровое пополнение до лимита в час (его ставит админ, сейчас обычно 50 000 ₽). Ещё есть ежедневный бонус, бомж-бонус, когда всё слил, и промокоды в «Халяве».'],
   ['Почему мне то везёт, то нет?','Удача идёт полосами, как на настоящих кейс-сайтах: то густо, то пусто. Шансы на странице кейса показаны для обычной полосы. Всё считает сервер, подкрутить с телефона нельзя.'],
   ['Как работает апгрейд?','Ставишь до 6 скинов и (или) часть баланса, выбираешь скин дороже. Чем больше множитель, тем уже зелёная полоса на кольце. Максимальный шанс 75%.'],
   ['Как работают контракты?','Сдаёшь от 3 до 10 скинов и получаешь один: от четверти до четырёх стоимостей сданного.'],
@@ -4932,6 +5131,237 @@ try{UW.addEventListener('change',railSync)}catch(e){}
     NAVN=Math.max(0,NAVN-1);go(h,false);
   });
 })();
+
+/* ================= 1.6: КЕЙСЫ ПО НАБРОСКАМ ================= */
+function crate(c,o={}){
+  if(c.art)return `<div class="caseart ${o.size||''}${c.hero?' hero':''}" style="--c1:${c.col[0]}"><img src="${esc(c.art)}" alt="" ${o.size==='lg'?'':'loading="lazy" '}decoding="async" draggable="false"></div>`;
+  const h=CIMG[c.id];
+  if(h)return `<div class="caseimg off16 ${o.size||''}" style="--c1:${c.col[0]};--c2:${c.col[1]}"><i class="off-glow"></i><img ${imgAttr(h,o.size==='lg'?'512fx512f':'360fx360f','case')} alt="" ${o.size==='lg'?'':'loading="lazy" '}decoding="async" draggable="false"><i class="off-shine"></i></div>`;
+  const k=shapeOf(c),u='c'+(++CRID),top=o.item||c.top,s=SK[top];
+  return `<div class="crate cs ${o.size||''} k-${k}" style="--c1:${c.col[0]};--c2:${c.col[1]}">${s&&o.size!=='sm'?`<div class="cs-loot">${icon(s,false,{lazy:true,sm:true})}</div>`:''}${shapeSVG(k,c.col[0],c.col[1],u,c.emo)}</div>`;
+}
+const topSkins=(c,n=4)=>[...c.items].sort((a,b)=>expP(SK[b.n])-expP(SK[a.n])).slice(0,n);
+function caseTile(c){
+  const price=c.pts?`🎃 ${fmt0n(c.pts)} очков`:fmt0(c.price);
+  return `<button class="case-tile t16${c.art?' has-art':' no-art'}${c.sec==='cs2'?' off':''}" type="button" data-case="${c.id}" style="--c1:${c.col[0]};--c2:${c.col[1]}">
+    <span class="ct-art">${crate(c)}${c.badge?`<span class="badge">${esc(c.badge)}</span>`:''}</span><span class="ct-info"><b class="ct-n">${esc(c.name)}</b><span class="ct-p">${price}</span></span></button>`;
+}
+/* категории кейсов как на наброске: панели с иконкой */
+const CATI={base:'<svg viewBox="0 0 24 24"><path d="M12 2s5 4.5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3-1-5 1-8.5z"/></svg>',
+  theme:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/><path d="M3 12h2M19 12h2"/></svg>',
+  hw:'<svg viewBox="0 0 24 24"><ellipse cx="12" cy="13" rx="9" ry="7"/><path d="M12 6c0-2 1-3 3-3M8 12l2 1-2 1M16 12l-2 1 2 1M8 17q4 2 8 0"/></svg>',
+  rare:'<svg viewBox="0 0 24 24"><path d="M6 3h12l3 6-9 12L3 9z"/><path d="M3 9h18M9 3l3 6 3-6M12 9v12"/></svg>',
+  mascot:'<svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg>',
+  quick:'<svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>',
+  stream:'<svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/><circle cx="9.5" cy="12" r="2.5"/></svg>',
+  pop:'<svg viewBox="0 0 24 24"><path d="M3 18 2 7l5 4 5-7 5 7 5-4-1 11z"/></svg>',
+  official:'<svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5h6v2M3 12h18"/></svg>'};
+function catPanel(k,title,list,o={}){
+  if(!list.length)return '';
+  return `<section class="cat-panel${o.wide?' wide':''}${o.cls?' '+o.cls:''}"><div class="cat-h"><span class="cat-ic">${CATI[k]||CATI.theme}</span><h3>${title}</h3><small>${list.length} ${list.length%10===1&&list.length%100!==11?'кейс':list.length%10>=2&&list.length%10<=4&&(list.length%100<10||list.length%100>=20)?'кейса':'кейсов'}</small>${o.more?`<button class="lnk" type="button" data-go="${o.more}">Все →</button>`:''}</div><div class="tiles t16">${list.map(c=>caseTile(c)).join('')}</div></section>`;
+}
+function newTile(c){return caseTile(c)}
+
+/* ================= 1.6: ИВЕНТ ПО НАБРОСКАМ ================= */
+function evClock(){
+  const ms=Math.max(0,evEnd()-Date.now()),d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),m=Math.floor(ms%36e5/6e4),s=Math.floor(ms%6e4/1e3);
+  return [[d,'дней'],[h,'часов'],[m,'минут'],[s,'секунд']].map(([v,t])=>`<span><b>${String(v).padStart(2,'0')}</b><small>${t}</small></span>`).join('');
+}
+setInterval(()=>{const els=$$('[data-evclock]');if(els.length&&EV.d){const h=evClock();els.forEach(e=>e.innerHTML=h)}},1000);
+function evBannerHTML(){
+  const d=EV.d;if(!d)return '<div id="evBan"></div>';
+  return `<div id="evBan" class="ev16-ban">
+    <div class="ev16-ban-art"><img src="case-ev-banner.webp" alt="" decoding="async"></div>
+    <div class="ev16-ban-t"><span class="eyebrow">🎃 Ивент · 7 дней</span><h2 class="ev16-title">Хэллоуин:<span>Ночь Заноса</span></h2>
+      <p>Задания, кейсы, эксклюзивные аватары и ${CASES.filter(c=>c.sec==='hw').length} уникальных кейсов за очки. Успей получить все награды!</p>
+      <button class="btn acc lg" type="button" data-go="event">Перейти к ивенту →</button></div>
+    <div class="ev16-mini">
+      <button type="button" data-evgo="cases"><span>📦</span><b>Кейсы за очки</b><small>Зарабатывай очки</small></button>
+      <button type="button" data-evgo="shop"><span>🛍</span><b>Магазин</b><small>Обменяй на награды</small></button>
+      <button type="button" data-evgo="top"><span>👑</span><b>Топ</b><small>Лучшие игроки</small></button></div></div>`;
+}
+document.addEventListener('click',e=>{const b=e.target.closest?.('[data-evgo]');if(b){EV.tab=b.dataset.evgo;go('event')}});
+const EVQI={cases:'📦',hw:'🎃',contracts:'📜',knife:'🔪',big:'💎',up10:'⬆️',bwins:'⚔️',durak:'🃏',days:'📅',refs:'👥'};
+const evQGo=x=>({hw:'event',up10:'upgrade',bwins:'battle',durak:'battle',contracts:'contracts',refs:'friends',days:'home'})[x.k]||'cases';
+async function renderEvent(){
+  const v=$('#v-event');if(!EV.d)v.innerHTML='<div class="panel"><div class="spin"></div></div>';
+  const d=await loadEvent(true);if(cur!=='event')return;
+  if(!d){v.innerHTML='<div class="empty">Ивент не загрузился. Админу нужно выполнить новый SQL</div>';return}
+  const q=d.quests||[],done=q.filter(x=>x.claimed).length,allDone=done===q.length,ready=q.find(x=>!x.claimed&&x.have>=x.need);
+  const hw=CASES.filter(c=>c.sec==='hw'),tabs=[['quests','Задания'],['cases','Кейсы'],['shop','Магазин'],['top','Топ']];
+  const qRow=x=>{const ok=x.have>=x.need,icon=EVQI[String(x.k||'').split(':')[0]]||'🎃';
+    return `<div class="ev16-q${x.claimed?' done':ok?' ready':''}"><span class="ev16-qi">${icon}</span><div class="ev16-qt"><b>${esc(x.t)}</b><small>${fmt0n(Math.min(x.have,x.need))} / ${fmt0n(x.need)}</small><div class="ev-prog sm"><i style="width:${Math.min(100,x.have/x.need*100).toFixed(1)}%"></i></div></div><span class="ev16-qr">+${fmt0n(x.reward)} очков</span>${x.claimed?'<span class="ev16-ok">✓</span>':ok?`<button class="btn acc sm" type="button" data-claim="${x.id}">Забрать</button>`:`<button class="btn line sm" type="button" data-qgo="${evQGo(x)}">Перейти</button>`}</div>`};
+  const shopCats=[['all','Все'],['ava','Аватары'],['frame','Обводки'],['bg','Фоны']];EV.cat=EV.cat||'all';
+  const body=EV.tab==='quests'?`<div class="ev16-qs">${q.map(qRow).join('')}</div>
+      <div class="ev16-king${d.final_claimed?' done':allDone?' ready':''}"><span class="ev-fin-art">${frameWrap(avaHTML('',S.col,'ex:king'),'fr:king')}</span><div><b>Король Хэллоуина</b><small>Выполни все ${q.length} заданий: аватарка «Король» и королевская обводка. Купить нельзя.</small></div>${d.final_claimed?'<span class="ev16-ok">✓</span>':`<button class="btn acc sm" type="button" data-claim="all" ${allDone?'':'disabled'}>Забрать</button>`}</div>
+      <p class="mute" style="font-size:13px;margin:0">Очки капают за игру: 1 очко за каждые 100 ₽ в кейсах, апгрейдах и битвах, +2 за контракт. Это не деньги, их тратят только в ивенте.</p>`
+    :EV.tab==='cases'?`<p class="mute" style="margin:0;font-size:14px">Эти кейсы открываются только за очки ивента.</p><div class="tiles t16">${hw.map(c=>caseTile(c)).join('')}</div>${hlOn()&&CASES.some(c=>c.sec==='hl')?`<h3 class="ph3">Временные хэллоуинские кейсы</h3><div class="tiles t16">${CASES.filter(c=>c.sec==='hl').map(c=>caseTile(c)).join('')}</div>`:''}`
+    :EV.tab==='shop'?`<div class="ev16-shopbar"><span class="ev16-pk">🎃</span><b>Обменивай очки на уникальные награды!</b><div class="ev16-mypts"><small>Твои очки</small><b class="ev-pts">${fmt0n(d.pts)}</b></div></div>
+      <div class="seg ev16-cats" id="evCats">${shopCats.map(([k,t])=>`<button type="button" data-ec="${k}" aria-pressed="${EV.cat===k}">${t}</button>`).join('')}</div>
+      <div class="ev16-shop">${(d.items||[]).filter(i=>EV.cat==='all'||i.kind===EV.cat).map(i=>evItemHTML(i,d)).join('')}</div>
+      <label class="sw"><input type="checkbox" id="sbgT" ${ST3.sbg?'checked':''}>Ставить надетый фон на весь сайт, а не только в профиль</label>`
+    :`<div class="ev-top">${(d.top||[]).map((x,i)=>`<button type="button" class="ev-top-r" data-go="u-${x.pub}"><span class="ev-pl">${i+1}</span>${frameWrap(avaHTML(x.nick,x.col,x.ava,'sm'),x.frame)}<b>${esc(x.nick)}</b><span class="mono">${fmt0n(x.pts)}</span></button>`).join('')||'<div class="mute">Пока никто не набрал очков. Будь первым</div>'}</div><p class="mute" style="margin:0">Ты на <b>${d.place}</b> месте, заработано всего ${fmt0n(d.total)} очков</p>`;
+  v.innerHTML=`<div class="ev16-head"><img class="ev16-head-art" src="case-ev-head.webp" alt=""><div class="ev16-head-in"><button class="back" type="button" data-go="home">←</button><h1 class="ev16-title sm">Хэллоуин: <span>Ночь Заноса</span></h1>
+      <div class="ev16-clock-w"><small>До конца ивента</small><div class="ev16-clock" data-evclock>${evClock()}</div></div></div></div>
+    <div class="ev16-prog"><span class="ev16-pk">🎃</span><div class="ev16-pt"><div class="ev16-pt-h"><b>Твой прогресс</b><span>${done} / ${q.length}</span></div><div class="ev-prog"><i style="width:${Math.round(done/q.length*100)||0}%"></i></div><small class="mute">У тебя <b class="ev-pts">${fmt0n(d.pts)}</b> очков · место #${d.place}</small></div>
+      <button class="btn acc" type="button" id="evTake" ${ready||(allDone&&!d.final_claimed)?'':'disabled'}>Забрать награду</button></div>
+    <div class="seg ev-tabs ev16-tabs" id="evTabs">${tabs.map(([k,t])=>`<button type="button" data-et="${k}" aria-pressed="${EV.tab===k}">${t}</button>`).join('')}</div>
+    <div class="ev-body ev16-body">${body}</div>
+    <div class="og-tease"><div class="og-noise"></div><span class="og-tag">СКОРО</span><b>OG 2015</b><span>Старые добрые скины CS:GO, ностальгия и кое-что ещё. Следующий ивент начнётся после Хэллоуина.</span><div class="og-skins">${['AK-47 | Vulcan','AWP | Asiimov','M4A4 | Howl','★ Karambit | Fade','Desert Eagle | Blaze'].filter(n=>SK[n]).map(n=>`<span>${icon(SK[n],false,{lazy:true})}</span>`).join('')}</div></div>`;
+  $('#evTabs').onclick=e=>{const b=e.target.closest('[data-et]');if(b){EV.tab=b.dataset.et;SFX.click();renderEvent()}};
+  const cats=$('#evCats');if(cats)cats.onclick=e=>{const b=e.target.closest('[data-ec]');if(b){EV.cat=b.dataset.ec;SFX.click();renderEvent()}};
+  const claim=async(id,btn)=>{if(btn)btn.disabled=true;try{EV.d=await rpc('zb_ev_claim',{p_q:id});S.evPts=+EV.d.pts;SFX.cash();confetti(['#ff7a12','#9aff3a','#fff','#7a3cff']);toast(id==='all'?'Ты Король Хэллоуина!':'Очки зачислены');renderEvent();refreshState()}catch(err){toast(errMsg(err));if(btn)btn.disabled=false}};
+  $('#evTake').onclick=e=>{if(ready)claim(ready.id,e.currentTarget);else claim('all',e.currentTarget)};
+  v.querySelector('.ev16-body').onclick=async e=>{
+    const g=e.target.closest('[data-qgo]');if(g){if(g.dataset.qgo==='event'){EV.tab='cases';renderEvent()}else go(g.dataset.qgo);return}
+    const c=e.target.closest('[data-claim]');if(c){claim(c.dataset.claim,c);return}
+    const b=e.target.closest('[data-buy]');if(b){b.disabled=true;try{EV.d=await rpc('zb_ev_buy',{p_item:b.dataset.buy});SFX.cash();toast('Куплено');await refreshState();renderEvent()}catch(err){toast(errMsg(err));b.disabled=false}return}
+    const w=e.target.closest('[data-wear]');if(w){const id=w.dataset.wear,isF=id.startsWith('fr:');const fr=isF?(S.frame===id?null:id):S.frame,bg=isF?S.pbg:(S.pbg===id?null:id);
+      try{applyState(await rpc('zb_set_look',{p_frame:fr,p_pbg:bg}));SFX.click();renderEvent()}catch(err){toast(errMsg(err))}return}
+    const a=e.target.closest('[data-ava-ex]');if(a){try{applyState(await rpc('zb_set_ava',{p_ava:a.dataset.avaEx}));SFX.click();toast('Аватар обновлён');renderEvent()}catch(err){toast(errMsg(err))}return}
+  };
+  const sb_=$('#sbgT');if(sb_)sb_.onchange=e=>{ST3.sbg=e.target.checked;save3();siteBg()};
+}
+VIEWS.event=renderEvent;
+function evItemHTML(it,d){
+  const own=(d.owned||[]).includes(it.id);
+  const pv=it.kind==='ava'?avaHTML('',S.col,it.id):it.kind==='frame'?frameWrap(avaHTML(S.nick,S.col,S.ava),it.id):`<span class="ev-bgprev">${pbgHTML(it.id)}</span>`;
+  const kind={ava:'Аватар',frame:'Обводка',bg:'Фон'}[it.kind]||'';
+  return `<div class="ev16-it${own?' own':''}"><div class="ev16-it-pv k-${it.kind}">${pv}</div><b>${kind} «${esc(it.t)}»</b><small class="ev16-price">🎃 ${fmt0n(it.price)} очков</small>${own?(it.kind!=='ava'?`<button class="btn ghost sm" type="button" data-wear="${esc(it.id)}">${(it.kind==='frame'?S.frame:S.pbg)===it.id?'Снять':'Надеть'}</button>`:`<button class="btn ghost sm" type="button" data-ava-ex="${esc(it.id)}">${S.ava===it.id?'Надета':'Поставить'}</button>`):`<button class="btn acc sm" type="button" data-buy="${esc(it.id)}" ${d.pts<it.price||!d.shop?'disabled':''}>Купить</button>`}</div>`;
+}
+
+/* ================= 1.5.1 ================= */
+/* Steam прямо в шапке профиля */
+function steamRowHTML(P,isMe){
+  const st=isMe?S.steam:P.steam;
+  if(!st)return isMe?`<div class="pf-steam none"><span class="stm-ic">${STEAM_ICO}</span><span>Steam не привязан</span><button class="btn line sm" type="button" data-stlink="1">Привязать Steam</button></div>`:'';
+  return `<div class="pf-steam"><span class="pf-steam-ava">${st.ava?`<img src="${esc(st.ava)}" alt="" referrerpolicy="no-referrer">`:STEAM_ICO}</span><div class="pf-steam-t"><small>Steam</small><b>${esc(st.nick||'Аккаунт Steam')}</b></div>
+    <button class="btn acc sm" type="button" data-stinv="${P.pub}" data-stnick="${esc(st.nick||'Steam')}">${STEAM_ICO} Инвентарь Steam</button>${st.id?`<a class="btn ghost sm" href="https://steamcommunity.com/profiles/${encodeURIComponent(st.id)}" target="_blank" rel="noopener noreferrer">Профиль Steam ↗</a>`:''}</div>`;
+}
+document.addEventListener('click',e=>{
+  const i=e.target.closest?.('[data-stinv]');if(i){steamInv(+i.dataset.stinv,i.dataset.stnick);return}
+  const l=e.target.closest?.('[data-stlink]');if(l){openModal(`<h3 style="font-size:20px">Привязать Steam</h3>${steamInfoHTML()}<button class="btn acc" type="button" id="stmOk" style="width:100%">${STEAM_ICO} Войти через Steam</button>`,sh=>{$('#stmOk',sh).onclick=steamLogin})}
+});
+
+/* объявление для всех от админа */
+function annSync(){
+  let el=$('#annBar');const a=ANNOUNCE;
+  if(!a||!a.t||(a.until&&a.until-clockSkew<Date.now())){el?.remove();return}
+  const key='ann:'+a.t;let hidden=false;try{hidden=sessionStorage.getItem('zb-ann')===key}catch(e){}
+  if(hidden){el?.remove();return}
+  if(!el){const lb=$('#liveBar');(lb||$('header.hdr')).insertAdjacentHTML('afterend','<div id="annBar" class="ann-bar" role="status"></div>');el=$('#annBar')}
+  el.innerHTML=`<span>📢</span><b>${esc(a.t)}</b><button class="icbtn" type="button" aria-label="Скрыть">×</button>`;
+  el.querySelector('button').onclick=()=>{try{sessionStorage.setItem('zb-ann',key)}catch(e){}el.remove()};
+}
+
+/* порядок кейсов и выключенные кейсы */
+const sortCases=list=>list.map((c,i)=>[c,i]).sort((a,b)=>((a[0].sort??1e6)-(b[0].sort??1e6))||a[1]-b[1]).map(x=>x[0]);
+{const cp=catPanel;catPanel=function(k,title,list,o){return cp(k,title,sortCases(list),o)}}
+{const ct=caseTile;caseTile=function(c){let h=ct(c);if(c.off){h=h.replace('class="case-tile t16','class="case-tile t16 is-off').replace('<span class="ct-info">',`<span class="ct-offtag">⛔ Недоступен${c.off.reason?`<small>${esc(c.off.reason)}</small>`:''}${c.off.until?`<small>до ${new Date(c.off.until-clockSkew).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}</small>`:''}</span><span class="ct-info">`)}return h}}
+
+/* ================= АДМИНКА: ПОЛНОЕ УПРАВЛЕНИЕ ================= */
+const MG={tab:'cases',q:'',sq:''};
+const SEC_NAMES={new:'Базовые',pop:'Популярные',theme:'Тематические',lux:'Редкие',mult:'Маскоты',stream:'Стрим',quick:'Быстрые',z:'Кейсы Занос',hl:'Halloween (временные)',hw:'Хэллоуин за очки',cs2:'Официальные CS2'};
+const DUR=[[30,'30 мин'],[60,'1 час'],[360,'6 часов'],[1440,'1 день'],[10080,'неделя'],[0,'пока не верну']];
+const durSeg=(id,cur_)=>`<div class="seg mg-dur" id="${id}">${DUR.map(([m,t])=>`<button type="button" data-m="${m}" aria-pressed="${cur_===m}">${t}</button>`).join('')}</div>`;
+async function mgApply(cat){if(!cat)return;rebuildEconomy();applyCatalog(cat)}
+function mgPane(pane){
+  const tabs=[['cases','📦 Кейсы'],['skins','🔫 Скины'],['event','🎃 Ивент'],['ann','📢 Объявление'],['set','⚙ Настройки']];
+  pane.innerHTML=`<div class="seg mg-tabs" id="mgTabs">${tabs.map(([k,t])=>`<button type="button" data-mt="${k}" aria-pressed="${MG.tab===k}">${t}</button>`).join('')}</div><div id="mgBody"></div>`;
+  $('#mgTabs',pane).onclick=e=>{const b=e.target.closest('[data-mt]');if(!b)return;MG.tab=b.dataset.mt;mgPane(pane)};
+  const body=$('#mgBody',pane);
+  if(MG.tab==='cases'){
+    const secs=Object.keys(SEC_NAMES);
+    const draw=()=>{const q=MG.q.trim().toLowerCase();
+      body.innerHTML=`<input class="inp" id="mgQ" type="search" placeholder="Найти кейс…" value="${esc(MG.q)}"><p class="mute" style="margin:0;font-size:13px">Нажми на кейс: выключить с причиной и сроком, поменять цену, название, категорию, место и шансы скинов. Всё сохраняется на сервере и не слетает при «Загрузить кейсы» и «Обновить цены».</p>
+        ${secs.map(sc=>{const l=sortCases(CASES.filter(c=>c.sec===sc&&(!q||c.name.toLowerCase().includes(q)||c.id.includes(q))));if(!l.length)return '';
+          return `<div class="mg-sec"><h4>${SEC_NAMES[sc]} <small class="mute">${l.length}</small></h4>${l.map((c,i)=>`<div class="mg-row${c.off?' off':''}" data-mc="${esc(c.id)}"><span class="mg-thumb">${crate(c,{size:'sm'})}</span><span class="mg-t"><b>${esc(c.name)}</b><small>${c.pts?fmt0n(c.pts)+' очков':fmt0(c.price)}${c.manual?' · шансы вручную':''}${c.off?' · ⛔ выключен':''}</small></span><span class="mg-ord"><button class="icbtn" type="button" data-up="${esc(c.id)}" aria-label="Выше" ${i?'':'disabled'}>▲</button><button class="icbtn" type="button" data-dn="${esc(c.id)}" aria-label="Ниже" ${i<l.length-1?'':'disabled'}>▼</button></span></div>`).join('')}</div>`}).join('')}`;
+      const qi=$('#mgQ',body);qi.oninput=()=>{MG.q=qi.value;const pos=qi.selectionStart;draw();const n=$('#mgQ',body);n.focus();n.setSelectionRange(pos,pos)};
+    };
+    draw();
+    body.onclick=async e=>{
+      const mv=e.target.closest('[data-up],[data-dn]');if(mv){e.stopPropagation();const id=mv.dataset.up||mv.dataset.dn,c=CBY[id];const l=sortCases(CASES.filter(x=>x.sec===c.sec));const i=l.indexOf(c),j=mv.dataset.up?i-1:i+1;if(j<0||j>=l.length)return;
+        [l[i],l[j]]=[l[j],l[i]];mv.disabled=true;try{let cat;for(let k=0;k<l.length;k++)if(l[k].sort!==k*10)cat=await rpc('zb_admin_case',{p_case:l[k].id,p_data:{sort:k*10}});await mgApply(cat);draw();toast('Порядок сохранён')}catch(err){toast(errMsg(err))}return}
+      const r=e.target.closest('[data-mc]');if(r)mgCase(CBY[r.dataset.mc],()=>draw());
+    };
+  }else if(MG.tab==='skins'){
+    const draw=()=>{const q=MG.sq.trim().toLowerCase();const found=q.length>1?Object.values(SK).filter(s=>s.name.toLowerCase().includes(q)||ruName(s).join(' ').toLowerCase().includes(q)).slice(0,30):[];
+      body.innerHTML=`<div class="panel"><h3 class="ph3">Убранные скины</h3>${SKIN_OFF.size?[...SKIN_OFF].map(([n,o])=>`<div class="mg-row off"><span class="mg-thumb">${SK[n]?icon(SK[n],false,{sm:true}):''}</span><span class="mg-t"><b>${esc(n)}</b><small>${o.reason?esc(o.reason)+' · ':''}${o.until?'до '+new Date(o.until-clockSkew).toLocaleString('ru-RU'):'пока не вернёшь'}</small></span><button class="btn ghost sm" type="button" data-son="${esc(n)}">Вернуть</button></div>`).join(''):'<div class="mute">Все скины на месте</div>'}</div>
+        <div class="panel"><h3 class="ph3">Убрать скин из всех кейсов</h3><input class="inp" id="mgSQ" type="search" placeholder="AWP Dragon Lore, Керамбит…" value="${esc(MG.sq)}" autocomplete="off">
+        <div class="adm-sk">${found.map(s=>`<button type="button" class="adm-skr" data-soff="${esc(s.name)}"><span class="adm-pi">${icon(s,false,{sm:true})}</span><span class="t">${esc(s.name)}</span><span class="mono">${SKIN_OFF.has(s.name)?'убран':fmt0(s.base)}</span></button>`).join('')||(q.length>1?'<div class="mute">Ничего не нашлось</div>':'')}</div>
+        <small class="mute">Убранный скин не выпадает ни из одного кейса и не берётся целью в апгрейде. Те, у кого он уже есть, его не теряют.</small></div>`;
+      const qi=$('#mgSQ',body);qi.oninput=()=>{MG.sq=qi.value;const pos=qi.selectionStart;draw();const n=$('#mgSQ',body);n.focus();n.setSelectionRange(pos,pos)};
+    };
+    draw();
+    body.onclick=async e=>{
+      const on=e.target.closest('[data-son]');if(on){on.disabled=true;try{await mgApply(await rpc('zb_admin_skin',{p_skin:on.dataset.son,p_off:false}));toast('Скин вернулся в кейсы');draw()}catch(err){toast(errMsg(err))}return}
+      const off=e.target.closest('[data-soff]');if(off){const n=off.dataset.soff;let m=0;
+        openModal(`<h3 style="font-size:19px">Убрать скин</h3><b>${esc(n)}</b><label class="label" for="mgR">Причина (видят все)</label><input class="inp" id="mgR" maxlength="200" placeholder="Например: слишком часто падал"><span class="label">На сколько</span>${durSeg('mgD',0)}<button class="btn red" type="button" id="mgGo" style="width:100%">Убрать из всех кейсов</button>`,sh=>{
+          $('#mgD',sh).onclick=ev=>{const b=ev.target.closest('[data-m]');if(!b)return;m=+b.dataset.m;$$('#mgD button',sh).forEach(x=>x.setAttribute('aria-pressed',x===b))};
+          $('#mgGo',sh).onclick=async ev=>{const _b=ev.currentTarget;_b.disabled=true;try{await mgApply(await rpc('zb_admin_skin',{p_skin:n,p_off:true,p_minutes:m||null,p_reason:$('#mgR',sh).value}));closeModal();toast('Скин убран');MG.tab='skins'}catch(err){toast(errMsg(err));_b.disabled=false}}})}
+    };
+  }else if(MG.tab==='event'){
+    const end=EV.d?evEnd():0;
+    body.innerHTML=`<div class="panel"><h3 class="ph3">Ивент «Хэллоуин»</h3><p style="margin:0">Сейчас: <b>${EV.d?(EV.d.on?'идёт':'закончился'):'не загружен'}</b>${end?` · конец ${new Date(end).toLocaleString('ru-RU')} (<span data-evleft>${evLeft(end-Date.now())}</span>)`:''}</p>
+      <div class="mg-grid"><button class="btn ghost" type="button" data-ev="-1440">−1 день</button><button class="btn ghost" type="button" data-ev="-60">−1 час</button><button class="btn ghost" type="button" data-ev="60">+1 час</button><button class="btn ghost" type="button" data-ev="1440">+1 день</button></div>
+      <div class="row"><button class="btn acc" type="button" data-evr="7">Перезапустить на 7 дней</button><button class="btn red" type="button" data-eve="1">Закончить сейчас</button></div>
+      <small class="mute">Когда ивент закончится, временные хэллоуинские кейсы пропадут, а магазин ещё будет открыт по правилам ивента.</small></div>`;
+    body.onclick=async e=>{const b=e.target.closest('[data-ev],[data-evr],[data-eve]');if(!b)return;
+      if(b.dataset.eve&&b.dataset.arm!=='1'){b.dataset.arm='1';b.textContent='Точно закончить?';return}
+      b.disabled=true;try{EV.d=b.dataset.ev?await rpc('zb_admin_event_set',{p_act:'shift',p_minutes:+b.dataset.ev}):b.dataset.evr?await rpc('zb_admin_event_set',{p_act:'restart',p_minutes:+b.dataset.evr}):await rpc('zb_admin_event_set',{p_act:'end',p_minutes:0});EV.at=Date.now();toast('Ивент обновлён');mgPane(pane)}catch(err){toast(errMsg(err));b.disabled=false}};
+  }else if(MG.tab==='ann'){
+    let m=60;
+    body.innerHTML=`<div class="panel"><h3 class="ph3">Объявление для всех игроков</h3><p class="mute" style="margin:0;font-size:13px">Полоска сверху сайта у всех. Например: «Техработы в 22:00» или «Кейс Мумия выключен до вечера».</p>
+      ${ANNOUNCE?`<div class="ann-bar static"><span>📢</span><b>${esc(ANNOUNCE.t)}</b></div>`:''}
+      <textarea class="inp" id="anT" rows="2" maxlength="300" placeholder="Текст объявления">${esc(ANNOUNCE?.t||'')}</textarea><span class="label">Сколько показывать</span>${durSeg('anD',60)}
+      <div class="row"><button class="btn acc" type="button" id="anGo">Показать всем</button>${ANNOUNCE?'<button class="btn ghost" type="button" id="anOff">Убрать</button>':''}</div></div>`;
+    $('#anD',body).onclick=e=>{const b=e.target.closest('[data-m]');if(!b)return;m=+b.dataset.m;$$('#anD button',body).forEach(x=>x.setAttribute('aria-pressed',x===b))};
+    const send=async(t,btn)=>{btn.disabled=true;try{const r=await rpc('zb_admin_setting',{p_k:'announce',p_v:t,p_minutes:t?(m||null):null});await mgApply(r.catalog);try{sessionStorage.removeItem('zb-ann')}catch(e){}annSync();toast(t?'Объявление показано всем':'Объявление убрано');mgPane(pane)}catch(err){toast(errMsg(err));btn.disabled=false}};
+    $('#anGo',body).onclick=e=>{const t=$('#anT',body).value.trim();if(!t){toast('Напиши текст');return}send(t,e.currentTarget)};
+    const o=$('#anOff',body);if(o)o.onclick=e=>send('',e.currentTarget);
+  }else{
+    body.innerHTML=`<div class="panel"><h3 class="ph3">Лимит игрового пополнения</h3><p class="mute" style="margin:0;font-size:13px">Сколько игрок может пополнить за час</p><div class="row"><input class="inp" id="stDep" type="number" min="100" step="1000" value="${S.depLimit||50000}" style="max-width:220px"><button class="btn acc" type="button" id="stDepGo">Сохранить</button></div></div>
+      <div class="panel"><h3 class="ph3">Удача игроков</h3><p class="mute" style="margin:0;font-size:13px">Ставится у каждого игрока отдельно: открой игрока во вкладке «Игроки» → «Удача игрока».</p></div>`;
+    $('#stDepGo',body).onclick=async e=>{const _b=e.currentTarget;const v=String(Math.round(+$('#stDep',body).value||0));_b.disabled=true;try{const r=await rpc('zb_admin_setting',{p_k:'dep_limit',p_v:v});S.depLimit=+r.dep_limit;toast('Лимит: '+fmt0(+r.dep_limit)+' в час');refreshState()}catch(err){toast(errMsg(err))}_b.disabled=false};
+  }
+}
+function mgCase(c,done){
+  if(!c)return;
+  const st={off:!!c.off,m:0,items:[...c.items].sort((a,b)=>expP(SK[b.n])-expP(SK[a.n])).map(x=>({n:x.n,p:+(x.w*100).toPrecision(5)})),q:''};
+  const sum=()=>st.items.reduce((a,x)=>a+(+x.p||0),0);
+  openModal(`<div class="mg-case"><div class="frow big"><span class="mg-thumb lg">${crate(c,{size:'sm'})}</span><div class="fr-t"><b>${esc(c.name)}</b><small>id: ${esc(c.id)} · ${SEC_NAMES[c.sec]||c.sec}</small></div></div>
+    <div class="seg" id="mcT"><button type="button" data-t="main" aria-pressed="true">Основное</button><button type="button" data-t="odds" aria-pressed="false">Шансы скинов</button><button type="button" data-t="off" aria-pressed="false">${c.off?'⛔ Выключен':'Выключить'}</button></div><div id="mcB"></div></div>`,sh=>{
+    const B=$('#mcB',sh);
+    const tab=t=>{$$('#mcT button',sh).forEach(x=>x.setAttribute('aria-pressed',x.dataset.t===t));
+      if(t==='main'){B.innerHTML=`<label class="label" for="mcN">Название</label><input class="inp" id="mcN" maxlength="40" value="${esc(c.name)}">
+        <label class="label" for="mcBd">Плашка на кейсе (пусто — без плашки)</label><input class="inp" id="mcBd" maxlength="20" value="${esc(c.badge||'')}" placeholder="Хит, Новый, -50%…">
+        <label class="label" for="mcS">Категория</label><select class="inp" id="mcS">${Object.entries(SEC_NAMES).map(([k,v])=>`<option value="${k}" ${c.sec===k?'selected':''}>${v}</option>`).join('')}</select>
+        ${c.pts?'':`<label class="label" for="mcP">Цена, ₽ (шансы сервер подстроит сам под эту цену)</label><input class="inp" id="mcP" type="number" min="1" step="1" value="${c.price}">`}
+        <button class="btn acc" type="button" id="mcSave" style="width:100%">Сохранить</button>`;
+        $('#mcSave',sh).onclick=async e=>{const _b=e.currentTarget;_b.disabled=true;const d={name:$('#mcN',sh).value.trim(),badge:$('#mcBd',sh).value.trim(),sec:$('#mcS',sh).value};const pi=$('#mcP',sh);if(pi&&+pi.value!==c.price)d.price=String(+pi.value);
+          try{await mgApply(await rpc('zb_admin_case',{p_case:c.id,p_data:d}));toast('Сохранено');closeModal();done&&done()}catch(err){toast(errMsg(err));_b.disabled=false}};
+      }else if(t==='odds'){
+        const draw=()=>{const s_=sum(),q=st.q.trim().toLowerCase(),add=q.length>1?Object.values(SK).filter(s=>!st.items.some(x=>x.n===s.name)&&(s.name.toLowerCase().includes(q)||ruName(s).join(' ').toLowerCase().includes(q))).slice(0,12):[];
+          B.innerHTML=`<p class="mute" style="margin:0;font-size:13px">Шанс каждого скина в процентах. Сумма сама приведётся к 100%. Сейчас сумма: <b>${s_.toFixed(2)}%</b>. Возврат кейса: <b>${Math.round(st.items.reduce((a,x)=>a+(x.p/s_)*expP(SK[x.n]),0)/(c.price||1)*100)||0}%</b></p>
+          <div class="mg-odds">${st.items.map((x,i)=>`<div class="mg-o r-${SK[x.n]?.rar}"><span class="mg-pi">${SK[x.n]?icon(SK[x.n],false,{sm:true}):''}</span><span class="mg-t"><b>${esc(x.n)}</b><small>${fmt0(expP(SK[x.n]))}${SKIN_OFF.has(x.n)?' · убран':''}</small></span><input class="inp" type="number" min="0" step="any" value="${x.p}" data-oi="${i}" aria-label="Шанс, %"><span>%</span><button class="icbtn" type="button" data-ox="${i}" aria-label="Убрать из кейса">×</button></div>`).join('')}</div>
+          <input class="inp" id="mcAdd" type="search" placeholder="Добавить скин в кейс…" value="${esc(st.q)}" autocomplete="off"><div class="adm-sk">${add.map(s=>`<button type="button" class="adm-skr" data-oa="${esc(s.name)}"><span class="adm-pi">${icon(s,false,{sm:true})}</span><span class="t">${esc(s.name)}</span><span class="mono">${fmt0(s.base)}</span></button>`).join('')}</div>
+          <div class="row"><button class="btn acc" type="button" id="mcOS">Сохранить шансы</button>${c.manual?'<button class="btn ghost" type="button" id="mcOA">Вернуть авто-шансы</button>':''}</div>`;
+          B.oninput=e=>{const i=e.target.dataset.oi;if(i!=null){st.items[+i].p=+e.target.value||0;const p=B.querySelector('p b');if(p)p.textContent=sum().toFixed(2)+'%'}if(e.target.id==='mcAdd'){st.q=e.target.value;const pos=e.target.selectionStart;draw();const n=$('#mcAdd',sh);n.focus();n.setSelectionRange(pos,pos)}};
+          B.onclick=async e=>{const x=e.target.closest('[data-ox]');if(x){if(st.items.length<2){toast('Хотя бы один скин должен остаться');return}st.items.splice(+x.dataset.ox,1);draw();return}
+            const a=e.target.closest('[data-oa]');if(a){st.items.push({n:a.dataset.oa,p:1});st.q='';draw();return}
+            if(e.target.id==='mcOS'){const b=e.target;b.disabled=true;try{await mgApply(await rpc('zb_admin_case',{p_case:c.id,p_data:{items:st.items.filter(x=>x.p>0).map(x=>[x.n,x.p])}}));toast('Шансы сохранены');closeModal();done&&done()}catch(err){toast(errMsg(err));b.disabled=false}}
+            if(e.target.id==='mcOA'){const b=e.target;b.disabled=true;try{await mgApply(await rpc('zb_admin_case',{p_case:c.id,p_data:{auto:true}}));toast('Шансы снова считает сервер. Нажми «Обновить цены», чтобы пересчитать');closeModal();done&&done()}catch(err){toast(errMsg(err));b.disabled=false}}};
+        };draw();
+      }else{
+        B.innerHTML=c.off?`<div class="note bad">Кейс выключен${c.off.reason?': '+esc(c.off.reason):''}${c.off.until?' до '+new Date(c.off.until-clockSkew).toLocaleString('ru-RU'):' пока не вернёшь'}</div><button class="btn acc" type="button" id="mcOn" style="width:100%">Включить кейс обратно</button>`
+          :`<label class="label" for="mcR">Причина (её видят все игроки)</label><input class="inp" id="mcR" maxlength="200" placeholder="Например: чиню шансы, вернётся вечером"><span class="label">На сколько</span>${durSeg('mcD',0)}<button class="btn red" type="button" id="mcOff" style="width:100%">Выключить кейс</button><small class="mute">Кейс останется на сайте серым с причиной, открыть его и взять в битву будет нельзя.</small>`;
+        const d=$('#mcD',sh);if(d)d.onclick=e=>{const b=e.target.closest('[data-m]');if(!b)return;st.m=+b.dataset.m;$$('#mcD button',sh).forEach(x=>x.setAttribute('aria-pressed',x===b))};
+        const off=$('#mcOff',sh);if(off)off.onclick=async e=>{const _b=e.currentTarget;_b.disabled=true;try{await mgApply(await rpc('zb_admin_case',{p_case:c.id,p_data:{off:true,minutes:st.m||null,reason:$('#mcR',sh).value.trim()}}));toast('Кейс выключен');closeModal();done&&done()}catch(err){toast(errMsg(err));_b.disabled=false}};
+        const on=$('#mcOn',sh);if(on)on.onclick=async e=>{const _b=e.currentTarget;_b.disabled=true;try{await mgApply(await rpc('zb_admin_case',{p_case:c.id,p_data:{off:false}}));toast('Кейс снова работает');closeModal();done&&done()}catch(err){toast(errMsg(err));_b.disabled=false}};
+      }};
+    $('#mcT',sh).onclick=e=>{const b=e.target.closest('[data-t]');if(b)tab(b.dataset.t)};tab('main');
+  });
+}
 
 userUI();
 if(!sb)authScreen('nocfg');
