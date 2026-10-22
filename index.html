@@ -2622,16 +2622,16 @@ let DEP={amt:1000,m:0};
 function openDeposit(){
   const bonus=a=>a>=5000?.15:a>=2000?.1:a>=1000?.05:0;
   const draw=sh=>{const b=bonus(DEP.amt);
-    $('#depBody',sh).innerHTML=`<div class="amts" id="amts">${[1000,5000,10000,25000,50000,100000,250000,650000].map(a=>`<button type="button" data-a="${a}" aria-pressed="${DEP.amt===a}">${a.toLocaleString('ru-RU')}</button>`).join('')}</div>
-    <div class="dep-custom"><input class="inp mono" id="depAmt" inputmode="numeric" placeholder="Своя сумма" value="${DEP.amt}"><small class="mute">Можно ещё: <b>${fmt0(S.depLeft??650000)}</b> за 12 часов</small></div>
+    $('#depBody',sh).innerHTML=`<div class="amts" id="amts">${[500,1000,2000,5000,10000,20000,30000,50000].map(a=>`<button type="button" data-a="${a}" aria-pressed="${DEP.amt===a}">${a.toLocaleString('ru-RU')}</button>`).join('')}</div>
+    <div class="dep-custom"><input class="inp mono" id="depAmt" inputmode="numeric" placeholder="Своя сумма" value="${DEP.amt}"><small class="mute">Можно ещё: <b>${fmt0(S.depLeft??50000)}</b> в этот час</small></div>
     <span class="label">Способ</span><div class="methods">${METHODS.map(([t,d],i)=>`<button type="button" data-m="${i}" aria-pressed="${DEP.m===i}"><b>${t}</b><span>${d}</span></button>`).join('')}</div>
     <div class="rtp" id="depRtp"></div>
     <button class="btn acc" type="button" id="depGo" style="width:100%"></button>`;
-    const upd=()=>{const b=bonus(DEP.amt),ok=DEP.amt>=50&&DEP.amt<=(S.depLeft??650000);
+    const upd=()=>{const b=bonus(DEP.amt),ok=DEP.amt>=50&&DEP.amt<=(S.depLeft??50000);
       $('#depRtp',sh).innerHTML=`<span>Зачислим${b?` <span class="pos">(+${b*100}% бонус)</span>`:''}</span><b class="pos">${fmt2(DEP.amt*(1+b))}</b>`;
-      const g=$('#depGo',sh);g.textContent=DEP.amt<50?'Минимум 50 ₽':DEP.amt>(S.depLeft??650000)?'Больше лимита':'Пополнить на '+fmt0(DEP.amt);g.disabled=!ok};
-    upd();$('#depAmt',sh).oninput=e=>{const v=parseInt(String(e.target.value).replace(/\D/g,''))||0;DEP.amt=Math.min(v,650000);$$('#amts button',sh).forEach(x=>x.setAttribute('aria-pressed',+x.dataset.a===DEP.amt));upd()}};
-  openModal(`<h3 style="font-size:20px">Пополнение баланса</h3><p class="mute" style="margin:0;font-size:14px">Деньги игровые, лимит 650 000 ₽ за 12 часов, чтобы никто не накручивал. Карты и банки не подключаются.</p><div id="depBody" style="display:flex;flex-direction:column;gap:12px"></div>`,sh=>{
+      const g=$('#depGo',sh);g.textContent=DEP.amt<50?'Минимум 50 ₽':DEP.amt>(S.depLeft??50000)?'Больше лимита':'Пополнить на '+fmt0(DEP.amt);g.disabled=!ok};
+    upd();$('#depAmt',sh).oninput=e=>{const v=parseInt(String(e.target.value).replace(/\D/g,''))||0;DEP.amt=Math.min(v,50000);$$('#amts button',sh).forEach(x=>x.setAttribute('aria-pressed',+x.dataset.a===DEP.amt));upd()}};
+  openModal(`<h3 style="font-size:20px">Пополнение баланса</h3><p class="mute" style="margin:0;font-size:14px">Деньги игровые, лимит 50 000 ₽ в час, чтобы никто не накручивал. Карты и банки не подключаются.</p><div id="depBody" style="display:flex;flex-direction:column;gap:12px"></div>`,sh=>{
     draw(sh);
     sh.onclick=(async e=>{
       const a=e.target.closest('[data-a]');if(a){DEP.amt=+a.dataset.a;SFX.click();draw(sh);return}
@@ -3640,7 +3640,7 @@ const FAQ=[
   ['Что за «Флаппи»?','Мини-игра в разделе «Ещё». Лети сквозь трубы, приз растёт с каждой трубой, максимум 10 000 ₽ за игру. 8 попыток в час, до 30 000 ₽ в сутки.'],
   ['Админ видит, что я делаю?','Админ видит ник, почту, устройство, раздел сайта и действия на сайте (дропы, продажи, пополнения). Если админ включил демонстрацию экрана, он видит то же, что и ты на сайте (кейсы, апгрейды, битвы), а у тебя в углу горит значок 👁.'],
   ['Деньги настоящие?','Нет. Всё на фантиках: пополнение, вывод и скины игровые. Ни карты, ни Steam не подключаются, вывести реальные деньги или скины нельзя.'],
-  ['Как пополнить баланс?','Кнопка «+» возле баланса. Это игровое пополнение до 650 000 ₽ за 12 часов. Ещё есть ежедневный бонус, бомж-бонус, когда всё слил, и промокоды в «Халяве».'],
+  ['Как пополнить баланс?','Кнопка «+» возле баланса. Это игровое пополнение до 50 000 ₽ в час. Ещё есть ежедневный бонус, бомж-бонус, когда всё слил, и промокоды в «Халяве».'],
   ['Почему мне то везёт, то нет?','Удача идёт полосами, как на настоящих кейс-сайтах: то густо, то пусто. Шансы на странице кейса показаны для обычной полосы. Всё считает сервер, подкрутить с телефона нельзя.'],
   ['Как работает апгрейд?','Ставишь до 6 скинов и (или) часть баланса, выбираешь скин дороже. Чем больше множитель, тем уже зелёная полоса на кольце. Максимальный шанс 75%.'],
   ['Как работают контракты?','Сдаёшь от 3 до 10 скинов и получаешь один: от четверти до четырёх стоимостей сданного.'],
