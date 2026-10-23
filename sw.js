@@ -6,7 +6,7 @@ const MAX = 2500;
 
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil((async () => {
-  for (const k of await caches.keys()) if ((k.startsWith('zb-img-') && k !== CACHE) || (k.startsWith('zb-art-') && k !== 'zb-art-v1')) await caches.delete(k);
+  for (const k of await caches.keys()) if ((k.startsWith('zb-img-') && k !== CACHE) || (k.startsWith('zb-art-') && k !== 'zb-art-v2')) await caches.delete(k);
   await self.clients.claim();
 })()));
 
@@ -37,7 +37,7 @@ self.addEventListener('fetch', e => {
   // картинки кейсов с нашего сайта: сразу из кэша, а в фоне проверяем, не обновились ли
   if (u.origin === self.location.origin && /\/case-[\w-]+\.webp$/.test(u.pathname)) {
     e.respondWith((async () => {
-      const cache = await caches.open('zb-art-v1');
+      const cache = await caches.open('zb-art-v2');
       const hit = await cache.match(req);
       const net = fetch(req).then(r => { if (r.ok) cache.put(req, r.clone()); return r; }).catch(() => null);
       return hit || (await net) || Response.error();
