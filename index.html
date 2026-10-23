@@ -1193,12 +1193,12 @@ html.th-anim{background:var(--bg)}
 ::view-transition-new(root){animation-name:thIn}
 @keyframes thIn{from{clip-path:circle(0 at 50% 30%)}to{clip-path:circle(150% at 50% 30%)}}
 ::view-transition-old(root){animation:none}
-@media(prefers-reduced-motion:reduce){.tfx i{animation:none!important}}
+
 /* 1.3.2 оптимизация */
 .tiles,.wins,.achs,.cst{content-visibility:auto;contain-intrinsic-size:auto 420px}
 .hero-wrap>.slide:not(.on) .spark{animation:none}
 html.lite *,html.lite *::before,html.lite *::after{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-html.lite .spark,html.lite .tfx{display:none!important}
+html.lite .spark{display:none!important}
 html.lite .case-tile,html.lite .item,html.lite .panel,html.lite .tiles.lux .case-tile{box-shadow:none!important}
 html.lite .hero-wrap>.slide{transition:none}
 html.lite .item .skimg,html.lite .caseimg img{filter:none!important}
@@ -1931,8 +1931,8 @@ html.lite .cp-art-bg{filter:brightness(.4)}
 .pbd-circuit .scan{inset:0;background:linear-gradient(100deg,transparent 30%,#7dffd9 45%,#fff 50%,#7dffd9 55%,transparent 70%) -100% 0/50% 100% no-repeat;
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='%2319e3b1' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M0 20H30L50 40H80'/%3E%3Cpath d='M80 40V70L100 90H120'/%3E%3Cpath d='M20 120V90L40 70H60'/%3E%3Cpath d='M60 0V20L70 30'/%3E%3Cpath d='M100 0V30L120 50'/%3E%3Cpath d='M0 60H15L25 70V100'/%3E%3Cpath d='M90 120V105'/%3E%3C/g%3E%3Cg fill='%2319e3b1'%3E%3Ccircle cx='80' cy='40' r='4'/%3E%3Ccircle cx='60' cy='70' r='4'/%3E%3Ccircle cx='70' cy='30' r='3'/%3E%3Ccircle cx='25' cy='100' r='3.5'/%3E%3Ccircle cx='90' cy='105' r='3.5'/%3E%3C/g%3E%3C/svg%3E") 0 0/90px 90px;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='%2319e3b1' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M0 20H30L50 40H80'/%3E%3Cpath d='M80 40V70L100 90H120'/%3E%3Cpath d='M20 120V90L40 70H60'/%3E%3Cpath d='M60 0V20L70 30'/%3E%3Cpath d='M100 0V30L120 50'/%3E%3Cpath d='M0 60H15L25 70V100'/%3E%3Cpath d='M90 120V105'/%3E%3C/g%3E%3Cg fill='%2319e3b1'%3E%3Ccircle cx='80' cy='40' r='4'/%3E%3Ccircle cx='60' cy='70' r='4'/%3E%3Ccircle cx='70' cy='30' r='3'/%3E%3Ccircle cx='25' cy='100' r='3.5'/%3E%3Ccircle cx='90' cy='105' r='3.5'/%3E%3C/g%3E%3C/svg%3E") 0 0/90px 90px;animation:pbdSc 4.5s linear infinite;filter:drop-shadow(0 0 4px #19e3b1)}
 @keyframes pbdSc{from{background-position:-100% 0}to{background-position:250% 0}}
-html.lite .pbd *{animation:none!important}
-@media (prefers-reduced-motion:reduce){.pbd *{animation:none!important}}
+
+
 /* выбор фона в кастомизации */
 .pbd-pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:10px}
 .pbd-pick button{display:flex;flex-direction:column;gap:6px;padding:6px;border-radius:14px;background:var(--surf-2,var(--surf));border:1.5px solid var(--line);color:inherit;text-align:left;cursor:pointer;font:inherit}
@@ -2468,7 +2468,7 @@ html.lite .zl8{animation:none!important}
 .pbd-velvet .pat{inset:0;opacity:.25;background:radial-gradient(circle at 50% 50%,transparent 9px,rgba(242,193,78,.6) 10px,transparent 11px) 0 0/36px 36px}
 .pbd-velvet .sh{top:0;bottom:0;width:30%;background:linear-gradient(100deg,transparent,rgba(255,240,200,.16),transparent);animation:pbdSh 6s ease-in-out infinite}
 .pbd-velvet .cr{left:50%;top:50%;width:70px;height:54px;transform:translate(-50%,-50%);background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 48'%3E%3Cpath d='M9 36 6 12l13 11 13-17 13 17 13-11-3 24z' fill='none' stroke='%23f2c14e' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M10 43h44' stroke='%23f2c14e' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E");filter:drop-shadow(0 0 10px #f2c14e);opacity:.8}
-html.lite .pbd-lava i,html.lite .pbd-city i,html.lite .pbd-coins i,html.lite .pbd-velvet i{animation:none!important}
+
 
 /* ===== апгрейдер на ПК: колесо больше не залезает на карточки и кнопку ===== */
 @media (min-width:1100px){
@@ -2692,6 +2692,55 @@ html.egg9-disco .hdr{box-shadow:0 2px 30px -6px hsl(var(--eh,280) 90% 60%)}
 .zl8.egg9-fly{animation:egg9fly 2.4s cubic-bezier(.4,0,.2,1)!important}
 @keyframes egg9fly{0%{transform:none}25%{transform:translate(40vw,30vh) rotate(360deg) scale(2.4)}50%{transform:translate(70vw,60vh) rotate(720deg) scale(1.6)}75%{transform:translate(20vw,40vh) rotate(1080deg) scale(2)}100%{transform:none}}
 html.egg9-hue body{filter:hue-rotate(160deg);transition:filter .6s}
+
+/* ===== 2.0.2: новые темы (экран) и такие же фоны профиля ===== */
+.tfx9{container-type:size;overflow:hidden}
+.tfx9 i,.tfx9 svg{position:absolute;display:block;pointer-events:none}
+.pb9{position:absolute;inset:0}
+/* алые лепестки */
+.tfx9-petal{background:radial-gradient(120% 60% at 50% 0%,#2a0a14 0,transparent 70%)}
+.pt9-field{left:-5%;right:-5%;bottom:-2%;height:26%;background:radial-gradient(70% 100% at 50% 100%,#e0213f 0,#9c0b22 45%,transparent 80%);filter:blur(2px);opacity:.75;animation:pt9f 6s ease-in-out infinite alternate}
+.pt9-haze{left:0;right:0;bottom:18%;height:14%;background:linear-gradient(transparent,#ffd5dc22,transparent)}
+.pt9{left:calc(var(--x)*1%);top:-6%;width:calc(16px*var(--s));height:calc(8px*var(--s));border-radius:60% 40% 60% 40%/70% 50% 50% 30%;background:linear-gradient(135deg,#ff5873,#c2102c);box-shadow:0 0 6px #ff3b5c66;animation:pt9d var(--t) var(--d) linear infinite;will-change:transform}
+@keyframes pt9d{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(calc(var(--dx)*.5cqw + 3cqw),55cqh) rotate(calc(var(--r)*.5))}100%{transform:translate(calc(var(--dx)*1cqw),112cqh) rotate(var(--r))}}
+@keyframes pt9f{to{opacity:.95;transform:scaleY(1.08)}}
+/* белый вихрь */
+.tfx9-blade{background:radial-gradient(90% 90% at 80% 30%,#5a0712 0,transparent 70%)}
+.bl9{width:min(78cqw,78cqh);height:min(78cqw,78cqh);fill:#f4f1f1;filter:drop-shadow(0 0 18px #fff3)}
+.bl9 .sh{fill:#c9c3c3;opacity:.55}
+.bl9.b1{left:-18%;bottom:-30%;animation:bl9r 26s linear infinite;opacity:.3}
+.bl9.b2{right:-22%;top:-34%;width:min(55cqw,55cqh);height:min(55cqw,55cqh);animation:bl9r 34s linear infinite reverse;opacity:.18}
+.bl9-vig{inset:0;background:radial-gradient(80% 80% at 50% 50%,transparent 50%,#0008)}
+@keyframes bl9r{to{transform:rotate(360deg)}}
+/* пиксельный дым */
+.px9{left:50%;top:48%;width:70cqw;height:46cqh;transform:translate(-50%,-50%);background:radial-gradient(circle,#e4789c 1.1px,transparent 1.6px) 0 0/5px 5px;-webkit-mask:radial-gradient(closest-side,#000 25%,transparent 100%);mask:radial-gradient(closest-side,#000 25%,transparent 100%);opacity:.28;animation:px9m 14s ease-in-out infinite alternate}
+.px9.c2{width:52cqw;height:30cqh;background-size:4px 4px;animation-duration:10s;animation-delay:-4s;opacity:.32}
+.px9.c3{width:84cqw;height:18cqh;top:52%;background:radial-gradient(circle,#ffd4e0 .9px,transparent 1.3px) 0 0/6px 6px;animation-duration:18s;opacity:.18}
+.px9-core{left:50%;top:48%;width:30cqw;height:20cqh;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,#c4b48c 40%,#c4b48c00 100%);opacity:.16;filter:blur(2px);animation:px9m 12s ease-in-out infinite alternate-reverse}
+.px9-d{left:calc(var(--x)*1%);top:calc(var(--y)*1%);width:3px;height:3px;background:#e4789c;opacity:0;animation:px9b var(--t) var(--d) steps(4) infinite}
+@keyframes px9m{0%{transform:translate(-52%,-50%) scale(1)}100%{transform:translate(-47%,-53%) scale(1.12)}}
+@keyframes px9b{0%,100%{opacity:0}30%{opacity:.7}60%{opacity:.2}}
+/* 1-бит */
+.tfx9-dither{background:#050505}
+.dt9-noise{inset:-50px;background-repeat:repeat;opacity:.2;animation:dt9n .6s steps(3) infinite;image-rendering:pixelated}
+.dt9-beam{width:60cqw;height:18cqh;background:#f4f4f4;opacity:.05;transform:rotate(-24deg)}
+.dt9-beam.a{left:-10%;top:30%;animation:dt9b 16s linear infinite}
+.dt9-beam.b{left:20%;top:62%;height:10cqh;opacity:.04;animation:dt9b 22s linear infinite reverse}
+.dt9-frame{inset:14px;border:2px solid #ffffff14}
+@keyframes dt9n{0%{transform:translate(0,0)}33%{transform:translate(-17px,9px)}66%{transform:translate(11px,-13px)}100%{transform:translate(0,0)}}
+@keyframes dt9b{0%{transform:translateX(-30cqw) rotate(-24deg)}100%{transform:translateX(90cqw) rotate(-24deg)}}
+/* пульс */
+.wv9-glow{left:10%;right:10%;top:44%;height:12%;background:radial-gradient(closest-side,#ffffff22,transparent);filter:blur(8px)}
+.wv9{position:absolute;left:8%;right:8%;top:50%;height:34cqh;transform:translateY(-50%);display:flex;align-items:center;justify-content:space-between;opacity:.45}
+.wv9 i{position:relative!important;flex:0 0 auto;width:max(2px,.45cqw);height:calc(var(--h)*100%);border-radius:3px;background:linear-gradient(transparent,#fff 30%,#fff 70%,transparent);box-shadow:0 0 6px #fff8;transform-origin:center;animation:wv9p 1.6s var(--d) ease-in-out infinite}
+.wv9-dust{left:calc(var(--x)*1%);top:calc(var(--y)*1%);width:2px;height:2px;border-radius:50%;background:#fff;opacity:0;animation:wv9d var(--t) var(--d) linear infinite}
+@keyframes wv9p{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+@keyframes wv9d{0%{opacity:0;transform:translate(0,0)}20%{opacity:.6}100%{opacity:0;transform:translate(-6cqw,-4cqh)}}
+/* в плашке профиля всё ярче — она маленькая */
+.pb9 .wv9{opacity:.7}.pb9 .bl9.b1{opacity:.5}.pb9 .bl9.b2{opacity:.3}.pb9 .px9{opacity:.6}.pb9 .px9-core{opacity:.45}.pb9 .dt9-noise{opacity:.3}.pb9 .dt9-beam{opacity:.14}
+.pbd-petal{background:#f0e6e8}.pbd-petal .pt9-field{opacity:1}
+.pbd-blade{background:#a3000f}.pbd-pixel{background:#f6f1ef}.pbd-pixel .px9-d{background:#c9466f}
+.pbd-dither{background:#000}.pbd-wave{background:#000}
 
 </style>
 </head>
@@ -4721,7 +4770,7 @@ const IC3={
  back:'<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>',
  up:'<svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>',
  star:'<svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>'};
-const NAV3=[['home','Главная',ICONS.home],['cases','Кейсы',ICONS.cases],['upgrade','Апгрейд',ICONS.upgrade],['contracts','Контракты',ICONS.contracts],['battle','Битвы',ICONS.battle],['friends','Друзья',IC3.friends],['chats','Чаты',IC3.chats],['forum','Форум',IC3.forum]];
+const NAV3=[['home','Главная',ICONS.home],['cases','Кейсы',ICONS.cases],['upgrade','Апгрейд',ICONS.upgrade],['inv','Инвентарь',PI.inv],['contracts','Контракты',ICONS.contracts],['battle','Битвы',ICONS.battle],['friends','Друзья',IC3.friends],['chats','Чаты',IC3.chats],['forum','Форум',IC3.forum]];
 function renderNav(){
   $('#navTop').innerHTML=NAV3.map(([k,t,ic])=>`<button type="button" data-go="${k}" title="${t}">${ic}<span>${t}</span><i class="nb" data-badge="${k}" hidden></i></button>`).join('')
     +`<div class="nav-extra"><button type="button" data-go="event" title="Ивент" class="nav-ev">🎃<span>Ивент</span></button><button type="button" data-go="games" title="Мини-игры">🐦<span>Мини-игры</span></button><button type="button" data-go="faq" title="FAQ и правила">${IC3.forum}<span>FAQ и правила</span></button><button type="button" data-go="profile" title="Профиль">${IC3.user}<span>Профиль</span></button><button type="button" data-go="custom" title="Кастомизация">${IC3.brush}<span>Кастомизация</span></button></div>`;
@@ -6938,7 +6987,7 @@ paintLogos();crownMode();
 /* ===================== ТЕМЫ: у каждой своя анимация, можно выключить ===================== */
 function themeFx(id){
   var el=document.getElementById('themeFx'),t=THEMES[id];
-  var off=ST3.lite||ST3.thAnim===false||matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var off=ST3.thAnim===false;/* 2.0.2: анимацию темы выключает только кнопка в «Стиле» */
   if(!t||off){if(el)el.remove();document.documentElement.classList.remove('th-anim');return}
   if(!el){el=document.createElement('div');el.id='themeFx';el.setAttribute('aria-hidden','true');document.body.prepend(el)}
   document.documentElement.classList.add('th-anim');
@@ -7146,6 +7195,41 @@ catPanel=function(k,title,list,o={}){const h=catPanel0(k,String(title).replace(/
   document.addEventListener('click',e=>{const l=e.target.closest('.hdr .logo');if(!l)return;const now=Date.now();if(now-t0>2500)n=0;t0=now;n++;
     if(n>=5){n=0;fx[k%fx.length]();k++}},true);
 })();
+
+/* ===================== 2.0.2: 5 новых тем + такие же фоны профиля ===================== */
+Object.assign(THEMES,{
+  petal:{n:'Алые лепестки',d:'Лепестки над красным полем',v:{bg:'#12050a','bg-2':'#1a0710',surf:'#200a13','surf-2':'#2d0e1b',line:'#4d1a2c',fg:'#fff2f5',mute:'#d29aaa',acc:'#e0213f','acc-2':'#ff4d6d','acc-ink':'#fff',g1:'rgba(255,50,80,.22)',g2:'rgba(180,20,50,.16)',card1:'#2a0c18',card2:'#13060b',hdr:'rgba(18,5,10,.92)'},art:'radial-gradient(90% 50% at 50% 115%,#e0213f 0,#7a0618 45%,transparent 75%),radial-gradient(8px 4px at 30% 30%,#ff4d6d 50%,transparent 55%),radial-gradient(6px 3px at 70% 45%,#ff4d6d 50%,transparent 55%),radial-gradient(5px 3px at 55% 20%,#ff8095 50%,transparent 55%),#f3e9ea'},
+  blade:{n:'Белый вихрь',d:'Алый фон и белые клинки',v:{bg:'#160306','bg-2':'#1f050a',surf:'#26070d','surf-2':'#340a13',line:'#5a1420',fg:'#fff5f5',mute:'#d9a0a6',acc:'#c8102e','acc-2':'#ff3b4e','acc-ink':'#fff',g1:'rgba(255,40,60,.22)',g2:'rgba(255,255,255,.06)',card1:'#2e0910',card2:'#140306',hdr:'rgba(22,3,6,.92)'},art:'conic-gradient(from 200deg at 15% 90%,#fff 0 8deg,transparent 8deg 18deg,#fff 18deg 24deg,transparent 24deg 36deg,#fff 36deg 41deg,transparent 41deg 60deg,#fff 60deg 64deg,transparent 64deg),#a3000f'},
+  pixel:{n:'Пиксельный дым',d:'Розовое облако из точек',v:{bg:'#0f0a0d','bg-2':'#160f13',surf:'#1b1318','surf-2':'#261a21',line:'#3e2a35',fg:'#fbf3ee',mute:'#c9aab5',acc:'#e4789c','acc-2':'#f2a7bf','acc-ink':'#1a0a10',g1:'rgba(228,120,156,.2)',g2:'rgba(196,180,140,.14)',card1:'#22171d',card2:'#110c0f',hdr:'rgba(15,10,13,.92)'},art:'radial-gradient(40% 30% at 50% 50%,#c4b48c 0,#c4b48c 55%,transparent 60%),radial-gradient(60% 45% at 50% 50%,#e4789c 0,transparent 70%),radial-gradient(circle,#ffffff30 1px,transparent 1.5px) 0 0/5px 5px,#f6f1ef'},
+  dither:{n:'1-бит',d:'Чёрно-белый дизеринг',v:{bg:'#070707','bg-2':'#0d0d0d',surf:'#121212','surf-2':'#1b1b1b',line:'#333',fg:'#f4f4f4',mute:'#a3a3a3',acc:'#e9e9e9','acc-2':'#ffffff','acc-ink':'#000',g1:'rgba(255,255,255,.06)',g2:'rgba(255,255,255,.04)',card1:'#171717',card2:'#0b0b0b',hdr:'rgba(7,7,7,.92)'},art:'linear-gradient(160deg,transparent 30%,#eee 31% 45%,transparent 46%),radial-gradient(circle,#fff 1px,transparent 1.2px) 0 0/3px 3px,radial-gradient(circle,#fff 1px,transparent 1.2px) 1.5px 1.5px/3px 3px,#000'},
+  wave:{n:'Пульс',d:'Белая звуковая волна',v:{bg:'#030304','bg-2':'#08080a',surf:'#0e0e11','surf-2':'#17171b',line:'#2a2a30',fg:'#ffffff',mute:'#a0a0aa',acc:'#cfcfd6','acc-2':'#ffffff','acc-ink':'#000',g1:'rgba(255,255,255,.07)',g2:'rgba(255,255,255,.04)',card1:'#141418',card2:'#09090b',hdr:'rgba(3,3,4,.92)'},art:'repeating-linear-gradient(90deg,transparent 0 6px,#fff 6px 8px),linear-gradient(transparent 30%,#000 30% 70%,transparent 70%),radial-gradient(60% 20% at 50% 50%,#fff8 0,transparent 70%),#000'}
+});
+const TH9={petal:1,blade:1,pixel:1,dither:1,wave:1};
+let DITH9='';
+const dith9=()=>{if(DITH9)return DITH9;try{const c=document.createElement('canvas');c.width=c.height=96;const g=c.getContext('2d'),d=g.createImageData(96,96);
+  const B=[0,8,2,10,12,4,14,6,3,11,1,9,15,7,13,5];
+  for(let y=0;y<96;y++)for(let x=0;x<96;x++){const v=(Math.sin(x*.09)+Math.cos(y*.07)+Math.sin((x+y)*.05))/6+.5+(Math.random()-.5)*.35;const on=v*16>B[(y%4)*4+x%4];const i=(y*96+x)*4;d.data[i]=d.data[i+1]=d.data[i+2]=255;d.data[i+3]=on?255:0}
+  g.putImageData(d,0,0);DITH9=c.toDataURL()}catch(e){}return DITH9};
+/* разметка эффекта — одна и та же для темы (весь экран) и фона профиля (плашка) */
+function fx9(k,small){const R=(n,f)=>{let s='';for(let i=0;i<n;i++)s+=f(i);return s};const m=small?.5:1;
+  if(k==='petal')return '<i class="pt9-field"></i><i class="pt9-haze"></i>'+R(Math.round(28*m),i=>`<i class="pt9" style="--x:${(i*37)%100};--s:${(.5+(i%5)*.25).toFixed(2)};--t:${7+(i*7)%9}s;--d:-${((i*1.9)%14).toFixed(1)}s;--dx:${-8-(i*13)%22};--r:${200+(i*47)%400}deg"></i>`);
+  if(k==='blade'){const path=(n,r0,r1,seed)=>{let p='';for(let i=0;i<=n*2;i++){const a=Math.PI*1.1*i/(n*2)-Math.PI*.05,r=i%2?r0:r1*(.82+((i*seed)%7)/30);p+=(i?'L':'M')+(Math.cos(a)*r).toFixed(1)+' '+(-Math.sin(a)*r).toFixed(1)}return p+'L0 0Z'};
+    return `<svg class="bl9 b1" viewBox="-110 -110 220 220" aria-hidden="true"><path d="${path(15,46,104,5)}"/><path class="sh" d="${path(11,30,70,3)}"/></svg><svg class="bl9 b2" viewBox="-110 -110 220 220" aria-hidden="true"><path d="${path(12,40,100,7)}"/></svg><i class="bl9-vig"></i>`}
+  if(k==='pixel')return '<i class="px9 c1"></i><i class="px9 c2"></i><i class="px9 c3"></i><i class="px9-core"></i>'+R(Math.round(18*m),i=>`<i class="px9-d" style="--x:${(i*41)%100};--y:${(i*29)%100};--t:${5+(i*3)%7}s;--d:-${(i*.7).toFixed(1)}s"></i>`);
+  if(k==='dither')return `<i class="dt9-noise" style="background-image:url(${dith9()})"></i><i class="dt9-beam a"></i><i class="dt9-beam b"></i><i class="dt9-frame"></i>`;
+  if(k==='wave')return '<i class="wv9-glow"></i><span class="wv9">'+R(Math.round(56*m),i=>{const c=Math.abs(i-28*m)/(28*m);return `<i style="--h:${(.15+.85*Math.pow(1-c,1.6)*(.55+((i*37)%45)/100)).toFixed(2)};--d:-${((i*.13)%1.6).toFixed(2)}s"></i>`})+'</span>'+R(Math.round(26*m),i=>`<i class="wv9-dust" style="--x:${(i*43)%100};--y:${40+(i*17)%20};--t:${3+(i%5)}s;--d:-${(i*.4).toFixed(1)}s"></i>`);
+  return ''}
+themeFx=(f=>function(id){
+  if(!TH9[id]){const e=document.getElementById('themeFx');if(e&&TH9[e.dataset.k]){e.remove()}return f.apply(this,arguments)}
+  let el=document.getElementById('themeFx');
+  if(ST3.thAnim===false){if(el)el.remove();document.documentElement.classList.remove('th-anim');return}
+  if(!el){el=document.createElement('div');el.id='themeFx';el.setAttribute('aria-hidden','true');document.body.prepend(el)}
+  document.documentElement.classList.add('th-anim');if(el.dataset.k===id)return;el.dataset.k=id;el.className='tfx tfx9 tfx9-'+id;el.innerHTML=fx9(id,innerWidth<700);
+})(themeFx);
+/* фоны профиля */
+Object.assign(PBD,{'bg:d-petal':'Алые лепестки','bg:d-blade':'Белый вихрь','bg:d-pixel':'Пиксельный дым','bg:d-dither':'1-бит','bg:d-wave':'Пульс'});
+Object.assign(PBGS,{'bg:d-petal':'Алые лепестки','bg:d-blade':'Белый вихрь','bg:d-pixel':'Пиксельный дым','bg:d-dither':'1-бит','bg:d-wave':'Пульс'});
+['petal','blade','pixel','dither','wave'].forEach(k=>{Object.defineProperty(PBD_IN,k,{get:()=>'<span class="tfx9 tfx9-'+k+' pb9">'+fx9(k,true)+'</span>',configurable:true,enumerable:true})});
 
 userUI();
 if(!sb)authScreen('nocfg');
