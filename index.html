@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' https: data: blob:; media-src 'self' blob: data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://cdn.jsdelivr.net; frame-src 'self' blob: data: about:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fastly.jsdelivr.net https://gcore.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' https: data: blob:; media-src 'self' blob: data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://cdn.jsdelivr.net https://fastly.jsdelivr.net https://gcore.jsdelivr.net; frame-src 'self' blob: data: about:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <script>if(window.top!==window.self){try{window.top.location.replace(window.location.href)}catch(e){document.documentElement.style.display='none'}}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -2799,8 +2799,10 @@ html.lite .dk.live .dk-pair.new>.pcard,html.lite .dk.live .dk-def.new,html.lite 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <canvas id="fx"></canvas>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js" defer></script>
+<script src="https://fastly.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.js"></script>
+<script>if(!window.supabase)document.write('<script src="https://gcore.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.js"><\/script>')</script>
+<script>if(!window.supabase)document.write('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.js"><\/script>')</script>
+<script src="https://fastly.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js" defer></script>
 <script src="config.js"></script>
 <script>
 
@@ -5105,7 +5107,7 @@ function seedData(){return{skins:Object.values(SK).map(s=>[s.name,s.rar,s.cls,s.
 function authScreen(state,msg){
   const g=$('#gate');g.hidden=false;
   const body=$('#gBody');
-  if(state==='nocfg'){body.innerHTML=`<h2>Сайт ещё не настроен</h2><p>Не найден файл config.js с адресом сервера Supabase. Владельцу нужно добавить его по инструкции.</p>`;return}
+  if(state==='nocfg'){body.innerHTML=!window.supabase?`<h2>Не удалось загрузить сайт</h2><p>Не скачалась часть сайта, которая отвечает за связь с сервером. Обычно так бывает, когда интернет-провайдер ограничивает сторонние сайты.</p><p style="font-size:14px;opacity:.85">Попробуй: обнови страницу (Ctrl+F5) · раздай интернет с телефона · включи VPN · открой в другом браузере</p><button class="btn acc" type="button" onclick="location.reload()">Обновить страницу</button>`:`<h2>Сайт ещё не настроен</h2><p>Не найден файл config.js с адресом сервера Supabase. Владельцу нужно добавить его по инструкции.</p>`;return}
   if(state==='wait'){body.innerHTML=`<div class="spin"></div><h2>Загружаем…</h2>`;return}
   if(state==='email'){
     body.innerHTML=`${INVITE?`<div class="invite"><b>Секретный инвайт</b><span>Тебя позвал <b>${esc(INVITE)}</b>. После входа забирай промокод <b>ГАБЕН</b> на +1000 ₽</span></div>`:''}<h2>Вход и регистрация</h2><p>Введи почту, пришлём код. Аккаунт создастся сам.</p><div class="field" style="width:100%"><input id="aEmail" class="inp" type="email" inputmode="email" autocomplete="email" placeholder="почта@mail.ru" value="${esc(AUTH.email||'')}"></div><button class="btn acc" type="button" id="aSend" style="width:100%">Получить код</button>${msg?`<p class="neg" style="font-size:14px">${esc(msg)}</p>`:''}<p style="font-size:12px">Владелец сайта видит твою почту, ник, устройство, раздел, где ты сейчас, и действия на сайте. Деньги на сайте ненастоящие.</p>`;
@@ -6823,6 +6825,20 @@ else{
 }
 })();
 
+</script>
+<script>
+/* 2.1.1: если сайт долго не может достучаться до сервера — объясняем, что делать, вместо вечной загрузки */
+setTimeout(function(){try{
+  var g=document.getElementById('gate'),b=document.getElementById('gBody');
+  if(!g||g.hidden||!b||!b.querySelector('.spin')||document.getElementById('netDog'))return;
+  var d=document.createElement('div');d.id='netDog';d.style.cssText='max-width:440px;text-align:center;font-size:14px;line-height:1.45;opacity:.95';
+  d.innerHTML='<p style="margin:6px 0">Сервер долго не отвечает. Проверяю связь…</p>';b.appendChild(d);
+  var C=window.ZANOS||{},url=(C.url||'').replace(/\/$/,''),done=false;
+  var say=function(ok){if(done)return;done=true;d.innerHTML=ok?'<p style="margin:6px 0">Связь с сервером есть, но он отвечает медленно. Подожди ещё немного или обнови страницу.</p><button class="btn acc" type="button" onclick="location.reload()">Обновить страницу</button>':'<p style="margin:6px 0"><b>Не получается достучаться до сервера.</b> Похоже, интернет-провайдер ограничивает доступ (так бывает с домашним интернетом).</p><p style="margin:6px 0;opacity:.85">Попробуй: раздай интернет с телефона · включи VPN · обнови страницу</p><button class="btn acc" type="button" onclick="location.reload()">Обновить страницу</button>'};
+  if(!url){say(false);return}
+  var t=setTimeout(function(){say(false)},8000);
+  fetch(url+'/auth/v1/health',{headers:{apikey:C.key||''},cache:'no-store'}).then(function(r){clearTimeout(t);say(r.status<500)}).catch(function(){clearTimeout(t);say(false)});
+}catch(e){}},15000);
 </script>
 </body>
 </html>
