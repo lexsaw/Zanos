@@ -2799,8 +2799,8 @@ html.lite .dq23-chest.on{animation:none}
 .up-core{border-color:color-mix(in srgb,var(--acc-2) 22%,var(--line));box-shadow:0 30px 70px -40px color-mix(in srgb,var(--acc) 70%,transparent),inset 0 1px 0 rgba(255,255,255,.04)}
 .up-wheelbox{position:relative;isolation:isolate}
 .up-wheelbox::before{content:"";position:absolute;inset:-6%;z-index:-1;border-radius:50%;pointer-events:none;
-  background:conic-gradient(from 0deg,transparent 0 8%,color-mix(in srgb,var(--acc-2) 40%,transparent) 18%,transparent 34%,color-mix(in srgb,var(--acc) 35%,transparent) 58%,transparent 72%,color-mix(in srgb,var(--gold) 22%,transparent) 86%,transparent);
-  filter:blur(22px);opacity:.75;animation:upHalo 12s linear infinite}
+  background:conic-gradient(from 0deg,transparent 0 8%,color-mix(in srgb,var(--h1) 45%,transparent) 18%,transparent 34%,color-mix(in srgb,var(--h2) 40%,transparent) 58%,transparent 72%,color-mix(in srgb,var(--h3) 30%,transparent) 86%,transparent);
+  filter:blur(22px);opacity:.75;animation:upHalo 12s linear infinite,haloBreath 4.5s ease-in-out infinite}
 .up-wheelbox:has(.wheel.spinning)::before{animation-duration:1.4s;opacity:1}
 /* итог: зашло — мерцание резко зеленеет и стягивается внутрь круга; мимо — краснеет и разлетается наружу */
 .up-wheelbox:has(.wheel.won)::before{background:conic-gradient(from 0deg,transparent 0 6%,color-mix(in srgb,var(--good) 85%,transparent) 16%,transparent 30%,color-mix(in srgb,var(--good) 70%,transparent) 52%,transparent 66%,color-mix(in srgb,#b6ffd4 70%,transparent) 82%,transparent);animation:upImplode .85s cubic-bezier(.6,0,.85,.25) both}
@@ -2816,8 +2816,33 @@ html.lite .dq23-chest.on{animation:none}
 @keyframes ringOut{0%{transform:translate(-50%,-50%) scale(.9);opacity:1}100%{transform:translate(-50%,-50%) scale(1.9);opacity:0}}
 @keyframes winGlow{0%{box-shadow:inset 0 0 0 2px var(--good),0 0 0 0 var(--good)}30%{box-shadow:inset 0 0 50px var(--good),0 0 60px 10px color-mix(in srgb,var(--good) 60%,transparent)}100%{box-shadow:inset 0 0 0 1px var(--good),0 0 24px color-mix(in srgb,var(--good) 40%,transparent)}}
 @keyframes loseShake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
-@keyframes upHalo{to{transform:rotate(360deg)}}
-#upArc{filter:drop-shadow(0 0 6px var(--acc-2));transition:stroke-dasharray .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes upHalo{to{rotate:360deg}}
+@keyframes haloBreath{50%{scale:1.08;opacity:.95}}
+/* цвет свечения: по умолчанию цвета темы, в «Стиле» можно выбрать свой */
+.up-wheelbox,.halo23-w,.halo23-l .halo23-w[data-halo="theme"]{--h1:var(--acc-2);--h2:var(--acc);--h3:var(--gold)}
+[data-halo="gold"] :is(.up-wheelbox,.halo23-w),.halo23-l .halo23-w[data-halo="gold"]{--h1:#ffd76a;--h2:#e09a2a;--h3:#fff1b8}
+[data-halo="fire"] :is(.up-wheelbox,.halo23-w),.halo23-l .halo23-w[data-halo="fire"]{--h1:#ff5a1f;--h2:#ffb02e;--h3:#ff2a4a}
+[data-halo="ice"] :is(.up-wheelbox,.halo23-w),.halo23-l .halo23-w[data-halo="ice"]{--h1:#5fd4ff;--h2:#1f8fff;--h3:#d6f6ff}
+[data-halo="toxic"] :is(.up-wheelbox,.halo23-w),.halo23-l .halo23-w[data-halo="toxic"]{--h1:#7dff3a;--h2:#16c94a;--h3:#e6ff3a}
+[data-halo="neon"] :is(.up-wheelbox,.halo23-w),.halo23-l .halo23-w[data-halo="neon"]{--h1:#ff2fa0;--h2:#2affd5;--h3:#7b5cff}
+[data-halo="rgb"] :is(.up-wheelbox,.halo23-w),.halo23-l .halo23-w[data-halo="rgb"]{--h1:#ff2a6a;--h2:#2affd5;--h3:#ffd22a}
+[data-halo="rgb"] .up-wheelbox::before{filter:blur(22px) hue-rotate(0deg);animation:upHalo 12s linear infinite,haloBreath 4.5s ease-in-out infinite,hueSpin 6s linear infinite}
+.halo23-l .halo23-w[data-halo="rgb"] i{filter:blur(4px);animation:upHalo 6s linear infinite,hueSpinS 4s linear infinite}
+@keyframes hueSpinS{to{filter:blur(4px) hue-rotate(360deg)}}
+@keyframes hueSpin{to{filter:blur(22px) hue-rotate(360deg)}}
+.halo23-l{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px}
+.halo23-l button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 6px;border-radius:14px;border:1px solid var(--line);background:var(--bg-2);font-weight:700;font-size:12.5px;color:var(--mute)}
+.halo23-l button[aria-pressed="true"]{border-color:var(--acc-2);color:var(--fg);box-shadow:0 0 0 1px var(--acc-2) inset}
+.halo23-w{position:relative;display:block;width:46px;height:46px}
+.halo23-w i{position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--h1),var(--h2),var(--h3),var(--h1));filter:blur(4px);animation:upHalo 6s linear infinite}
+.halo23-w b{position:absolute;inset:9px;border-radius:50%;background:var(--bg-2);box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--h1) 60%,transparent)}
+/* спокойные анимации, пока колесо стоит: стрелка покачивается, дуга шанса мягко пульсирует */
+.wheel:not(.spinning):not(.won):not(.lost) .pointer{animation:ptrBob 2.4s ease-in-out infinite}
+.wheel:not(.spinning):not(.won):not(.lost) #upArc{animation:arcPulse 2.8s ease-in-out infinite}
+@keyframes ptrBob{50%{translate:0 4px}}
+@keyframes arcPulse{50%{filter:drop-shadow(0 0 14px var(--acc-2)) brightness(1.15)}}
+html.lite .wheel .pointer,html.lite #upArc,html.lite .halo23-w i{animation:none!important}
+#upArc{filter:drop-shadow(0 0 6px var(--acc-2));transition:stroke .3s}
 .w-center{background:radial-gradient(circle at 50% 28%,color-mix(in srgb,var(--acc) 26%,var(--surf-2)),var(--bg-2) 74%);
   box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--acc-2) 30%,var(--line)),inset 0 10px 30px rgba(255,255,255,.04),inset 0 0 44px color-mix(in srgb,var(--acc) 30%,transparent),0 0 46px -12px color-mix(in srgb,var(--acc-2) 55%,transparent)}
 .wheel.won .w-center{animation:upPop .5s cubic-bezier(.2,1.6,.4,1)}
@@ -3023,6 +3048,8 @@ const r2=x=>Math.round(x*100)/100;
 const fmt0=n=>Math.round(+n).toLocaleString('ru-RU')+' ₽';
 const fmt2=n=>(+n).toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2})+' ₽';
 const pick=(a,rng=Math.random)=>a[Math.floor(rng()*a.length)];
+/* 2.3: подсказки для ника — каждый раз случайная */
+const NICK23=["Тихий_Снайпер","Кейс_Хантер","Носок_Удачи","Батя_Апгрейда","Ночной_Дроп","Хрустящий_Флик","Скин_Магнат","Кот_в_Кейсе","Флешка_Рандома","Сонный_Клатч","Бархатный_Нож","Шальной_Ролл","Пиксель_Пират","Лаки_Лис","Дед_Фаска","Тапок_Судьбы","Голодный_Азарт","Кринж_Капитан","Мятный_Дроп","Барон_Копейка"];
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const hexOk=c=>/^#[0-9a-f]{6}$/i.test(c||'');
@@ -4356,9 +4383,9 @@ function renderUpgrade(){
   <div class="up-stage">
     <div class="slot up-slot"><span class="label">Ваш предмет</span><div id="upFrom" class="up-slot-b"></div></div>
     <div class="up-core"><div class="up-wheelbox">
-      <div class="wheel${ST3.up==='arrow'?' arrow':''}" id="wheel"><div class="ring-rot" id="ringRot"><svg class="ring" viewBox="0 0 240 240">${ticks}<circle cx="120" cy="120" r="91" fill="none" style="stroke:var(--bg-2)" stroke-width="14"/><circle id="upArc" cx="120" cy="120" r="91" fill="none" style="stroke:var(--acc-2)" stroke-width="14" stroke-linecap="butt" stroke-dasharray="0 1000"/></svg></div><div class="pointer"></div><div class="needle" id="needle"><i></i></div><div class="w-center" id="wc"></div></div></div>
+      <div class="wheel${ST3.up==='arrow'||ST3.up==='both'?' arrow':''}" id="wheel"><div class="ring-rot" id="ringRot"><svg class="ring" viewBox="0 0 240 240">${ticks}<circle cx="120" cy="120" r="91" fill="none" style="stroke:var(--bg-2)" stroke-width="14"/><circle id="upArc" cx="120" cy="120" r="91" fill="none" style="stroke:var(--acc-2)" stroke-width="14" stroke-linecap="butt" stroke-dasharray="0 1000"/></svg></div><div class="pointer"></div><div class="needle" id="needle"><i></i></div><div class="w-center" id="wc"></div></div></div>
       <div class="up-ctrl"><button class="btn acc lg up-go" type="button" id="upGo">Апгрейд</button>
-      <div class="up-opts"><div class="seg" id="upMode"><button type="button" data-um="ring" aria-pressed="${ST3.up!=='arrow'}">Кольцо</button><button type="button" data-um="arrow" aria-pressed="${ST3.up==='arrow'}">Стрелка</button></div>
+      <div class="up-opts"><div class="seg" id="upMode"><button type="button" data-um="ring" aria-pressed="${ST3.up!=='arrow'&&ST3.up!=='both'}">Кольцо</button><button type="button" data-um="arrow" aria-pressed="${ST3.up==='arrow'}">Стрелка</button><button type="button" data-um="both" aria-pressed="${ST3.up==='both'}">Оба</button></div>
       <label class="sw"><input type="checkbox" id="upFast" ${S.fast?'checked':''}>Быстрая прокрутка</label></div>
       <div class="presets" id="presets"><button type="button" data-m="2">x2</button><button type="button" data-m="5">x5</button><button type="button" data-m="10">x10</button><button type="button" data-p=".3">30%</button><button type="button" data-p=".5">50%</button><button type="button" data-p=".75">75%</button><button type="button" data-rnd="1" aria-label="Случайная цель">⤮</button></div>
       <div class="chance-row"><span class="label" style="min-width:auto;text-align:left">Свой шанс</span><input type="range" id="chR" min="1" max="75" step="1" value="${Math.round(upChance()*100)||30}" aria-label="Свой шанс"><span id="chV">${Math.round(upChance()*100)||30}%</span></div>
@@ -4376,8 +4403,12 @@ function renderUpgrade(){
     const st=upStake(),ch=upChance(),sel=S.inv.filter(i=>U.sel.has(i.id)),arc=ch*360,useBal=Math.min(U.bal,S.bal);
     $('#upFrom').innerHTML=sel.length===1&&!useBal?card(sel[0],{cls:'big'}):(sel.length||useBal)?`<div class="stack">${sel.map(i=>card(i,{cls:'mini'})).join('')}${useBal?`<div class="balstake"><span class="coin">₽</span><b>${fmt0(useBal)}</b><small>с баланса</small></div>`:''}</div><div class="up-sum">Ставка: <b class="mono">${fmt2(st)}</b></div>`:`<div class="slot-empty"><span>Выбери до 6 скинов<br>в «Мои предметы»</span></div>`;
     $('#upTo').innerHTML=U.target?card(U.target,{cls:'big win'}):`<div class="slot-empty"><span>Выбери скин<br>в «Скины для апгрейда»</span></div>`;
-    const a=$('#upArc');a.setAttribute('stroke-dasharray',`${ch*C} ${C}`);a.style.transform=`rotate(${90-arc/2}deg)`;
-    $('#wc').innerHTML=`<small>Шанс успеха</small><b>${(ch*100).toFixed(ch<.1&&ch>0?2:1)}%</b><small class="mono">${U.target&&st?'x'+(U.target.p/st).toFixed(2):'—'}</small>`;
+    /* 2.3: шанс перетекает от прошлого значения к новому (30% → 50%), а не стартует с нуля */
+    $('#wc').innerHTML=`<small>Шанс успеха</small><b></b><small class="mono">${U.target&&st?'x'+(U.target.p/st).toFixed(2):'—'}</small>`;
+    const drawCh=c=>{const a=$('#upArc');if(!a)return;a.style.strokeDasharray=`${c*C} ${C}`;a.style.transform=`rotate(${90-c*180}deg)`;const b=$('#wc b');if(b)b.textContent=(c*100).toFixed(c<.1&&c>0?2:1)+'%'};
+    cancelAnimationFrame(U._raf);const c0=U._ch||0,t0=performance.now(),D=c0===ch?0:520;
+    const step=now=>{const k=D?Math.min(1,(now-t0)/D):1,e=1-Math.pow(1-k,3);U._ch=c0+(ch-c0)*e;drawCh(U._ch);if(k<1)U._raf=requestAnimationFrame(step);else U._ch=ch};step(t0);
+    clearTimeout(U._rto);U._rto=setTimeout(()=>{if(U._ch!==ch){cancelAnimationFrame(U._raf);U._ch=ch;drawCh(ch)}},D+120);
     $('#upGo').disabled=!(U.target&&st>0&&ch>0&&U.target.p>st*1.05);
     $('#upSelN').textContent=U.sel.size?`выбрано ${U.sel.size} из 6`:'до 6 штук';
   };
@@ -4397,7 +4428,7 @@ function renderUpgrade(){
   $('#upTabs').onclick=e=>{const b=e.target.closest('[data-ut]');if(b){SFX.click();setTab(b.dataset.ut)}};
   $('#upQ').oninput=e=>{U.q=e.target.value;catL()};
   $('#upFast').onchange=e=>{S.fast=e.target.checked;save()};
-  $('#upMode').onclick=e=>{if(busy)return;const b=e.target.closest('[data-um]');if(!b)return;ST3.up=b.dataset.um;save3();SFX.click();$$('#upMode button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#wheel').classList.toggle('arrow',ST3.up==='arrow')};
+  $('#upMode').onclick=e=>{if(busy)return;const b=e.target.closest('[data-um]');if(!b)return;ST3.up=b.dataset.um;save3();SFX.click();$$('#upMode button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#wheel').classList.toggle('arrow',ST3.up!=='ring')};
   $('#presets').onclick=e=>{if(busy)return;const b=e.target.closest('button');if(!b)return;const st=upStake();if(!st){toast('Сначала выбери скины или добавь баланс');return}SFX.click();
     if(b.dataset.m)setTarget(CATALOG.find(t=>t.p>=st*+b.dataset.m)||CATALOG[CATALOG.length-1]);
     else if(b.dataset.p)setTarget(targetForChance(+b.dataset.p));
@@ -4430,13 +4461,17 @@ async function doUpgrade(){
   const ch=+r.ch,rr=+r.r,arc=ch*360,start=180-arc/2;
   /* кольцо крутится, стрелка стоит сверху: подводим нужную точку кольца под стрелку */
   const theta=r.win?start+arc*(.06+.88*(rr/ch)):(start+arc+(360-arc)*(.03+.94*((rr-ch)/(1-ch))))%360;
-  const arrow=ST3.up==='arrow',spins=S.fast?3:6,R=arrow?360*spins+theta:360*spins+((360-theta)%360);
+  /* 2.3: режим «Оба» — кольцо крутится назад, стрелка вперёд; стрелка встаёт на ту же точку кольца, что выбрал сервер */
+  const mode=ST3.up==='both'?'both':ST3.up==='arrow'?'arrow':'ring',arrow=mode!=='ring',spins=S.fast?3:6;
+  const RR=mode==='both'?-(720+Math.floor(Math.random()*360)):0;
+  const R=mode==='ring'?360*spins+((360-theta)%360):360*spins+(((theta+RR)%360)+360)%360;
   const rot=arrow?$('#needle'):$('#ringRot'),wh=$('#wheel'),dur=S.fast?SPEED.upF:SPEED.upN;
   $('#ringRot').style.transform='rotate(0deg)';$('#needle').style.transform='rotate(0deg)';
   wh.classList.remove('won','lost');wh.classList.add('spinning');
   rot.style.transition='none';rot.style.transform='rotate(0deg)';void rot.offsetWidth;
   SFX.spinStart(dur/1000);
   rot.style.transition=`transform ${dur}ms cubic-bezier(.12,.66,.08,1)`;rot.style.transform=`rotate(${R}deg)`;
+  if(mode==='both'){const rr=$('#ringRot');rr.style.transition='none';rr.style.transform='rotate(0deg)';void rr.offsetWidth;rr.style.transition=`transform ${dur}ms cubic-bezier(.12,.66,.08,1)`;rr.style.transform=`rotate(${RR}deg)`}
   let last=-1,lastA=0,lastT=performance.now();const t0=performance.now();
   await new Promise(res=>{const loop=()=>{const m=tf(rot);const a=(Math.atan2(m.b,m.a)*180/Math.PI+360)%360;const now=performance.now();const sp=Math.min(1.5,Math.abs(((a-lastA+540)%360)-180)/Math.max(1,now-lastT)*8);lastA=a;lastT=now;const i=Math.floor(a/12);if(i!==last){last=i;SFX.tick(sp)}if(now-t0<dur+20&&cur==='upgrade')requestAnimationFrame(loop);else res()};requestAnimationFrame(loop)});
   wh.classList.remove('spinning');wh.classList.add(r.win?'won':'lost');
@@ -4865,7 +4900,7 @@ const PI={user:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="
 const COLS=['#a94dff','#4b69ff','#eb4b4b','#d32ce6','#3ee08c','#ff8a3d','#ffc53a','#5be0c2'];
 function nickForm(sh,force){
   let col=S.col;
-  $('#nkBody',sh).innerHTML=`<div class="field"><label class="label" for="nick">Ник</label><input id="nick" maxlength="18" placeholder="Например, Лёша_Занос" autocomplete="off" value="${esc(S.nick||'')}"></div><div class="field"><span class="label">Цвет аватарки</span><div class="colors" id="cl">${COLS.map(c=>`<button type="button" style="--c:${c}" data-c="${c}" aria-pressed="${c===col}" aria-label="Цвет"></button>`).join('')}</div></div><button class="btn acc" type="button" id="nkOk" style="width:100%">${force?'Погнали':'Сохранить'}</button>`;
+  $('#nkBody',sh).innerHTML=`<div class="field"><label class="label" for="nick">Ник</label><input id="nick" maxlength="18" placeholder="Например, ${pick(NICK23)}" autocomplete="off" value="${esc(S.nick||'')}"></div><div class="field"><span class="label">Цвет аватарки</span><div class="colors" id="cl">${COLS.map(c=>`<button type="button" style="--c:${c}" data-c="${c}" aria-pressed="${c===col}" aria-label="Цвет"></button>`).join('')}</div></div><button class="btn acc" type="button" id="nkOk" style="width:100%">${force?'Погнали':'Сохранить'}</button>`;
   $('#cl',sh).onclick=e=>{const x=e.target.closest('[data-c]');if(!x)return;col=x.dataset.c;$$('#cl button',sh).forEach(y=>y.setAttribute('aria-pressed',y===x))};
   const ok=async()=>{const n=$('#nick',sh).value.trim();if(n.length<2){toast('Ник от 2 символов');return}const b=$('#nkOk',sh);b.disabled=true;try{applyState(await rpc('zb_set_nick',{p_nick:n,p_col:col}));closeModal();SFX.join();toast(`Залетел, ${S.nick}. Удачных круток`);beat();if(force)go(cur==='home'?'home':cur);if(force&&INVITE)setTimeout(()=>{bonusModal();const c=$('#code');if(c)c.value='ГАБЕН'},700)}catch(e){b.disabled=false;toast(errMsg(e))}};
   $('#nkOk',sh).onclick=ok;$('#nick',sh).onkeydown=e=>{if(e.key==='Enter')ok()};
@@ -5787,10 +5822,11 @@ async function steamLoginReturn(){
   catch(e){toast(errMsg(e));SFX.error()}
 }
 const steamBtn23=(t='Войти через Steam',id='')=>`<button class="stm23-btn" type="button"${id?` id="${id}"`:''}><span class="stm23-ic">${STEAM_ICO}</span><span>${t}</span></button>`;
-/* напоминание при каждом заходе (раз за сессию браузера), пока Steam не привязан */
+/* напоминание при каждом заходе на сайт (каждая загрузка страницы), пока Steam не привязан */
 function steamNag23(){
-  if(S.steam||!S.nick)return;try{if(sessionStorage.getItem('zb-stnag'))return;sessionStorage.setItem('zb-stnag','1')}catch(e){}
-  if(!$('#modal').hidden){setTimeout(steamNag23,4000);try{sessionStorage.removeItem('zb-stnag')}catch(e){}return}
+  if(S.steam||!S.nick||steamNag23.shown)return;
+  if(!$('#modal').hidden){setTimeout(steamNag23,4000);return}
+  steamNag23.shown=true;
   openModal(`<div class="stm23-nag"><div class="stm23-orb">${STEAM_ICO}</div>
     <h3>Привяжи Steam — это обязательно</h3>
     <p>Скоро вход на сайт будет <b>только через Steam</b>. Аккаунты без привязанного Steam потеряют доступ: баланс, скины и достижения пропадут.</p>
@@ -6700,7 +6736,7 @@ function avaPrep(file){return new Promise((res,rej)=>{if(!file||!/^image\//.test
 const CROWN8=`<svg class="zl8" viewBox="0 0 64 48" aria-hidden="true"><path class="c8o" d="M9 36 6 12l13 11 13-17 13 17 13-11-3 24z"/><path class="c8b" d="M10 43h44"/><path class="c8i" d="M14 31 12 20l9 7 11-13 11 13 9-7-2 11z"/></svg>`;
 function paintLogos(root=document){$$('.logo',root).forEach(l=>{if(l.dataset.z8)return;l.dataset.z8=1;l.dataset.z7=1;l.innerHTML=`<span class="zl" aria-label="Zanos Battle">${CROWN8}<span class="zl-t"><b>ZANOS</b><i>BATTLE</i></span></span>`;l.classList.add('logo7')})}
 function crownMode(){const m=ST3.crown||'theme';document.documentElement.dataset.crown=m}
-paintLogos();crownMode();document.documentElement.dataset.ptr=ST3.ptr||"tri";
+paintLogos();crownMode();document.documentElement.dataset.ptr=ST3.ptr||"tri";document.documentElement.dataset.halo=ST3.halo||"theme";
 
 /* ===================== ТЕМЫ: у каждой своя анимация, можно выключить ===================== */
 function themeFx(id){
@@ -6763,8 +6799,15 @@ renderCustom=(f=>function(){f.apply(this,arguments);const v=$('#v-custom');if(!v
     cr.insertAdjacentHTML('afterend',`<div class="panel" id="ptr23"><h3 class="ph3">Стрелка в апгрейде</h3>
       <div class="ptr23-l" id="ptrM">${PTR23.map(([k,t])=>`<button type="button" data-pt="${k}" aria-pressed="${m===k}"><span class="ptr23-w" data-ptr="${k}"><i class="pointer"></i></span><small>${t}</small></button>`).join('')}</div></div>`);ptrPaint(v);
     $('#ptrM',v).onclick=e=>{const b=e.target.closest('[data-pt]');if(!b)return;ST3.ptr=b.dataset.pt;save3();document.documentElement.dataset.ptr=ST3.ptr;ptrPaint();SFX.click();$$('#ptrM button',v).forEach(x=>x.setAttribute('aria-pressed',x===b))};}
+  /* 2.3: цвет свечения за колесом апгрейда */
+  const pp=$('#ptr23',v);
+  if(pp&&!$('#halo23',v)){const m=ST3.halo||'theme';
+    pp.insertAdjacentHTML('afterend',`<div class="panel" id="halo23"><h3 class="ph3">Свечение в апгрейде</h3>
+      <div class="halo23-l" id="haloM">${HALO23.map(([k,t])=>`<button type="button" data-hl="${k}" aria-pressed="${m===k}"><span class="halo23-w" data-halo="${k}"><i></i><b></b></span><small>${t}</small></button>`).join('')}</div></div>`);
+    $('#haloM',v).onclick=e=>{const b=e.target.closest('[data-hl]');if(!b)return;ST3.halo=b.dataset.hl;save3();document.documentElement.dataset.halo=ST3.halo;SFX.click();$$('#haloM button',v).forEach(x=>x.setAttribute('aria-pressed',x===b))};}
 })(renderCustom);
 const PTR23=[['tri','Треугольник'],['crown','Корона'],['blade','Клинок'],['gem','Кристалл'],['beam','Луч']];
+const HALO23=[['theme','Цвет темы'],['gold','Золото'],['fire','Огонь'],['ice','Лёд'],['toxic','Токсик'],['neon','Неон'],['rgb','RGB']];
 VIEWS.custom=renderCustom;
 
 /* ===================== ФОНЫ ПРОФИЛЯ: ещё 4 ===================== */
@@ -7010,6 +7053,30 @@ const ZI={
   lock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
   sticker:'<path d="M15 3H6a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h7l8-8V9a6 6 0 0 0-6-6z"/><path d="M13 21v-4a4 4 0 0 1 4-4h4"/>'};
 const zi=(k,c='')=>`<svg class="zi${c?' '+c:''}" viewBox="0 0 24 24" aria-hidden="true">${ZI[k]||ZI.box}</svg>`;
+/* 2.3: недостающие значки — чтобы в меню не было смайликов, всё в одном стиле */
+Object.assign(ZI,{
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>',
+  bell:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 21a2 2 0 0 0 4 0"/>',
+  chat:'<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>',
+  support:'<path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/><path d="M19 19c0 1.5-2 2.5-5 2.5"/>',
+  gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+  help:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.6v.6M12 17.2v.1"/>',
+  refresh:'<path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/>',
+  out:'<path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10"/>',
+  wallet:'<path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1z"/><path d="M4 7l11-3v3M16 13.5h.1"/>',
+  forum:'<path d="M3 4h12v9H8l-5 4z"/><path d="M15 9h6v9l-3-2h-7v-3"/>',
+  admin:'<path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/><path d="m8.5 12 2.5 2.5 4.5-5"/>',
+  brush:'<path d="M14 4l6 6-8.5 8.5-6-6z"/><path d="M5.5 12.5 3 21l8.5-2.5"/>',
+  home:'<path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/>'});
+const ICON23={profile:'user',inv:'bag',friends:'users',chats:'chat',custom:'brush',bonus:'gift',stats:'chart',forum:'forum',admin:'admin',
+  settings:'gear',faq:'help',news:'spark',reload:'refresh',logout:'out',notes:'bell',support:'support',wallet:'wallet',achs:'trophy',home:'home'};
+umenu=(f=>function(){f.apply(this,arguments);const m=$('#umenu');if(m.hidden)return;
+  m.querySelectorAll('.u8-r[data-u]').forEach(r=>{const k=ICON23[r.dataset.u],ic=r.querySelector('.u8-ic');if(k&&ic)ic.innerHTML=zi(k)});
+  const a=m.querySelector('[data-u="admin"] small');if(a)a.innerHTML=a.innerHTML.replace('💬','')})(umenu);
+moreSheet=(f=>function(){f.apply(this,arguments);const sh=$('#sheet');if(!sh)return;
+  const set=(b,k)=>{const ic=b&&b.querySelector('.m8-ic');if(!ic)return;const nb=ic.querySelector('.nb');ic.innerHTML=zi(k);if(nb)ic.appendChild(nb)};
+  sh.querySelectorAll('.m8-i[data-go]').forEach(b=>{const k=ICON23[b.dataset.go];if(k)set(b,k)});
+  set($('#mReload',sh),'refresh');set($('#mNotes',sh),'bell');set($('#mSup',sh),'support')})(moreSheet);
 
 /* ===================== 2.2: спрятанные промокоды ===================== */
 try{console.log('%cЗанос Battle%c\nЗаглянул под капот? Уважаем. Промокод: КОНСОЛЬ','font:900 22px sans-serif;color:#a94dff','font:14px sans-serif;color:#f2c14e')}catch(e){}
@@ -8442,6 +8509,12 @@ Steam ограничил запросы. Попробуй через минут�
 Steam прислал пустой ответ, попробуй позже	Steam sent an empty response, try later
 Steam не ответил (код {0}), попробуй позже	Steam didn't answer (code {0}), try later
 Steam скрыт или не привязан	Steam is hidden or not linked
+Оба	Both
+Свечение в апгрейде	Upgrade glow
+Огонь	Fire
+Лёд	Ice
+Неон	Neon
+Например	For example
 `;
 const LANG=ST3.lang==='en'?'en':'ru';
 const I18N=(()=>{
