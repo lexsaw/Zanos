@@ -2801,17 +2801,18 @@ html.lite .dq23-chest.on{animation:none}
 .up-wheelbox::before{content:"";position:absolute;inset:-6%;z-index:-1;border-radius:50%;pointer-events:none;
   background:conic-gradient(from 0deg,transparent 0 8%,color-mix(in srgb,var(--h1) 45%,transparent) 18%,transparent 34%,color-mix(in srgb,var(--h2) 40%,transparent) 58%,transparent 72%,color-mix(in srgb,var(--h3) 30%,transparent) 86%,transparent);
   filter:blur(22px);opacity:.75;animation:upHalo 12s linear infinite,haloBreath 4.5s ease-in-out infinite}
-.up-wheelbox:has(.wheel.spinning)::before{animation-duration:1.4s;opacity:1}
+.up-wheelbox:has(.wheel.spinning)::before{animation:haloSpinUp var(--sd,4s) cubic-bezier(.5,0,.9,.35) forwards;opacity:1}
+@keyframes haloSpinUp{from{rotate:0deg;scale:1}to{rotate:2160deg;scale:1.12}}
 /* итог: зашло — мерцание резко зеленеет и стягивается внутрь круга; мимо — краснеет и разлетается наружу */
-.up-wheelbox:has(.wheel.won)::before{background:conic-gradient(from 0deg,transparent 0 6%,color-mix(in srgb,var(--good) 85%,transparent) 16%,transparent 30%,color-mix(in srgb,var(--good) 70%,transparent) 52%,transparent 66%,color-mix(in srgb,#b6ffd4 70%,transparent) 82%,transparent);animation:upImplode .85s cubic-bezier(.6,0,.85,.25) both}
+.up-wheelbox:has(.wheel.won)::before{background:conic-gradient(from 0deg,transparent 0 6%,color-mix(in srgb,var(--good) 85%,transparent) 16%,transparent 30%,color-mix(in srgb,var(--good) 70%,transparent) 52%,transparent 66%,color-mix(in srgb,#b6ffd4 70%,transparent) 82%,transparent);animation:upImplode 1.15s cubic-bezier(.45,0,.8,.3) both}
 .up-wheelbox:has(.wheel.lost)::before{background:conic-gradient(from 0deg,transparent 0 6%,color-mix(in srgb,var(--bad) 85%,transparent) 16%,transparent 30%,color-mix(in srgb,var(--bad) 70%,transparent) 52%,transparent 66%,color-mix(in srgb,#ff9a9a 60%,transparent) 82%,transparent);animation:upBurst .9s cubic-bezier(.12,.75,.3,1) both}
 .up-wheelbox::after{content:"";position:absolute;left:50%;top:50%;height:94%;aspect-ratio:1;border-radius:50%;pointer-events:none;z-index:5;opacity:0;transform:translate(-50%,-50%)}
 .up-wheelbox:has(.wheel.won)::after{border:3px solid var(--good);box-shadow:0 0 30px var(--good),inset 0 0 30px var(--good);animation:ringIn .75s cubic-bezier(.6,0,.85,.25) both}
 .up-wheelbox:has(.wheel.lost)::after{border:3px solid var(--bad);box-shadow:0 0 30px var(--bad),inset 0 0 20px var(--bad);animation:ringOut .8s cubic-bezier(.12,.75,.3,1) both}
-.wheel.won .w-center{animation:upPop .5s cubic-bezier(.2,1.6,.4,1) .55s both,winGlow 1.4s ease-out .55s both}
+.wheel.won .w-center{animation:upPop .5s cubic-bezier(.2,1.6,.4,1) .85s both,winGlow 1.4s ease-out .85s both}
 .wheel.lost .w-center{animation:loseShake .45s ease-in-out both}
-@keyframes upImplode{0%{transform:scale(1.25) rotate(0);opacity:1;filter:blur(18px)}75%{opacity:1}100%{transform:scale(.25) rotate(260deg);opacity:0;filter:blur(4px)}}
-@keyframes upBurst{0%{transform:scale(.85) rotate(0);opacity:1;filter:blur(10px)}100%{transform:scale(2.2) rotate(-120deg);opacity:0;filter:blur(30px)}}
+@keyframes upImplode{0%{rotate:0deg;scale:1.2;opacity:1;filter:blur(18px)}55%{scale:.85;opacity:1;filter:blur(12px)}100%{rotate:1080deg;scale:.12;opacity:0;filter:blur(2px)}}
+@keyframes upBurst{0%{rotate:0deg;scale:.9;opacity:1;filter:blur(10px)}100%{rotate:-160deg;scale:2.3;opacity:0;filter:blur(34px)}}
 @keyframes ringIn{0%{transform:translate(-50%,-50%) scale(1.35);opacity:0}25%{opacity:1}100%{transform:translate(-50%,-50%) scale(.42);opacity:0}}
 @keyframes ringOut{0%{transform:translate(-50%,-50%) scale(.9);opacity:1}100%{transform:translate(-50%,-50%) scale(1.9);opacity:0}}
 @keyframes winGlow{0%{box-shadow:inset 0 0 0 2px var(--good),0 0 0 0 var(--good)}30%{box-shadow:inset 0 0 50px var(--good),0 0 60px 10px color-mix(in srgb,var(--good) 60%,transparent)}100%{box-shadow:inset 0 0 0 1px var(--good),0 0 24px color-mix(in srgb,var(--good) 40%,transparent)}}
@@ -2842,6 +2843,12 @@ html.lite .dq23-chest.on{animation:none}
 @keyframes ptrBob{50%{translate:0 4px}}
 @keyframes arcPulse{50%{filter:drop-shadow(0 0 14px var(--acc-2)) brightness(1.15)}}
 html.lite .wheel .pointer,html.lite #upArc,html.lite .halo23-w i{animation:none!important}
+/* центр колеса — «жидкое стекло»: размытие того, что под ним, блик сверху и мягкая кромка */
+.wheel .w-center{background:radial-gradient(circle at 50% 30%,color-mix(in srgb,var(--h1,var(--acc-2)) 18%,transparent),color-mix(in srgb,var(--bg-2) 70%,transparent) 72%);
+  -webkit-backdrop-filter:blur(14px) saturate(1.5);backdrop-filter:blur(14px) saturate(1.5);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -10px 24px rgba(0,0,0,.35),inset 0 0 0 1px rgba(255,255,255,.12),inset 0 0 40px color-mix(in srgb,var(--acc) 25%,transparent),0 0 46px -12px color-mix(in srgb,var(--acc-2) 55%,transparent)}
+.wheel .w-center::before{content:"";position:absolute;left:14%;right:14%;top:5%;height:38%;border-radius:50% 50% 45% 45%;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,0));filter:blur(.5px)}
+.up-wheelbox:has(.wheel.won)::after{animation:ringIn 1.05s cubic-bezier(.45,0,.8,.3) both}
 #upArc{filter:drop-shadow(0 0 6px var(--acc-2));transition:stroke .3s}
 .w-center{background:radial-gradient(circle at 50% 28%,color-mix(in srgb,var(--acc) 26%,var(--surf-2)),var(--bg-2) 74%);
   box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--acc-2) 30%,var(--line)),inset 0 10px 30px rgba(255,255,255,.04),inset 0 0 44px color-mix(in srgb,var(--acc) 30%,transparent),0 0 46px -12px color-mix(in srgb,var(--acc-2) 55%,transparent)}
@@ -2965,6 +2972,112 @@ html.lite .stm23-btn,html.lite .stm23-btn::before,html.lite .stm23-orb,html.lite
 @keyframes glitch23{0%{clip-path:inset(40% 0 35% 0);transform:translateX(-8px)}15%{clip-path:inset(10% 0 70% 0);transform:translateX(6px)}30%{clip-path:inset(70% 0 5% 0);transform:translateX(-4px)}45%{clip-path:inset(0 0 0 0);transform:none}}
 @keyframes crt23{50%{opacity:.85}}
 html.lite .term23-scr::after{animation:none}
+
+/* ===================== 2.3: фоны профиля заново ===================== */
+.pbd .z-pump{position:absolute;display:block}
+/* золотые соты: медовый градиент, рельефные соты, часть ячеек тлеет, по сотам идёт блик */
+.pbd-hex{background:radial-gradient(70% 90% at 30% 0,#5a3b08,#1a1004 62%,#090502)}
+.pbd-hex .z-hx{inset:-20%;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='104'%3E%3Cg fill='none' stroke-width='2'%3E%3Cpath d='M30 70 2 54V20L30 4l28 16v34z' stroke='%23ffcf5a' stroke-opacity='.55'/%3E%3Cpath d='M30 70v34M2 20 0 19M58 20l2-1' stroke='%23ffcf5a' stroke-opacity='.4'/%3E%3Cpath d='M30 66 6 52V22L30 8l24 14v30z' stroke='%23000' stroke-opacity='.45'/%3E%3C/g%3E%3C/svg%3E") 0 0/60px 104px;animation:pbdDr 18s ease-in-out infinite alternate}
+.pbd-hex .z-cell{left:var(--x);top:var(--y);width:46px;height:52px;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:radial-gradient(circle at 40% 35%,#fff3b8,#ffc23a 45%,#a8660a);opacity:0;animation:z-ember 4.5s ease-in-out var(--d) infinite;filter:drop-shadow(0 0 10px #ffb02e)}
+.pbd-hex .z-sweep{inset:-30% -60%;background:linear-gradient(115deg,transparent 42%,#fff2c055 49%,#ffe08a77 50%,transparent 58%);animation:z-sweep 7s ease-in-out infinite}
+@keyframes z-ember{0%,100%{opacity:0;transform:scale(.85)}40%,60%{opacity:.85;transform:scale(1)}}
+@keyframes z-sweep{0%{transform:translateX(-45%)}60%,100%{transform:translateX(45%)}}
+/* звёздная пыль: туманность, три слоя звёзд с параллаксом, падающие звёзды */
+.pbd-stars{background:#03020b}
+.pbd-stars .z-neb{inset:-20%;background:radial-gradient(40% 55% at 30% 40%,#7a2bd088,transparent 70%),radial-gradient(35% 45% at 72% 60%,#1f6bff77,transparent 70%),radial-gradient(25% 30% at 55% 30%,#ff4fae55,transparent 70%);filter:blur(10px);animation:z-neb 22s ease-in-out infinite alternate}
+.pbd-stars .z-st{inset:-10% -10% -10% -10%;background-repeat:repeat}
+.pbd-stars .z-st.a{background-image:radial-gradient(1px 1px at 20px 30px,#fff,transparent),radial-gradient(1px 1px at 90px 80px,#cfe0ff,transparent),radial-gradient(1px 1px at 150px 20px,#fff,transparent),radial-gradient(1px 1px at 60px 140px,#ffd6f2,transparent);background-size:180px 160px;animation:z-drift 60s linear infinite,pbdTw 3s ease-in-out infinite alternate}
+.pbd-stars .z-st.b{background-image:radial-gradient(1.5px 1.5px at 40px 60px,#fff,transparent),radial-gradient(1.5px 1.5px at 130px 110px,#bcd2ff,transparent);background-size:220px 200px;animation:z-drift 38s linear infinite,pbdTw 2.2s ease-in-out infinite alternate-reverse}
+.pbd-stars .z-st.c{background-image:radial-gradient(2.4px 2.4px at 70px 50px,#fff,transparent),radial-gradient(2px 2px at 200px 150px,#ffe7a8,transparent);background-size:300px 240px;animation:z-drift 24s linear infinite;filter:drop-shadow(0 0 3px #fff)}
+.pbd-stars .z-shoot{left:70%;top:10%;width:120px;height:2px;background:linear-gradient(90deg,#fff,transparent);transform:rotate(-25deg);opacity:0;animation:z-shoot 6s ease-in infinite;filter:drop-shadow(0 0 4px #fff)}
+.pbd-stars .z-shoot.s2{left:35%;top:25%;animation-delay:3.4s}
+@keyframes z-neb{to{transform:translate(4%,-3%) scale(1.08) rotate(3deg)}}
+@keyframes z-drift{to{transform:translateX(-180px)}}
+@keyframes z-shoot{0%,85%{opacity:0;translate:0 0}88%{opacity:1}100%{opacity:0;translate:-220px 110px}}
+/* микросхема: плата, дорожки, чипы, мигающие светодиоды, по дорожкам бегут импульсы */
+.pbd-circuit{background:radial-gradient(80% 120% at 50% 110%,#0a4a3a,#03201a 55%,#010b09)}
+.pbd-circuit .z-pcb{inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cg fill='none' stroke='%2319e3b1' stroke-opacity='.45' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M0 24h34l20 20h40l12-12h34M70 44v40l22 22h48M0 96h26l18-18M20 140v-26l16-16h30M110 0v18'/%3E%3C/g%3E%3Cg fill='%2319e3b1' fill-opacity='.7'%3E%3Ccircle cx='54' cy='44' r='3'/%3E%3Ccircle cx='92' cy='106' r='3'/%3E%3Ccircle cx='44' cy='78' r='3'/%3E%3Ccircle cx='106' cy='32' r='3'/%3E%3C/g%3E%3C/svg%3E") 0 0/140px 140px}
+.pbd-circuit .z-chip{left:var(--x);top:var(--y);width:54px;height:40px;border-radius:5px;background:linear-gradient(145deg,#1c2b28,#0b1311);box-shadow:0 0 0 1px #19e3b166,0 6px 16px #000a;
+  background-image:repeating-linear-gradient(90deg,#c9d6d0 0 3px,transparent 3px 9px),repeating-linear-gradient(90deg,#c9d6d0 0 3px,transparent 3px 9px),linear-gradient(145deg,#1c2b28,#0b1311);background-size:100% 5px,100% 5px,100% 100%;background-position:0 -1px,0 calc(100% + 1px),0 0;background-repeat:no-repeat}
+.pbd-circuit .z-led{left:var(--x);top:var(--y);width:6px;height:6px;border-radius:50%;background:#7dffd9;box-shadow:0 0 10px #19e3b1,0 0 20px #19e3b1;animation:z-blink 1.8s steps(2) var(--d) infinite}
+.pbd-circuit .z-pulse{inset:0;background:linear-gradient(100deg,transparent 35%,#b6fff0 48%,#fff 50%,#b6fff0 52%,transparent 65%) -100% 0/40% 100% no-repeat;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cg fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M0 24h34l20 20h40l12-12h34M70 44v40l22 22h48M0 96h26l18-18M20 140v-26l16-16h30M110 0v18'/%3E%3C/g%3E%3C/svg%3E") 0 0/140px 140px;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cg fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M0 24h34l20 20h40l12-12h34M70 44v40l22 22h48M0 96h26l18-18M20 140v-26l16-16h30M110 0v18'/%3E%3C/g%3E%3C/svg%3E") 0 0/140px 140px;animation:pbdSc 3.5s linear infinite}
+@keyframes z-blink{50%{opacity:.15}}
+/* неоновый город: закатное небо, луна, два слоя небоскрёбов с окнами, вывески, фары на дороге, дымка */
+.pbd-city{background:#0a0016}
+.pbd-city .z-sky{inset:0;background:linear-gradient(180deg,#12002a 0%,#3a0b5e 45%,#b0177a 72%,#ff6a3d 88%,#2a0630 88.5%)}
+.pbd-city .z-moon{right:12%;top:12%;width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#fff6e0,#ffb36a);box-shadow:0 0 40px #ff9a5a,0 0 90px #ff3ad8aa}
+.pbd-city .z-far{left:0;right:0;bottom:12%;height:48%;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100' preserveAspectRatio='none'%3E%3Cpath d='M0 100V60h18V40h14v30h10V22h22v48h12V50h16v20h10V30h8V18h10v52h14V44h20v56h12V36h18v34h10V26h16v44h14V48h22v52h16V40h12v30h18V30h20v70z' fill='%2333104f'/%3E%3C/svg%3E") 0 100%/400px 100% repeat-x;opacity:.9;animation:z-pan 70s linear infinite}
+.pbd-city .z-near{left:0;right:0;bottom:8%;height:44%;background:
+  repeating-linear-gradient(90deg,transparent 0 6px,#ffd36a33 6px 9px,transparent 9px 16px) 0 0/16px 10px,
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100' preserveAspectRatio='none'%3E%3Cpath d='M0 100V50h30V20h24v80h18V40h26v60h14V10h30v90h20V45h22v55h16V30h28v70h20V55h24v45h18V25h26v75h22V40h26v60z' fill='%2312041f'/%3E%3C/svg%3E") 0 100%/400px 100% repeat-x;animation:z-pan 35s linear infinite}
+.pbd-city .z-sign{width:70px;height:16px;border-radius:4px;border:2px solid #ff3ad8;box-shadow:0 0 12px #ff3ad8,inset 0 0 8px #ff3ad8;animation:z-flick 3.2s steps(1) infinite}
+.pbd-city .z-sign.s1{left:20%;bottom:40%}.pbd-city .z-sign.s2{left:62%;bottom:46%;width:44px;border-color:#2affd5;box-shadow:0 0 12px #2affd5,inset 0 0 8px #2affd5;animation-delay:1.3s}
+.pbd-city .z-car{left:-10%;bottom:4%;width:26px;height:3px;border-radius:3px;background:#fff6c8;box-shadow:0 0 10px #fff,20px 0 0 -1px #ff3a5a;animation:z-car 5s linear infinite}
+.pbd-city .z-car.c2{animation-duration:7s;animation-delay:2s;bottom:6%;background:#ff3a5a;box-shadow:0 0 10px #ff3a5a}
+.pbd-city .z-haze{left:0;right:0;bottom:0;height:30%;background:linear-gradient(0deg,#ff3ad855,transparent)}
+@keyframes z-pan{to{background-position:-400px 100%,-400px 100%}}
+@keyframes z-flick{0%,100%{opacity:1}47%{opacity:.25}50%{opacity:1}53%{opacity:.4}56%{opacity:1}}
+@keyframes z-car{to{left:110%}}
+/* дождь из монет: золотые монеты падают и переворачиваются, внизу горка с бликом */
+.pbd-coins{background:radial-gradient(80% 100% at 50% 0,#3a2706,#130c02 70%)}
+.pbd-coins .z-gold{inset:0;background:radial-gradient(60% 40% at 50% 100%,#ffb02e55,transparent 70%)}
+.pbd-coins .z-coin{left:var(--x);top:-12%;width:calc(26px*var(--s));aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff6c8,#ffcf3a 40%,#b8771f 75%,#7a4a0a);box-shadow:inset 0 0 0 2px #ffe08a,inset 0 0 0 4px #b8771f,0 0 12px #ffb02e88;animation:z-fall var(--t) linear var(--d) infinite,z-flip calc(var(--t)/3) ease-in-out var(--d) infinite}
+.pbd-coins .z-pile{left:-5%;right:-5%;bottom:-18%;height:34%;border-radius:50% 50% 0 0;background:radial-gradient(circle at 20% 30%,#fff2b0 0 3px,transparent 4px) 0 0/22px 18px,radial-gradient(ellipse at 50% 0,#ffcf3a,#b8771f 60%,#5a3a06);box-shadow:0 -10px 40px #ffb02e66}
+@keyframes z-fall{to{transform:translateY(125cqh)}}
+@keyframes z-flip{50%{scale:.15 1}}
+/* королевский бархат: бархатный шёлк, дамасский узор, золотой герб, блик ткани, золотая рамка */
+.pbd-velvet{background:radial-gradient(70% 110% at 50% 10%,#6a1030,#2a0414 70%,#14020a)}
+.pbd-velvet .z-vel{inset:0;background:repeating-linear-gradient(100deg,#ffffff06 0 2px,transparent 2px 7px)}
+.pbd-velvet .z-dam{inset:-10%;opacity:.35;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='100'%3E%3Cg fill='none' stroke='%23f2c14e' stroke-width='1.4'%3E%3Cpath d='M40 6c10 12 22 14 22 30S48 58 40 70C32 58 18 52 18 36S30 18 40 6z'/%3E%3Cpath d='M40 22c5 6 10 8 10 16s-6 12-10 18c-4-6-10-10-10-18s5-10 10-16zM40 70v24M28 84h24'/%3E%3C/g%3E%3C/svg%3E") 0 0/80px 100px}
+.pbd-velvet .z-crest{left:50%;top:50%;width:90px;height:70px;transform:translate(-50%,-50%);opacity:.5;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 50'%3E%3Cpath d='M9 38 6 12l13 11 13-17 13 17 13-11-3 26z' fill='none' stroke='%23f2c14e' stroke-width='2.4' stroke-linejoin='round'/%3E%3Cpath d='M11 44h42' stroke='%23f2c14e' stroke-width='3'/%3E%3C/svg%3E") center/contain no-repeat;filter:drop-shadow(0 0 12px #f2c14e88)}
+.pbd-velvet .z-sheen{inset:-40% -80%;background:linear-gradient(105deg,transparent 40%,#ff9ac033 48%,#ffffff22 50%,transparent 60%);animation:z-sweep 9s ease-in-out infinite}
+.pbd-velvet .z-frame{inset:8px;border:1px solid #f2c14e66;border-radius:12px;box-shadow:inset 0 0 0 3px #2a0414,inset 0 0 0 4px #f2c14e33}
+/* белый вихрь: три слоя белых спиралей крутятся с разной скоростью, ядро светится, искры по орбитам */
+.pbd-blade{background:radial-gradient(60% 90% at 50% 50%,#2a2a33,#0d0d12 70%,#050507)}
+.pbd-blade .z-vx{left:50%;top:50%;width:160%;aspect-ratio:1;border-radius:50%;translate:-50% -50%;background:repeating-conic-gradient(from 0deg,#ffffff00 0 14deg,#ffffffaa 18deg,#ffffff00 26deg 40deg);-webkit-mask:radial-gradient(closest-side,transparent 6%,#000 22%,transparent 72%);mask:radial-gradient(closest-side,transparent 6%,#000 22%,transparent 72%);filter:blur(2px);animation:z-spin 14s linear infinite}
+.pbd-blade .z-vx.b{width:120%;opacity:.6;animation-duration:9s;animation-direction:reverse;filter:blur(4px)}
+.pbd-blade .z-vx.c{width:220%;opacity:.25;animation-duration:24s;filter:blur(6px)}
+.pbd-blade .z-core{left:50%;top:50%;width:60px;height:60px;translate:-50% -50%;border-radius:50%;background:radial-gradient(circle,#fff,#ffffff55 40%,transparent 70%);animation:glow23 2.6s ease-in-out infinite}
+.pbd-blade .z-mote{left:50%;top:50%;width:4px;height:4px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff;transform:rotate(var(--a)) translateX(calc(var(--r)*2.4));animation:z-orb 7s linear var(--d) infinite}
+@keyframes z-spin{to{rotate:360deg}}
+@keyframes z-orb{to{transform:rotate(calc(var(--a) + 360deg)) translateX(calc(var(--r)*2.4))}}
+/* алые лепестки: тёмно-алый шёлк, лепестки падают, кружатся и раскачиваются */
+.pbd-petal{background:radial-gradient(70% 100% at 50% 0,#7a0c1e,#3a040e 60%,#180206)}
+.pbd-petal .z-crim{inset:0;background:radial-gradient(40% 60% at 80% 90%,#ff3a5a33,transparent 70%),radial-gradient(30% 40% at 15% 20%,#ff8aa033,transparent 70%)}
+.pbd-petal .z-pet{left:var(--x);top:-10%;width:calc(16px*var(--s));height:calc(11px*var(--s));border-radius:80% 0 80% 0;background:linear-gradient(135deg,#ffb3c2,#ff2a4a 55%,#a3000f);box-shadow:0 2px 6px #0006;animation:z-pfall var(--t) linear var(--d) infinite}
+.pbd-petal .z-bloom{left:-10%;right:-10%;bottom:-20%;height:40%;background:radial-gradient(ellipse at 50% 100%,#ff2a4a55,transparent 70%)}
+@keyframes z-pfall{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(var(--sw),25cqh) rotate(120deg)}50%{transform:translate(0,55cqh) rotate(220deg)}75%{transform:translate(calc(var(--sw)*-1),80cqh) rotate(320deg)}100%{transform:translate(0,120cqh) rotate(420deg)}}
+.pbd{container-type:size}
+/* пиксельный дым: ретро-клубы поднимаются ступеньками и рассыпаются */
+.pbd-pixel{background:linear-gradient(180deg,#0d0618,#1a0b2e 60%,#2a0f3a)}
+.pbd-pixel .z-pxbg{inset:0;background:linear-gradient(#ffffff08 1px,transparent 1px) 0 0/100% 8px,linear-gradient(90deg,#ffffff08 1px,transparent 1px) 0 0/8px 100%}
+.pbd-pixel .z-px{left:var(--x);bottom:-10%;width:var(--s);height:var(--s);background:var(--c);box-shadow:var(--s) 0 0 var(--c),0 calc(var(--s)*-1) 0 var(--c),calc(var(--s)*-1) calc(var(--s)*-1) 0 color-mix(in srgb,var(--c) 70%,#fff);image-rendering:pixelated;animation:z-rise var(--t) steps(12) var(--d) infinite}
+@keyframes z-rise{0%{transform:translateY(0);opacity:0}10%{opacity:.95}100%{transform:translateY(-110cqh) scale(1.6);opacity:0}}
+/* 1-бит: чёрно-белый дизеринг, по нему идёт волна, сверху развёртка как на старом мониторе */
+.pbd-dither{background:#000}
+.pbd-dither .z-dt{inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' shape-rendering='crispEdges'%3E%3Crect width='1' height='1' fill='%23fff'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%23fff'/%3E%3C/svg%3E") 0 0/4px 4px;-webkit-mask:radial-gradient(70% 90% at 30% 60%,#000,transparent 75%);mask:radial-gradient(70% 90% at 30% 60%,#000,transparent 75%);image-rendering:pixelated;animation:z-dmask 8s ease-in-out infinite alternate}
+.pbd-dither .z-dtw{inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' shape-rendering='crispEdges'%3E%3Crect width='1' height='1' fill='%23fff'/%3E%3Crect x='2' y='0' width='1' height='1' fill='%23fff'/%3E%3Crect x='1' y='2' width='1' height='1' fill='%23fff'/%3E%3Crect x='3' y='2' width='1' height='1' fill='%23fff'/%3E%3C/svg%3E") 0 0/4px 4px;-webkit-mask:linear-gradient(90deg,transparent 20%,#000 50%,transparent 80%) -100% 0/60% 100% no-repeat;mask:linear-gradient(90deg,transparent 20%,#000 50%,transparent 80%) -100% 0/60% 100% no-repeat;animation:z-dwave 4s linear infinite}
+.pbd-dither .z-scan{inset:0;background:repeating-linear-gradient(0deg,#0000 0 2px,#0008 2px 3px)}
+@keyframes z-dmask{to{-webkit-mask-position:80% 20%;mask-position:80% 20%}}
+@keyframes z-dwave{to{-webkit-mask-position:250% 0;mask-position:250% 0}}
+/* тыквенное поле: ночное небо, огромная луна, холмы, тыквы со светящимися лицами, туман и светлячки */
+.pbd-pumpkin{background:#07040f}
+.pbd-pumpkin .z-pksky{inset:0;background:linear-gradient(180deg,#0b0620,#2a0f3a 55%,#4a1a1a)}
+.pbd-pumpkin .z-pkmoon{right:10%;top:8%;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle at 38% 38%,#fff8dc,#ffd27a 55%,#ff9a3a);box-shadow:0 0 50px #ffb04a,0 0 120px #ff7a2a88}
+.pbd-pumpkin .z-hill{left:-10%;right:-10%;bottom:-22%;height:52%;border-radius:50% 50% 0 0;background:#120814}
+.pbd-pumpkin .z-hill.h2{bottom:-32%;height:50%;left:30%;right:-30%;background:#0a0410}
+.pbd-pumpkin .z-pump{left:var(--x);bottom:6%;width:calc(54px*var(--s));height:calc(42px*var(--s));border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffb36a,#ff7a12 45%,#b84a00);box-shadow:inset -6px -4px 0 #0003,0 0 18px #ff7a1255;animation:z-glow 2.4s ease-in-out var(--d) infinite}
+.pbd-pumpkin .z-pump::before{content:"";position:absolute;left:50%;top:-14%;width:12%;height:22%;border-radius:3px;background:#3a5a1a;transform:translateX(-50%) rotate(8deg)}
+.pbd-pumpkin .z-pump i{left:18%;right:18%;top:30%;bottom:20%;background:#ffe14a;clip-path:polygon(8% 10%,28% 10%,18% 34%,72% 10%,92% 10%,82% 34%,5% 55%,20% 70%,35% 55%,50% 72%,65% 55%,80% 70%,95% 55%,72% 92%,28% 92%);filter:drop-shadow(0 0 6px #ffcc00);animation:z-flame 1.4s steps(3) var(--d) infinite}
+.pbd-pumpkin .z-fog{left:-50%;width:200%;bottom:0;height:34%;background:radial-gradient(ellipse at 30% 60%,#c9b8ff22,transparent 60%),radial-gradient(ellipse at 70% 70%,#ffffff18,transparent 60%);animation:z-fog 26s linear infinite}
+.pbd-pumpkin .z-fog.f2{bottom:-6%;opacity:.7;animation-duration:40s;animation-direction:reverse}
+.pbd-pumpkin .z-fly{left:var(--x);top:var(--y);width:4px;height:4px;border-radius:50%;background:#e9ff8a;box-shadow:0 0 8px #e9ff8a;animation:z-firefly 6s ease-in-out var(--d) infinite}
+@keyframes z-glow{50%{box-shadow:inset -6px -4px 0 #0003,0 0 34px #ff7a12aa}}
+@keyframes z-flame{33%{opacity:.75}66%{opacity:1;filter:drop-shadow(0 0 10px #ffcc00)}}
+@keyframes z-fog{to{transform:translateX(25%)}}
+@keyframes z-firefly{0%,100%{transform:translate(0,0);opacity:.2}50%{transform:translate(18px,-14px);opacity:1}}
+html.lite .pbd i,html.lite .pbd .z-pump{animation:none!important}
 @media (prefers-reduced-motion:reduce){.drop-hero .drop-img::before,.drop-hero .drop-img::after,.drop-hero .drop-img .skimg,.drop-info>*,.res-cell,.res-t,.roul.won7 .track>.win{animation:none}}
 </style>
 </head>
@@ -3209,7 +3322,7 @@ const toItem=x=>x&&({id:+x.id||0,n:x.n,w:x.w==null?null:+x.w,f:x.f==null?null:+x
 function applyState(st){
   if(!st||!st.profile)return;
   const p=st.profile;
-  S.bal=+p.bal;S.nick=p.nick;S.col=p.col||S.col;S.ava=p.ava&&(SK[p.ava]||/^(ex|up):/.test(p.ava))?p.ava:null;S.frame=p.frame||null;S.pbg=p.pbg||null;S.evPts=+p.ev_pts||0;S.evOwned=p.ev_owned||[];S.hot=+p.hot_left||0;S.cool=+p.cool||0;S.nickBad=!!p.nick_bad;S.nickOld=p.nick_old||'';S.pk=p.pk||null;S.steam=p.steam||null;S.upCap=+p.up_cap||1;S.upMax=+p.up_max||.85;S.depLimit=+p.dep_limit||50000;S.depLeft=p.dep_left==null?null:+p.dep_left;S.bad=+p.bad_streak||0;S.upB=+p.up_bonus||0;S.pub=p.pub;S.theme=p.theme||null;S.cstats=p.cstats||[];S.won=p.won==null?null:+p.won;S.won_sum=p.won_sum==null?null:+p.won_sum;S.opened=+p.opened||0;S.best=p.best?toItem(p.best):null;S.daily_at=p.daily_at;S.broke_at=p.broke_at;S.is_admin=!!p.is_admin;S.email=p.email||'';
+  S.bal=+p.bal;S.nick=p.nick;S.col=p.col||S.col;S.ava=p.ava&&(SK[p.ava]||/^(ex|up|st):/.test(p.ava))?p.ava:null;S.frame=p.frame||null;S.pbg=p.pbg||null;S.evPts=+p.ev_pts||0;S.evOwned=p.ev_owned||[];S.hot=+p.hot_left||0;S.cool=+p.cool||0;S.nickBad=!!p.nick_bad;S.nickOld=p.nick_old||'';S.pk=p.pk||null;S.steam=p.steam||null;S.upCap=+p.up_cap||1;S.upMax=+p.up_max||.85;S.depLimit=+p.dep_limit||50000;S.depLeft=p.dep_left==null?null:+p.dep_left;S.bad=+p.bad_streak||0;S.upB=+p.up_bonus||0;S.pub=p.pub;S.theme=p.theme||null;S.cstats=p.cstats||[];S.won=p.won==null?null:+p.won;S.won_sum=p.won_sum==null?null:+p.won_sum;S.opened=+p.opened||0;S.best=p.best?toItem(p.best):null;S.daily_at=p.daily_at;S.broke_at=p.broke_at;S.is_admin=!!p.is_admin;S.email=p.email||'';
   S.inv=(st.inv||[]).map(toItem).filter(i=>SK[i.n]);
   S.vault=(st.vault||[]).map(toItem).filter(i=>SK[i.n]);
   if(typeof tryRef==='function')setTimeout(tryRef,500);
@@ -3800,6 +3913,9 @@ async function skinModal(n,{w=null,st=false,item=null}={}){
       const h=hashOf(n,cw,cst),site=item?item.p:priceOf(n,cw,cst),box=$('#skP',sh);if(!box)return;
       box.innerHTML=`<div class="pr"><span>Цена на сайте</span><b>${fmt2(site)}</b></div><div class="pr"><span>CS Market</span><b id="pCS">…</b></div><div class="pr"><span>Steam</span><b id="pST">…</b></div><small class="mute">${isAg?'':esc(WEARS[cw][1])+(cst?' · StatTrak™':'')+' · '}цены площадок в рублях, Steam обновляется раз в 6 часов</small>`;
       const m=await marketMap();const cs=m[h]?.[0];if($('#pCS',sh))$('#pCS',sh).textContent=cs!=null?fmt2(cs):'нет данных';
+      /* 2.3: сначала цену спрашивает функция steam (её Steam режет реже), если не вышло — старый путь через базу */
+      try{if($('#pST',sh))$('#pST',sh).textContent='загружаю…';const sp=await steamFn({act:'price',hash:h});const rub=t=>{if(!t)return null;const x=parseFloat(String(t).replace(/[^\d,.]/g,'').replace(/\.(?=\d{3}\b)/g,'').replace(',','.'));return isFinite(x)?x:null};
+        const lo=rub(sp.lowest),md=rub(sp.median);if((lo!=null||md!=null)&&$('#pST',sh)&&hashOf(n,cw,cst)===h){$('#pST',sh).innerHTML=`${fmt2(lo??md)}${md&&lo?` <small class="mute">медиана ${fmt0(md)}</small>`:''}`;return}}catch(e){}
       for(let i=0;i<6;i++){
         if(!$('#pST',sh)||hashOf(n,cw,cst)!==h)return;
         let r;try{r=await rpc('zb_steam_price',{p_hash:h})}catch(e){$('#pST',sh).textContent='нет данных';return}
@@ -4467,7 +4583,7 @@ async function doUpgrade(){
   const R=mode==='ring'?360*spins+((360-theta)%360):360*spins+(((theta+RR)%360)+360)%360;
   const rot=arrow?$('#needle'):$('#ringRot'),wh=$('#wheel'),dur=S.fast?SPEED.upF:SPEED.upN;
   $('#ringRot').style.transform='rotate(0deg)';$('#needle').style.transform='rotate(0deg)';
-  wh.classList.remove('won','lost');wh.classList.add('spinning');
+  wh.classList.remove('won','lost');wh.parentElement.style.setProperty('--sd',dur+'ms');wh.classList.add('spinning');
   rot.style.transition='none';rot.style.transform='rotate(0deg)';void rot.offsetWidth;
   SFX.spinStart(dur/1000);
   rot.style.transition=`transform ${dur}ms cubic-bezier(.12,.66,.08,1)`;rot.style.transform=`rotate(${R}deg)`;
@@ -5096,7 +5212,7 @@ function renderCustom(){
   <div class="panel"><h3 class="ph3">Темы</h3><small class="mute">Тема видна у тебя в профиле, менять можно когда угодно</small>
     <div class="themes">${Object.entries(THEMES).map(([k,t])=>`<button type="button" class="th${cur3===k?' on':''}" data-th="${k}"><span class="th-art" style="background:${t.art}">${CROWN}</span><span class="th-b"><b>${t.n}</b><small>${cur3===k?'✓ Активная':t.d}</small></span></button>`).join('')}</div></div>
   <div class="panel"><h3 class="ph3">Аватарки</h3><div class="seg" id="avC">${Object.entries(cats).map(([k,t])=>`<button type="button" data-c="${k}" aria-pressed="${AVC===k}">${t}</button>`).join('')}</div>
-    <div class="avas" id="avas"><button type="button" data-a="" aria-pressed="${!S.ava}" title="Буква ника">${avaHTML(S.nick,S.col,null)}</button>${avs.map(a=>`<button type="button" data-a="${esc(a)}" aria-pressed="${S.ava===a}">${avaHTML('',S.col,a)}</button>`).join('')}</div></div>
+    <div class="avas" id="avas"><button type="button" data-a="" aria-pressed="${!S.ava}" title="Буква ника">${avaHTML(S.nick,S.col,null)}</button>${(()=>{const h=((S.steam&&S.steam.ava)||'').match(/([0-9a-f]{40})/);return h?`<button type="button" data-a="st:${h[1]}" aria-pressed="${S.ava==='st:'+h[1]}" title="Steam">${avaHTML('',S.col,'st:'+h[1])}</button>`:''})()}${avs.map(a=>`<button type="button" data-a="${esc(a)}" aria-pressed="${S.ava===a}">${avaHTML('',S.col,a)}</button>`).join('')}</div></div>
   <div class="panel"><h3 class="ph3">Язык · Language</h3>${langSwitch()}<small class="mute">Валюта всегда в рублях · Currency always stays in rubles</small></div>
   <div class="panel"><h3 class="ph3">Версия сайта</h3>${viewModeHTML()}<small class="mute">Включи «Компьютерную», чтобы на телефоне был полный сайт, как на ПК</small></div>
   <div class="panel"><h3 class="ph3">Меню на компьютере</h3><div class="navpick" id="navP"><button type="button" data-nav="top" aria-pressed="${ST3.nav!=='left'}"><span class="np np-top"><i></i><i></i></span><b>Сверху</b></button><button type="button" data-nav="left" aria-pressed="${ST3.nav==='left'}"><span class="np np-left"><i></i><i></i></span><b>Слева</b></button></div><small class="mute">На телефоне меню всегда внизу, всё остальное прячется в «Ещё»</small></div>
@@ -6718,6 +6834,8 @@ function avaHTML(nick,col,ava,cls=''){
   if(ava&&/^up:\d+:\d+$/.test(ava)){const d=AVUP_C.get(ava);if(!d){AVUP_Q.add(ava);clearTimeout(AVUP_T);AVUP_T=setTimeout(avaUpLoad,60)}
     return `<span class="ava img up ${cls}" style="--c:${c}" data-up="${ava}">${d?`<img src="${d}" alt="" decoding="async">`:`<i class="up-l">${esc(String(nick||'?')[0].toUpperCase())}</i>`}</span>`}
   if(ava&&ava.startsWith('ex:'))return `<span class="ava abs ex ${cls}" style="--c:${c}">${exSVG(ava)}</span>`;
+  /* 2.3: аватарка из Steam (st:<хеш>); если основной сервер картинок Steam не ответил — пробуем запасной */
+  if(ava&&/^st:[0-9a-f]{40}$/.test(ava)){const h=ava.slice(3);return `<span class="ava img st ${cls}" style="--c:${c}"><img src="https://avatars.steamstatic.com/${h}_medium.jpg" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://avatars.akamai.steamstatic.com/${h}_medium.jpg'}else this.remove()" alt="" decoding="async" referrerpolicy="no-referrer"></span>`}
   return `<span class="ava ${cls}" style="--c:${c}">${esc(String(nick||'?')[0].toUpperCase())}</span>`;
 }
 async function avaUpLoad(){
@@ -7015,6 +7133,26 @@ themeFx=(f=>function(id){
 Object.assign(PBD,{'bg:d-petal':'Алые лепестки','bg:d-blade':'Белый вихрь','bg:d-pixel':'Пиксельный дым','bg:d-dither':'1-бит','bg:d-wave':'Пульс'});
 Object.assign(PBGS,{'bg:d-petal':'Алые лепестки','bg:d-blade':'Белый вихрь','bg:d-pixel':'Пиксельный дым','bg:d-dither':'1-бит','bg:d-wave':'Пульс'});
 ['petal','blade','pixel','dither','wave'].forEach(k=>{Object.defineProperty(PBD_IN,k,{get:()=>'<span class="tfx9 tfx9-'+k+' pb9">'+fx9(k,true)+'</span>',configurable:true,enumerable:true})});
+
+/* ===================== 2.3: фоны профиля заново ===================== */
+/* пиксельный камуфляж убран; соты, звёзды, микросхема, город, монеты, бархат, вихрь, лепестки, пиксельный дым, 1-бит и тыквенное поле нарисованы заново */
+delete PBD['bg:d-camo'];delete PBGS['bg:d-camo'];
+{const R=(n,f)=>Array.from({length:n},(_,i)=>f(i)).join('');
+ const set=(k,html)=>Object.defineProperty(PBD_IN,k,{value:html,writable:true,configurable:true,enumerable:true});
+ set('hex','<i class="z-hx"></i>'+R(9,i=>`<i class="z-cell" style="--x:${[8,22,36,50,64,78,15,43,71][i]}%;--y:${[30,62,30,62,30,62,12,12,12][i]}%;--d:${(i*.7).toFixed(1)}s"></i>`)+'<i class="z-sweep"></i>');
+ set('stars','<i class="z-neb"></i><i class="z-st a"></i><i class="z-st b"></i><i class="z-st c"></i><i class="z-shoot"></i><i class="z-shoot s2"></i>');
+ set('circuit','<i class="z-pcb"></i>'+R(3,i=>`<i class="z-chip" style="--x:${[18,52,80][i]}%;--y:${[28,58,22][i]}%"></i>`)+R(7,i=>`<i class="z-led" style="--x:${(i*14+6)%96}%;--y:${(i*37+15)%85}%;--d:${(i*.45).toFixed(2)}s"></i>`)+'<i class="z-pulse"></i>');
+ set('city','<i class="z-sky"></i><i class="z-moon"></i><i class="z-far"></i><i class="z-near"></i><i class="z-sign s1"></i><i class="z-sign s2"></i><i class="z-car"></i><i class="z-car c2"></i><i class="z-haze"></i>');
+ set('coins','<i class="z-gold"></i>'+R(16,i=>`<i class="z-coin" style="--x:${(i*29+5)%96}%;--t:${(2.6+(i*7)%5*.45).toFixed(2)}s;--d:-${(i*.53).toFixed(2)}s;--s:${(.55+(i%4)*.18).toFixed(2)}"></i>`)+'<i class="z-pile"></i>');
+ set('velvet','<i class="z-vel"></i><i class="z-dam"></i><i class="z-crest"></i><i class="z-sheen"></i><i class="z-frame"></i>');
+ set('blade','<i class="z-vx a"></i><i class="z-vx b"></i><i class="z-vx c"></i><i class="z-core"></i>'+R(10,i=>`<i class="z-mote" style="--a:${i*36}deg;--r:${30+(i*13)%40}%;--d:-${(i*.8).toFixed(1)}s"></i>`));
+ set('petal','<i class="z-crim"></i>'+R(18,i=>`<i class="z-pet" style="--x:${(i*23+3)%98}%;--t:${(5+(i*5)%6*.7).toFixed(1)}s;--d:-${(i*.61).toFixed(2)}s;--s:${(.6+(i%3)*.3).toFixed(1)};--sw:${(i%2?1:-1)*(20+(i*11)%40)}px"></i>`)+'<i class="z-bloom"></i>');
+ set('pixel','<i class="z-pxbg"></i>'+R(22,i=>`<i class="z-px" style="--x:${(i*17+4)%96}%;--t:${(3+(i*3)%5*.6).toFixed(1)}s;--d:-${(i*.37).toFixed(2)}s;--s:${5+(i%4)*3}px;--c:${['#ff4fa3','#b06bff','#5b8cff','#ff8ad0'][i%4]}"></i>`));
+ set('dither','<i class="z-dt"></i><i class="z-dtw"></i><i class="z-scan"></i>');
+ pbgHTML=(f=>function(id,cls=''){
+   if(id==='bg:pumpkin')return `<span class="pbg pbd pbd-pumpkin z-pk ${cls}" aria-hidden="true"><i class="z-pksky"></i><i class="z-pkmoon"></i><i class="z-hill h1"></i><i class="z-hill h2"></i>${R(6,i=>`<b class="z-pump" style="--x:${[6,22,40,58,74,88][i]}%;--s:${[.9,.65,1.1,.75,1,.6][i]};--d:${(i*.41).toFixed(2)}s"><i></i></b>`)}<i class="z-fog f1"></i><i class="z-fog f2"></i>${R(8,i=>`<i class="z-fly" style="--x:${(i*13+5)%95}%;--y:${(i*29+20)%60}%;--d:-${(i*.9).toFixed(1)}s"></i>`)}</span>`;
+   return f(id,cls)})(pbgHTML);
+}
 
 /* ===================== 2.2: фирменные иконки (одна линия, одна толщина, цвет от темы) ===================== */
 const ZI={
@@ -8515,6 +8653,18 @@ Steam скрыт или не привязан	Steam is hidden or not linked
 Лёд	Ice
 Неон	Neon
 Например	For example
+Халява и промокоды	Freebies and promo codes
+Админка	Admin
+Выйти	Sign out
+Правила	Rules
+{0} шт.	{0} pcs
+Steam не знает цену этого предмета	Steam has no price for this item
+Нет названия предмета	No item name
+Сначала привяжи Steam	Link Steam first
+Цвет	Color
+медиана	median
+Steam не ответил, попробуй позже	Steam didn't answer, try later
+загружаю…	loading…
 `;
 const LANG=ST3.lang==='en'?'en':'ru';
 const I18N=(()=>{
@@ -8556,6 +8706,8 @@ const I18N=(()=>{
   const mo=new MutationObserver(ms=>{for(const m of ms){if(m.type==='characterData')q.add(m.target);else if(m.type==='attributes')q.add(m.target);else m.addedNodes.forEach(n=>q.add(n))}if(!sched){sched=true;queueMicrotask(flush)}});
   const start=()=>{walk(document.body);mo.observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['placeholder','title','aria-label']});document.title=tr(document.title)};
   document.documentElement.lang='en';
+  /* даты тоже по-английски («23 Oct», а не «23 окт.»); числа и рубли оставляем как есть */
+  for(const m of ['toLocaleDateString','toLocaleString','toLocaleTimeString']){const o=Date.prototype[m];Date.prototype[m]=function(l,opt){return o.call(this,/^ru/i.test(l||'')?'en-GB':l,opt)}}
   if(document.body)start();else addEventListener('DOMContentLoaded',start);
   return {on:true,tr};
 })();
@@ -8565,6 +8717,9 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-lang]');if
 /* 2.3: никаких искр и конфетти — выпадение показывают лучи редкости в окне */
 for(const k of Object.keys(FX7))if(typeof FX7[k]==='function')FX7[k]=()=>{};
 confetti=()=>{};
+/* 2.3: темы 2.x (лепестки, вихрь, пиксельный дым, 1-бит, волна) подключаются ниже первого applyTheme — применяем выбранную ещё раз,
+   иначе после перезагрузки сайт ставил фиолетовую и тему приходилось выбирать заново */
+applyTheme(ST3.theme);
 
 userUI();
 if(!sb)authScreen('nocfg');
