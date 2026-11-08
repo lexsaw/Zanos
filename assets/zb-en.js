@@ -429,7 +429,7 @@ Steam скрыт от других	Steam hidden from others
 Классический	Classic
 Клатч в эфире	Clutch on Air
 Клинок	Blade
-Кнопка «+» возле баланса. Это игровое пополнение до лимита в час (его ставит админ, сейчас обычно 50 000 ₽). Ещё есть ежедневный бонус 1 000 ₽ и промокоды в «Халяве». Часть промокодов спрятана по сайту.	The "+" button next to your balance. It's a play-money top-up with an hourly limit (set by the admin, usually 50,000 ₽). There's also a 1,000 ₽ daily bonus and promo codes in "Freebies". Some promo codes are hidden around the site.
+Кнопка «+» возле баланса. Это игровое пополнение до лимита в час (его ставит админ, сейчас 20 000 ₽). Ещё есть ежедневный бонус 1 000 ₽ и промокоды в «Халяве». Часть промокодов спрятана по сайту.	The "+" button next to your balance. It's a play-money top-up with an hourly limit (set by the admin, currently 20,000 ₽). There's also a 1,000 ₽ daily bonus and promo codes in "Freebies". Some promo codes are hidden around the site.
 Когда места заняты, жми «Начать».	When all seats are taken, press "Start".
 Когда откроемся	When we open
 Кого добавить	Who to add
@@ -1408,4 +1408,46 @@ Steam не ответил, попробуй позже	Steam didn't answer, try 
 Ножи и перчатки	Knives and gloves
 Оружейные	Weapons
 Оружейные кейсы	Weapon cases
+Статистика с версии 2.4	Stats since version 2.4
+Старая статистика	Old stats
+Всё, что было до версии 2.4. Уровень и достижения остались.	Everything before version 2.4. Your level and achievements stay.
+Лучший дроп	Best drop
+Всё, что было до версии 2.4	Everything before version 2.4
+Новая статистика — с версии 2.4	New stats — since version 2.4
+С версии 2.4	Since 2.4
+Самый дорогой дроп до 2.4	Most expensive drop before 2.4
+Самый дорогой дроп с 2.4	Most expensive drop since 2.4
+Без StatTrak	No StatTrak
+Сдай от 3 до 10 скинов — получи один новый, как в CS2	Trade in 3 to 10 skins and get a new one, just like in CS2
+Получишь от и до	You get from–to
+до ×5	up to ×5
+Флоат результата	Result float
+средний флоат вложенных скинов	average float of the skins you put in
+Будет StatTrak™	It will be StatTrak™
+все вложенные — StatTrak	all inputs are StatTrak
+Обычный	Regular
+StatTrak выйдет, если все скины StatTrak	You get StatTrak if all skins are StatTrak
+если все скины StatTrak — результат тоже	if all skins are StatTrak, the result is too
+Подписать контракт	Sign the contract
+Низкий флоат	Low float
+10 самых дешёвых	10 cheapest
+10 StatTrak	10 StatTrak
+10 с лучшим флоатом	10 with best float
+Под этот фильтр скинов нет	No skins match this filter
+Нужно хотя бы 3 StatTrak-скина	You need at least 3 StatTrak skins
+Мало скинов	Not enough skins
+Контракт обмена №	Trade-up contract #
+Сдаёшь	You give
+Флоат	Float
+подпись игрока	player's signature
+ПОДПИСАНО	SIGNED
+Легенды Копенгагена 2024	Copenhagen 2024 Legends
+Легенды Шанхая 2024	Shanghai 2024 Legends
+Автографы чемпионов Остин 2025	Austin 2025 Champions Autographs
+Не нашлось подходящего скина, попробуй другой набор	No matching skin found, try another set
+Версия 2.4	Version 2.4
+Новая эпоха: статистика сайта и профилей идёт с нуля, старая доступна по кнопке «Старая статистика». Экономика кейсов переделана: сотни новых скинов, все агенты, ножи и перчатки, Doppler Ruby, Sapphire, Black Pearl и Emerald. Четыре новые капсулы наклеек. Контракты как в CS2: флоат результата — средний флоат вложенных, StatTrak, если все скины StatTrak. Честный апгрейд: 50% — это почти x2. Открытие 2–4 кейсов лентами, StatTrak и флоат видно сразу, новые звуки. Пополнение — до 20 000 ₽ в час.	A new era: site and profile stats start from zero, the old ones are under the "Old stats" button. The case economy is reworked: hundreds of new skins, every agent, knives and gloves, Doppler Ruby, Sapphire, Black Pearl and Emerald. Four new sticker capsules. Contracts like in CS2: the result float is the average float of the inputs, StatTrak if all skins are StatTrak. Fair upgrades: 50% is almost x2. Opening 2–4 cases as reels, StatTrak and float shown right away, new sounds. Deposits up to 20,000 ₽ per hour.
+Привяжи Steam	Link Steam
+С привязанным Steam вход в один клик, а аккаунт не потеряется, даже если забудешь почту.	With Steam linked you sign in with one click, and you never lose your account even if you forget your email.
+Рекомендуем: вход в один клик, ничего запоминать не надо	Recommended: one-click sign-in, nothing to remember
 `;

@@ -3156,3 +3156,90 @@ html:not([data-ptrline="1"]) .wheel .needle i{display:none!important}
 .tfx23-petal .pt{left:var(--x);top:-6%;width:calc(18px*var(--s));height:calc(12px*var(--s));border-radius:80% 0 80% 0;background:linear-gradient(135deg,#ffc2cf,#ff2a4a 55%,#9a000f);box-shadow:0 2px 6px rgba(0,0,0,.4);animation:pt23 var(--t) linear var(--d) infinite}
 @keyframes pt23{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(var(--sw),28vh) rotate(110deg)}50%{transform:translate(0,56vh) rotate(210deg)}75%{transform:translate(calc(var(--sw)*-1),84vh) rotate(310deg)}100%{transform:translate(0,112vh) rotate(420deg)}}
 html.lite .tfx23 *{animation:none!important}
+/* 2.4: статистика новой эпохи */
+.pera{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 20px 18px;font-size:12.5px;flex-wrap:wrap}
+.pold-best{display:flex;flex-direction:column;gap:6px;max-width:220px}
+#v-stats .sec-h{flex-wrap:wrap;gap:12px}
+/* 2.4: 2–4 кейса — горизонтальные ленты */
+.cp7-rolls.hz24{gap:8px;padding:12px}
+.cp7-rolls.hz24 .roul{padding:10px 0}
+.cp7-rolls.hz24 .roul .item{flex-basis:128px}
+.cp7-rolls.hz24.compact24 .roul{padding:6px 0}
+.cp7-rolls.hz24.compact24 .roul .item{flex-basis:104px}
+.cp7-rolls.hz24.compact24 .roul .item .item-t{font-size:10.5px}
+@media (max-width:640px){.cp7-rolls.hz24{padding:8px;gap:6px}.cp7-rolls.hz24 .roul .item{flex-basis:96px}.cp7-rolls.hz24.compact24 .roul .item{flex-basis:84px}}
+/* 2.4: результат — StatTrak и флоат видно сразу */
+.pill.st24{border-color:#ff8a2a;color:#ffb066;background:color-mix(in srgb,#ff8a2a 16%,transparent);font-weight:800}
+.pill.nost24{border-color:var(--line);color:var(--mute)}
+.flt24{display:flex;flex-direction:column;gap:6px;max-width:300px;margin:2px 0 4px}
+.flt24-h{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--mute)}
+.flt24-h b{color:var(--text,#fff);font-size:13px}
+.flt24-bar{position:relative;height:6px;border-radius:4px;background:linear-gradient(90deg,#3ee08c 0 7%,#9be04a 7% 15%,#e0d84a 15% 38%,#ff9a3a 38% 45%,#ff4d5a 45% 100%)}
+.flt24-bar i{position:absolute;top:-4px;width:3px;height:14px;margin-left:-1.5px;border-radius:2px;background:#fff;box-shadow:0 0 6px #000a}
+@media (max-width:600px){.flt24{margin:2px auto 4px;width:100%}}
+/* 2.4: много предметов в ставке — список прокручивается, сумма ставки всегда видна */
+#v-upgrade .up-slot{display:flex;flex-direction:column;min-height:0}
+#v-upgrade #upFrom{min-height:0;overflow:hidden;justify-content:flex-start}
+#v-upgrade #upFrom .stack{flex:1 1 auto;min-height:0;max-height:none;overflow:auto;align-content:start;scrollbar-width:thin;padding-right:2px}
+#v-upgrade #upFrom .stack:only-child{align-self:stretch}
+#v-upgrade #upFrom .up-sum{flex:0 0 auto;margin-top:6px;padding:7px 10px;border-radius:10px;background:var(--bg-2);border:1px solid color-mix(in srgb,var(--acc-2) 45%,var(--line));position:relative;z-index:2;font-size:13px;white-space:nowrap}
+#v-upgrade #upFrom .up-sum b{color:var(--acc-2)}
+@media (max-width:760px){#v-upgrade #upFrom .up-sum{padding:4px 6px;font-size:11px}}
+/* 2.4: итог апгрейда — свечение плавно гаснет и перетекает в отметку */
+.up-wheelbox{position:relative}
+.up-wheelbox.settle::before,.up-wheelbox:has(.wheel.won)::before,.up-wheelbox:has(.wheel.lost)::before{animation:upHalo 3.2s linear infinite!important;opacity:0!important;scale:.82;transition:opacity .75s ease,scale .9s cubic-bezier(.2,.8,.2,1)}
+.up-wheelbox.settle .w-center>*{opacity:0;transition:opacity .3s ease}
+.up-res24{position:absolute;inset:0;z-index:4;display:grid;place-items:center;pointer-events:none}
+.up-res24.ok{--rc24:var(--good)}.up-res24.bad{--rc24:var(--bad)}
+.up-res24 .g{position:absolute;inset:4%;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--rc24) 55%,transparent),color-mix(in srgb,var(--rc24) 18%,transparent) 62%,transparent);filter:blur(14px);opacity:0;scale:1.25;transition:opacity .8s ease,scale 1s cubic-bezier(.2,.8,.2,1)}
+.up-res24.on .g{opacity:1;scale:1}
+.up-res24 svg{position:relative;width:clamp(54px,24%,84px);height:auto;fill:none;stroke:var(--rc24);stroke-width:8;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 10px color-mix(in srgb,var(--rc24) 70%,transparent));scale:.7;opacity:0;transition:opacity .35s ease .2s,scale .6s cubic-bezier(.2,1.4,.4,1) .2s}
+.up-res24.on svg{opacity:1;scale:1}
+.up-res24 path{stroke-dasharray:100;stroke-dashoffset:100;transition:stroke-dashoffset .5s cubic-bezier(.6,0,.2,1) .35s}
+.up-res24 path.p2{transition-delay:.55s}
+.up-res24.on path{stroke-dashoffset:0}
+.wheel.won .w-center,.wheel.lost .w-center{transition:box-shadow .6s ease}
+@media (prefers-reduced-motion:reduce){.up-res24 *,.up-wheelbox.settle::before{transition:none!important}}
+/* ===================== 2.4: контракты ===================== */
+.k24 .k-slot{position:relative;font:inherit;cursor:default}
+.k24 button.k-slot{cursor:pointer;transition:transform .15s}
+.k24 button.k-slot:hover{transform:translateY(-2px)}
+.k24 button.k-slot:hover::after{content:'×';position:absolute;top:2px;right:5px;font:800 14px var(--f-mono);color:var(--bad)}
+.k-st{position:absolute;left:4px;bottom:3px;font:800 9px/1 var(--f-mono);font-style:normal;color:#ffb066;letter-spacing:.04em}
+.k9-in small{font-size:11.5px}
+.k24-info{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 12px}
+.k24-c{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border-radius:14px;background:var(--bg-2);border:1px solid var(--line);min-width:0}
+.k24-c b{font-size:17px}.k24-c small{color:var(--mute);font-size:12px}
+.k24-c .flt24-bar{margin-top:4px}
+.k24-st{color:#ffb066}
+.k24-auto{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+@media (max-width:560px){.k24-info{grid-template-columns:1fr}}
+/* подписание: документ с короной, скины влетают, подпись и печать */
+.kdoc{position:relative;width:min(340px,100%);margin:4px auto;padding:18px 18px 20px;border-radius:18px;display:flex;flex-direction:column;gap:12px;overflow:hidden;
+  background:linear-gradient(170deg,color-mix(in srgb,var(--acc) 22%,var(--bg-2)),var(--bg-2) 55%);border:1px solid color-mix(in srgb,var(--acc-2) 50%,var(--line));
+  box-shadow:0 20px 50px -20px color-mix(in srgb,var(--acc-2) 60%,transparent);animation:kdocIn .45s cubic-bezier(.2,.9,.3,1.1) both}
+.kdoc::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 23px,rgba(255,255,255,.035) 23px 24px);pointer-events:none}
+.kdoc-h{display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:1px dashed color-mix(in srgb,var(--acc-2) 40%,var(--line))}
+.kdoc-h b{display:block;font-family:inherit;font-weight:900;font-size:17px;line-height:1.1;letter-spacing:.06em}
+.kdoc-h small{color:var(--mute);font-size:12px}
+.kdoc-logo{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;flex:0 0 auto;background:color-mix(in srgb,var(--acc-2) 22%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--acc-2) 55%,transparent)}
+.kdoc svg{display:block}
+.kdoc-logo svg,.kdoc-stamp span svg{width:70%;fill:none;stroke:var(--acc-2);stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round}
+.kdoc-items{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.kdoc-i{aspect-ratio:1;border-radius:9px;display:grid;place-items:center;background:radial-gradient(circle at 50% 120%,color-mix(in srgb,var(--rc) 45%,transparent),transparent 70%),rgba(255,255,255,.03);border:1px solid color-mix(in srgb,var(--rc) 55%,transparent);
+  animation:kdocItem .4s cubic-bezier(.2,1.4,.4,1) var(--d) both}
+.kdoc-i .skimg,.kdoc-i svg{width:88%;height:88%}
+.kdoc-l{display:flex;align-items:baseline;gap:8px;font-size:13px}
+.kdoc-l span{color:var(--mute)}.kdoc-l i{flex:1;border-bottom:1px dotted var(--line)}
+.kdoc-sig{display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin-top:4px}
+.kdoc-sig svg{width:150px;height:38px;fill:none;stroke:var(--text,#fff);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:300;stroke-dashoffset:300;animation:kdocSig .8s ease-in-out .85s forwards}
+.kdoc-sig small{color:var(--mute);font-size:11px;border-top:1px solid var(--line);padding-top:2px;width:160px}
+.kdoc-stamp{position:absolute;right:14px;bottom:12px;width:98px;height:98px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  border:3px double var(--good);color:var(--good);rotate:-14deg;opacity:0;scale:2.2;animation:kdocStamp .32s cubic-bezier(.5,0,.75,0) 1.65s forwards}
+.kdoc-stamp span{width:42px;height:28px;display:grid;place-items:center}.kdoc-stamp span svg{stroke:var(--good);width:100%}
+.kdoc-stamp b{font:900 12px var(--f-mono);letter-spacing:.08em}
+@keyframes kdocIn{from{opacity:0;transform:translateY(24px) scale(.94)}}
+@keyframes kdocItem{from{opacity:0;transform:translateY(-30px) scale(.4)}}
+@keyframes kdocSig{to{stroke-dashoffset:0}}
+@keyframes kdocStamp{to{opacity:.92;scale:1}}
+@media (prefers-reduced-motion:reduce){.kdoc,.kdoc-i,.kdoc-sig svg,.kdoc-stamp{animation-duration:.01s!important;animation-delay:0s!important}}
