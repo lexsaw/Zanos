@@ -1450,4 +1450,10 @@ StatTrak выйдет, если все скины StatTrak	You get StatTrak if a
 Привяжи Steam	Link Steam
 С привязанным Steam вход в один клик, а аккаунт не потеряется, даже если забудешь почту.	With Steam linked you sign in with one click, and you never lose your account even if you forget your email.
 Рекомендуем: вход в один клик, ничего запоминать не надо	Recommended: one-click sign-in, nothing to remember
+Можно получить	You can get
+до {0} ₽	up to {0} ₽
+до ×{0}	up to ×{0}
+Версия 2.4.1	Version 2.4.1
+Апгрейд больше не зависает, если быстро менять проценты. Скин под нужный процент подбирается точнее, в списке все износы. На телефоне инвентарь теперь в нижнем меню, а «Кейсы» не перезагружаются, когда возвращаешься. Стиль по умолчанию — «Минимализм». В официальных кейсах CS2 появились недостающие ножи и перчатки. В контрактах видно, до скольки можно выбить.	The upgrader no longer freezes when you switch percentages quickly. The skin for the chance you pick is matched more precisely, and the list has every wear. On phones the inventory is now in the bottom menu, and Cases no longer reload when you come back. The default style is now Minimalism. Official CS2 cases got their missing knives and gloves. Contracts show how much you can get at most.
+Steam не привязан	Steam not linked
 `;

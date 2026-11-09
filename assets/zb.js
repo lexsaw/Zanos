@@ -142,7 +142,7 @@ for(const c of CASES){
   c.groups=[...new Set(c.items.map(x=>SK[x.n].rar))].sort((a,b)=>RORD.indexOf(a)-RORD.indexOf(b));
 }
 const CBY=Object.fromEntries(CASES.map(c=>[c.id,c]));
-const CATALOG=[];for(const s of ALL){if(NW(s))CATALOG.push({n:s.name,w:null,st:false,p:s.base});else for(const w of [0,2,4])CATALOG.push({n:s.name,w,st:false,p:r2(s.base*WEARS[w][4])})}
+const CATALOG=[];for(const s of ALL){if(NW(s))CATALOG.push({n:s.name,w:null,st:false,p:s.base});else for(const w of [0,1,2,3,4])CATALOG.push({n:s.name,w,st:false,p:r2(s.base*WEARS[w][4])})}
 CATALOG.sort((a,b)=>a.p-b.p);
 
 
@@ -414,9 +414,9 @@ const RF_LIST=Array.from({length:RFN},(_,k)=>'rf:'+(k+1));
 
 
 /* ================= v3 CORE: настройки, темы, экономика, звук, файлы ================= */
-const VER='2.4',VER_TAG='',VER_FULL=(VER+' '+VER_TAG).trim();
+const VER='2.4.1',VER_TAG='',VER_FULL=(VER+' '+VER_TAG).trim();
 const LS3='zanos.v3';
-const ST3=(()=>{let o={};try{o=JSON.parse(localStorage.getItem(LS3)||'{}')||{}}catch(e){}return Object.assign({theme:'violet',nav:'top',vol:.8,seenVer:'',view:'auto',up:'ring',lite:false},o)})();
+const ST3=(()=>{let o={};try{o=JSON.parse(localStorage.getItem(LS3)||'{}')||{}}catch(e){}if(!o.th241){if(!o.theme||o.theme==='violet')o.theme='minimal';o.th241=1}return Object.assign({theme:'minimal',nav:'top',vol:.8,seenVer:'',view:'auto',up:'ring',lite:false},o)})();
 /* компьютерная версия на телефоне: страница рисуется шириной 1280, как на ПК */
 if(ST3.view==='pc'){const vp=document.querySelector('meta[name=viewport]'),touch=matchMedia('(pointer:coarse)').matches;if(vp)vp.content=touch?'width=1100':'width=1280';if(touch)document.documentElement.classList.add('pcm')}
 function setViewMode(m){if(ST3.view===m)return;ST3.view=m;save3();toast(m==='pc'?'Включаю компьютерную версию…':'Возвращаю обычную версию…');setTimeout(()=>location.reload(),400)}
@@ -550,6 +550,9 @@ for(const [n,r,p,h] of ZI24.sk){if(!SK[n]){reg(n,r,p);ALL.push(SK[n])}if(h&&!IMG
 for(const [n,r,p,h] of ZI24.ag){if(!SK[n]){reg(n,r,p,'agent');ALL.push(SK[n]);AGENT_NAMES.push(n)}if(h&&!IMG[n])IMG[n]=h}
 for(const k in ZI24.st)for(const [n,r,p,h] of ZI24.st[k]){if(!SK[n]){reg(n,r,p,'sticker');ALL.push(SK[n])}if(h&&!IMG[n])IMG[n]=h}
 Object.assign(CIMG,ZI24.caps||{});
+/* 2.4.1: в официальные кейсы CS2 дописаны ножи и перчатки, которые лежат в настоящих кейсах, но у нас их не было */
+const OFF241={"fever":["★ Paracord Knife | Damascus Steel","★ Paracord Knife | Ultraviolet","★ Paracord Knife | Rust Coat","★ Nomad Knife | Marble Fade","★ Nomad Knife | Tiger Tooth","★ Nomad Knife | Damascus Steel","★ Nomad Knife | Ultraviolet","★ Nomad Knife | Rust Coat"],"kilowatt":["★ Kukri Knife | Forest DDPAT","★ Kukri Knife | Boreal Forest","★ Kukri Knife | Scorched","★ Kukri Knife | Urban Masked"],"revolution":["★ Driver Gloves | Racing Green","★ Driver Gloves | Overtake","★ Hand Wraps | Arboreal","★ Hand Wraps | Duct Tape","★ Hydra Gloves | Rattler","★ Hydra Gloves | Mangrove","★ Moto Gloves | Turtle","★ Moto Gloves | Transport","★ Specialist Gloves | Mogul","★ Specialist Gloves | Buckshot","★ Sport Gloves | Omega","★ Sport Gloves | Bronze Morph"],"recoil":["★ Broken Fang Gloves | Unhinged","★ Broken Fang Gloves | Needle Point","★ Driver Gloves | Black Tie","★ Driver Gloves | Rezan the Red","★ Hand Wraps | Giraffe","★ Hand Wraps | Constrictor","★ Moto Gloves | Smoke Out","★ Moto Gloves | 3rd Commando Company","★ Specialist Gloves | Tiger Strike","★ Specialist Gloves | Lt. Commander","★ Sport Gloves | Scarlet Shamagh","★ Sport Gloves | Big Game"],"dreams":["★ Bowie Knife | Gamma Doppler","★ Bowie Knife | Lore","★ Bowie Knife | Autotronic","★ Bowie Knife | Black Laminate","★ Bowie Knife | Freehand","★ Bowie Knife | Bright Water","★ Butterfly Knife | Gamma Doppler","★ Butterfly Knife | Lore","★ Butterfly Knife | Autotronic","★ Butterfly Knife | Black Laminate","★ Butterfly Knife | Freehand","★ Butterfly Knife | Bright Water","★ Falchion Knife | Gamma Doppler","★ Falchion Knife | Lore","★ Falchion Knife | Autotronic","★ Falchion Knife | Black Laminate","★ Falchion Knife | Freehand","★ Falchion Knife | Bright Water","★ Huntsman Knife | Gamma Doppler","★ Huntsman Knife | Lore","★ Huntsman Knife | Autotronic","★ Huntsman Knife | Black Laminate","★ Huntsman Knife | Freehand","★ Huntsman Knife | Bright Water","★ Shadow Daggers | Gamma Doppler","★ Shadow Daggers | Lore","★ Shadow Daggers | Autotronic","★ Shadow Daggers | Black Laminate","★ Shadow Daggers | Freehand","★ Shadow Daggers | Bright Water"],"fracture":["★ Nomad Knife | Urban Masked","★ Nomad Knife | Night Stripe","★ Nomad Knife | Stained","★ Nomad Knife | Forest DDPAT","★ Nomad Knife | Boreal Forest","★ Nomad Knife | Scorched","★ Nomad Knife | Safari Mesh","★ Paracord Knife | Urban Masked","★ Paracord Knife | Night Stripe","★ Paracord Knife | Stained","★ Paracord Knife | Forest DDPAT","★ Paracord Knife | Boreal Forest","★ Paracord Knife | Scorched","★ Paracord Knife | Safari Mesh","★ Skeleton Knife | Urban Masked","★ Skeleton Knife | Night Stripe","★ Skeleton Knife | Stained","★ Skeleton Knife | Forest DDPAT","★ Skeleton Knife | Boreal Forest","★ Skeleton Knife | Scorched","★ Skeleton Knife | Safari Mesh","★ Survival Knife | Urban Masked","★ Survival Knife | Night Stripe","★ Survival Knife | Stained","★ Survival Knife | Forest DDPAT","★ Survival Knife | Boreal Forest","★ Survival Knife | Scorched","★ Survival Knife | Safari Mesh"],"prisma":["★ Navaja Knife | Ultraviolet","★ Stiletto Knife | Ultraviolet","★ Talon Knife | Ultraviolet","★ Ursus Knife | Ultraviolet"]};
+for(const o of OFFICIAL){const x=OFF241[o.id];if(x){o.g=o.g||[];for(const n of x)if(SK[n]&&!o.g.includes(n))o.g.push(n)}}
 const st24=id=>(ZI24.st[id]||[]).map(x=>x[0]);
 CUSTOM.push(
   {id:'st-cph',name:'Легенды Копенгагена 2024',sec:'stk',col:['#ff5a5a','#1c0606'],price:89,badge:'НОВЫЙ',items:st24('st-cph')},
@@ -612,7 +615,7 @@ function rebuildEconomy(){
     delete c.tease;
   }
   for(const k of Object.keys(CBY))delete CBY[k];CASES.forEach(c=>CBY[c.id]=c);
-  CATALOG.length=0;for(const s of Object.values(SK)){if(NW(s))CATALOG.push({n:s.name,w:null,st:false,p:priceOf(s.name,null,false)});else for(const w of [0,2,4])CATALOG.push({n:s.name,w,st:false,p:priceOf(s.name,w,false)})}
+  CATALOG.length=0;for(const s of Object.values(SK)){if(NW(s))CATALOG.push({n:s.name,w:null,st:false,p:priceOf(s.name,null,false)});else for(const w of [0,1,2,3,4])CATALOG.push({n:s.name,w,st:false,p:priceOf(s.name,w,false)})}
   CATALOG.sort((a,b)=>a.p-b.p);
 }
 rebuildEconomy();
@@ -837,7 +840,7 @@ async function skinModal(n,{w=null,st=false,item=null}={}){
 }
 
 /* ---------- что нового ---------- */
-const NEWS=[['Версия 2.4','Новая эпоха: статистика сайта и профилей идёт с нуля, старая доступна по кнопке «Старая статистика». Сотни новых скинов, все агенты, ножи и перчатки, Doppler Ruby, Sapphire, Black Pearl и Emerald. Четыре новые капсулы наклеек. Контракты как в CS2: флоат результата — средний флоат вложенных, StatTrak, если все скины StatTrak. Открытие 2–4 кейсов лентами, StatTrak и флоат видно сразу, новые звуки. Пополнение — до 20 000 ₽ в час.'],['Версия 2.3.2','Сайт стал быстрее: он разбит на части, браузер запоминает их и не качает заново. Новые звуки, плавное открытие нескольких кейсов колонками, разделы «Ножи и перчатки» и «Оружейные», переделанные темы «Гроза», «Океан», RGB, «1-бит», «Алые лепестки», 7 новых достижений и новые промокоды.'],['Вход через Steam','Входи на сайт через Steam в один клик. Привяжи Steam в настройках: скоро вход будет только через него.'],['Задания дня','Каждый день три задания и сундук дня на главной.'],['Терминалы как в CS2','Genesis и Dead Hand теперь открываются как терминал: три предложения по очереди, назад вернуться нельзя.'],['Новый апгрейдер и звуки','Колесо крупнее, стрелку можно выбрать в «Стиле». Звуки новые, по умолчанию тихо.'],['English','Сайт можно переключить на английский в меню «Ещё» и в настройках.']];
+const NEWS=[['Версия 2.4.1','Апгрейд больше не зависает, если быстро менять проценты. Скин под нужный процент подбирается точнее, в списке все износы. На телефоне инвентарь теперь в нижнем меню, а «Кейсы» не перезагружаются, когда возвращаешься. Стиль по умолчанию — «Минимализм». В официальных кейсах CS2 появились недостающие ножи и перчатки. В контрактах видно, до скольки можно выбить.'],['Версия 2.4','Новая эпоха: статистика сайта и профилей идёт с нуля, старая доступна по кнопке «Старая статистика». Сотни новых скинов, все агенты, ножи и перчатки, Doppler Ruby, Sapphire, Black Pearl и Emerald. Четыре новые капсулы наклеек. Контракты как в CS2: флоат результата — средний флоат вложенных, StatTrak, если все скины StatTrak. Открытие 2–4 кейсов лентами, StatTrak и флоат видно сразу, новые звуки. Пополнение — до 20 000 ₽ в час.'],['Версия 2.3.2','Сайт стал быстрее: он разбит на части, браузер запоминает их и не качает заново. Новые звуки, плавное открытие нескольких кейсов колонками, разделы «Ножи и перчатки» и «Оружейные», переделанные темы «Гроза», «Океан», RGB, «1-бит», «Алые лепестки», 7 новых достижений и новые промокоды.'],['Вход через Steam','Входи на сайт через Steam в один клик. Привяжи Steam в настройках: скоро вход будет только через него.'],['Задания дня','Каждый день три задания и сундук дня на главной.'],['Терминалы как в CS2','Genesis и Dead Hand теперь открываются как терминал: три предложения по очереди, назад вернуться нельзя.'],['Новый апгрейдер и звуки','Колесо крупнее, стрелку можно выбрать в «Стиле». Звуки новые, по умолчанию тихо.'],['English','Сайт можно переключить на английский в меню «Ещё» и в настройках.']];
 const NEWS_22=[['Версия 2.2','Сайт обновился до версии 2.2.']];
 const NEWS_21=[
   ['Достижения','29 достижений: базовые, редкие, эпические и засекреченные. Засекреченные скрыты, пока не получишь. Под каждым видно, у какой доли игроков оно есть. Раздел «Достижения» в профиле, всплывашка, когда получаешь новое.'],
@@ -970,7 +973,7 @@ document.addEventListener('click',e=>{if(!e.target.closest('#umenu')&&!e.target.
 $('#reloadBtn').onclick=()=>{SFX.click();location.reload()};
 
 /* ================= ROUTER ================= */
-let cur='home',UP='';let NAVN=0,LASTH='#home';
+let cur='home',UP='';const CKEEP={y:0,kept:false,k:''};let NAVN=0,LASTH='#home';
 function backSync(){const b=$('#backBtn');if(b)b.hidden=!(NAVN>0&&cur!=='home')}
 const VIEWS={};
 function go(v,push=true){
@@ -984,6 +987,7 @@ function go(v,push=true){
   if(view!=='case'&&view!=='user'&&!VIEWS[view])view='home';
   if(view==='admin'&&!S.is_admin)view='home';
   if(cur==='battle'&&view!=='battle')leaveRoom();
+  if(cur==='cases')CKEEP.y=scrollY;
   cur=view;
   for(const s of $$('main>section'))s.hidden=s.id!=='v-'+view;
   const navKey=view==='case'?'cases':view==='user'?'friends':view;
@@ -991,8 +995,9 @@ function go(v,push=true){
   try{const url=location.pathname+location.search.replace(/[?&]add=\d+/,'')+'#'+(view==='case'||view==='user'?v:view);LASTH='#'+(view==='case'||view==='user'?v:view);if(push&&location.hash!==LASTH){history.pushState({zb:1},'',url);NAVN++}else history.replaceState(history.state,'',url)}catch(e){}
   backSync();
   if(cur!=='chats'){clearInterval(CH.timer);clearInterval(CH.listTimer)}
+  CKEEP.kept=false;
   if(view==='case')renderCase(CBY[cid]);else if(view==='user')renderUser(UP);else VIEWS[view]();
-  scrollTo({top:0,behavior:'instant'});
+  scrollTo({top:view==='cases'&&CKEEP.kept?CKEEP.y:0,behavior:'instant'});
   beat();
 }
 document.addEventListener('click',e=>{
@@ -1372,7 +1377,7 @@ function renderContracts(){
   const pool=[...S.inv].filter(i=>K.f==='st'?i.st:K.f==='fn'?i.f!=null&&i.f<.15:true).sort((a,b)=>K.f==='fn'?(a.f-b.f):(a.p-b.p)).slice(0,300);
   v.innerHTML=`<div class="sec-h"><h2>Контракты</h2><span class="mute" style="font-size:13px">Сдай от 3 до 10 скинов — получи один новый, как в CS2</span></div>
   <div class="panel k24"><div class="k-slots">${Array.from({length:10},(_,i)=>{const it=items[i];if(!it)return `<div class="k-slot">${i+1}</div>`;const s=SK[it.n];return `<button type="button" class="k-slot on r-${s.rar}" data-kx="${it.id}" title="${esc(s.name)} — убрать">${icon(s)}${it.st?'<i class="k-st">ST</i>':''}</button>`}).join('')}</div>
-  <div class="k-sum k9"><div class="k9-in"><span>Ты вкладываешь</span><b>${fmt2(sum)}</b><small class="mute">${items.length} из 10</small></div><i class="k9-ar" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i><div class="k9-max"><span>Получишь от и до</span><b>${fmt0(sum*.25)} – ${fmt0(sum*5)}</b><small>до ×5</small></div></div>
+  <div class="k-sum k9"><div class="k9-in"><span>Ты вкладываешь</span><b>${fmt2(sum)}</b><small class="mute">${items.length} из 10</small></div><i class="k9-ar" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i><div class="k9-max"><span>Можно получить</span><b>до ${fmt0(sum*5.5)}</b><small>до ×5,5</small></div></div>
   <div class="k24-info">
     <div class="k24-c"><span class="label">Флоат результата</span>${af!=null?`<b class="mono">${af.toFixed(4)}</b><small>${WEARS[kWear(af)][1]}</small><div class="flt24-bar"><i style="left:${(af*100).toFixed(1)}%"></i></div>`:'<b class="mute">—</b><small>средний флоат вложенных скинов</small>'}</div>
     <div class="k24-c"><span class="label">StatTrak™</span>${items.length?st?'<b class="k24-st">Будет StatTrak™</b><small>все вложенные — StatTrak</small>':'<b>Обычный</b><small>StatTrak выйдет, если все скины StatTrak</small>':'<b class="mute">—</b><small>если все скины StatTrak — результат тоже</small>'}</div>
@@ -1414,7 +1419,8 @@ let U={sel:new Set(),bal:0,target:null,rot:0,q:''};
 const upStake=()=>r2(S.inv.filter(i=>U.sel.has(i.id)).reduce((a,i)=>a+i.p,0)+Math.min(U.bal,S.bal));
 /* 2.4: честный шанс — ставка ÷ цена цели × 0,95 (50% ≈ x1,9, 75% ≈ x1,27); удача влияет только если её включил админ */
 const upChance=()=>{const s=upStake();if(!U.target||!(s>0))return 0;const r=s/U.target.p,adm=(S.upCap||1)>1;return Math.max(0,adm?Math.min(.95,Math.min(.75,r*.95)*(1+(+S.upB||0))):Math.min(.75,r*.95))};
-function targetForChance(p){const st=upStake();if(!st)return null;const want=st*.95/Math.max(.01,p);return CATALOG.find(t=>t.p>=want&&t.p>st*1.05)||CATALOG[CATALOG.length-1]}
+/* 2.4.1: под нужный шанс берём скин с ближайшим шансом (раньше — первый дороже, и 12% могли стать 6%) */
+function targetForChance(p){const st=upStake();if(!st)return null;const want=st*.95/Math.max(.01,p);let best=null,bd=1e9;for(const t of CATALOG){if(t.p<=st*1.05)continue;const d=Math.abs(Math.log(t.p/want));if(d<bd){bd=d;best=t}}return best||CATALOG[CATALOG.length-1]}
 function renderUpgrade(){
   for(const id of U.sel)if(!S.inv.some(i=>i.id===id))U.sel.delete(id);
   const v=$('#v-upgrade');
@@ -1473,8 +1479,8 @@ function renderUpgrade(){
     if(b.dataset.m)setTarget(CATALOG.find(t=>t.p>=st*+b.dataset.m)||CATALOG[CATALOG.length-1]);
     else if(b.dataset.p)setTarget(targetForChance(+b.dataset.p));
     else{const pool=CATALOG.filter(t=>t.p>st*1.3&&t.p<st*20);setTarget(pick(pool.length?pool:CATALOG))}};
-  $('#chR').oninput=e=>{const p=+e.target.value/100;$('#chV').textContent=e.target.value+'%';if(!upStake())return;U.target=targetForChance(p);sync();catL()};
-  $('#upBal').oninput=e=>{U.bal=+e.target.value;$('#upBalV').textContent=fmt0(U.bal);dropTarget();sync();catL()};
+  $('#chR').oninput=e=>{if(busy){e.target.value=Math.round(upChance()*100)||1;return}const p=+e.target.value/100;$('#chV').textContent=e.target.value+'%';if(!upStake())return;U.target=targetForChance(p);sync();catL();$('#chV').textContent=Math.round(upChance()*100)+'%'};
+  $('#upBal').oninput=e=>{if(busy){e.target.value=Math.min(U.bal,S.bal);return}U.bal=+e.target.value;$('#upBalV').textContent=fmt0(U.bal);dropTarget();sync();catL()};
   $('#upGo').onclick=doUpgrade;
 }
 VIEWS.upgrade=renderUpgrade;
@@ -1518,13 +1524,15 @@ async function doUpgrade(){
   const preRes=()=>{if(pre)return;pre=true;box.insertAdjacentHTML('beforeend',`<div class="up-res24 ${r.win?'ok':'bad'}" aria-hidden="true"><i class="g"></i><svg viewBox="0 0 100 100">${r.win?'<path pathLength="100" d="M24 52 L43 70 L77 32"/>':'<path pathLength="100" d="M31 31 L69 69"/><path class="p2" pathLength="100" d="M69 31 L31 69"/>'}</svg></div>`);
     box.classList.add('settle');setTimeout(()=>SFX.mark(r.win),380);requestAnimationFrame(()=>requestAnimationFrame(()=>box.querySelector('.up-res24')?.classList.add('on')))};
   setTimeout(preRes,Math.max(0,dur-420));
-  await new Promise(res=>{const loop=()=>{const m=tf(rot);const a=(Math.atan2(m.b,m.a)*180/Math.PI+360)%360;const now=performance.now();const sp=Math.min(1.5,Math.abs(((a-lastA+540)%360)-180)/Math.max(1,now-lastT)*8);lastA=a;lastT=now;const i=Math.floor(a/12);if(i!==last){last=i;SFX.tick(sp)}if(now-t0<dur+20&&cur==='upgrade')requestAnimationFrame(loop);else res()};requestAnimationFrame(loop)});
-  preRes();wh.classList.remove('spinning');wh.classList.add(r.win?'won':'lost');
-  if(cur!=='upgrade'){U.sel.clear();U.bal=0;U.target=null;busy=false;toast(r.win?`Апгрейд зашёл: ${ruName(SK[wonIt.n])[1]} за ${fmt0(wonIt.p)}`:'Апгрейд не зашёл');if(r.win)pollFeed();return}
-  if(r.win){const it=wonIt;SFX.upWin();setTimeout(()=>SFX.reveal(SK[it.n].rar),250);confetti();toast(`Апнул! ${ruName(SK[it.n])[1]} за ${fmt0(it.p)}`);pollFeed()}
-  else{SFX.upLose();toast(pick(['Мимо. Скины ушли Габену на новую яхту','Не зашло. Бывает раз в жизни, каждый день','Почти! (нет)','Кольцо сегодня против тебя']))}
+  /* 2.4.1: колесо больше не зависает — если анимация сорвалась (ошибка, свернули вкладку), итог всё равно наступает по таймеру */
+  await new Promise(res=>{let done=false;const fin=()=>{if(!done){done=true;res()}};setTimeout(fin,dur+600);const loop=()=>{if(done)return;try{const m=tf(rot);const a=(Math.atan2(m.b,m.a)*180/Math.PI+360)%360;const now=performance.now();const sp=Math.min(1.5,Math.abs(((a-lastA+540)%360)-180)/Math.max(1,now-lastT)*8);lastA=a;lastT=now;const i=Math.floor(a/12);if(i!==last){last=i;SFX.tick(sp)}if(now-t0<dur+20&&cur==='upgrade')requestAnimationFrame(loop);else fin()}catch(e){fin()}};requestAnimationFrame(loop)});
+  const wonName=()=>{const s=wonIt&&SK[wonIt.n];return s?ruName(s)[1]:wonIt?wonIt.n:''};
+  try{preRes();wh.classList.remove('spinning');wh.classList.add(r.win?'won':'lost')}catch(e){}
+  if(cur!=='upgrade'){U.sel.clear();U.bal=0;U.target=null;busy=false;toast(r.win?`Апгрейд зашёл: ${wonName()} за ${fmt0(wonIt.p)}`:'Апгрейд не зашёл');if(r.win)pollFeed();return}
+  try{if(r.win){const it=wonIt;SFX.upWin();setTimeout(()=>{try{SFX.reveal((SK[it.n]||{}).rar||'k')}catch(e){}},250);confetti();toast(`Апнул! ${wonName()} за ${fmt0(it.p)}`);pollFeed()}
+  else{SFX.upLose();toast(pick(['Мимо. Скины ушли Габену на новую яхту','Не зашло. Бывает раз в жизни, каждый день','Почти! (нет)','Кольцо сегодня против тебя']))}}catch(e){}
   U.sel.clear();U.bal=0;U.target=null;
-  await sleep(1600);busy=false;renderUpgrade();
+  await sleep(1600);busy=false;if(cur==='upgrade')renderUpgrade();
 }
 
 /* ================= BATTLES ================= */
@@ -1788,7 +1796,7 @@ function drawAdmin(){
     <div class="adm-quick"><button class="btn acc" type="button" id="seedBtn">⬆ Загрузить кейсы</button><button class="btn acc" type="button" id="mktBtn">₽ Обновить цены</button><button class="btn ghost" type="button" data-go="forum">💬 Форум <b id="admForumN"></b></button></div>
     <div class="note adm-log" id="admLog" hidden></div>
     <div class="adm-top" id="admStats"></div>
-    <div class="seg adm-tabs" id="admTabs"><button type="button" data-t="online">Онлайн <b id="admOnN"></b></button><button type="button" data-t="players">Игроки <b id="admAllN"></b></button><button type="button" data-t="luck">Удача</button><button type="button" data-t="manage">⚙ Управление</button><button type="button" data-t="stats">📊 Статистика</button><button type="button" data-t="alerts">🔔 Оповещения <b id="admAlN"></b></button><button type="button" data-t="eco">Экономика</button></div>
+    <div class="seg adm-tabs" id="admTabs"><button type="button" data-t="online">Онлайн <b id="admOnN"></b></button><button type="button" data-t="players">Игроки <b id="admAllN"></b></button><button type="button" data-t="steam">Steam <b id="admStN"></b></button><button type="button" data-t="luck">Удача</button><button type="button" data-t="manage">⚙ Управление</button><button type="button" data-t="stats">📊 Статистика</button><button type="button" data-t="alerts">🔔 Оповещения <b id="admAlN"></b></button><button type="button" data-t="eco">Экономика</button></div>
     <div id="admAlerts"></div>
     <div id="admPane"></div></div>`;
     const log=t=>{const l=$('#admLog');l.hidden=false;l.textContent=t};
@@ -1799,7 +1807,7 @@ function drawAdmin(){
   const online=u.filter(x=>x.last_seen&&now-x.last_seen<70000),types={phone:0,tablet:0,desktop:0};online.forEach(x=>types[cleanDev(x.device).type]++);
   const day=u.filter(x=>x.last_seen&&now-x.last_seen<864e5).length,hot=u.filter(x=>heatInfo(x).k==='hot').length;
   $('#admStats').innerHTML=`<div class="stat"><span class="label">Сейчас на сайте</span><b class="pos">${online.length}</b></div><div class="stat"><span class="label">Телефоны / ПК</span><b>${types.phone+types.tablet} / ${types.desktop}</b></div><div class="stat"><span class="label">За сутки</span><b>${day}</b></div><div class="stat"><span class="label">Всего · прёт</span><b>${u.length} · ${hot}</b></div>`;
-  $('#admForumN').textContent=BADGE.forum?'('+BADGE.forum+')':'';$('#admOnN').textContent=online.length;$('#admAllN').textContent=u.length;
+  $('#admForumN').textContent=BADGE.forum?'('+BADGE.forum+')':'';$('#admOnN').textContent=online.length;$('#admAllN').textContent=u.length;{const e=$('#admStN');if(e)e.textContent=u.filter(x=>x.steam_id).length}
   $$('#admTabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.t===ADM.tab));
   const AL=allAlerts(),bad=AL.filter(z=>z.lvl!=='info');$('#admAlN').textContent=AL.length?'('+AL.length+')':'';
   $('#admAlerts').innerHTML=bad.length&&ADM.tab!=='alerts'?`<div class="adm-al">${bad.map(z=>`<div class="al al-${z.lvl}"><span>${z.lvl==='bad'?'⛔':'⚠️'}</span><b>${esc(z.t)}</b>${z.k==='prices'?'<button class="btn acc sm" type="button" data-al="mkt">Обновить</button>':z.k==='cases'?'<button class="btn acc sm" type="button" data-al="seed">Загрузить</button>':z.k==='errors'?'<button class="btn ghost sm" type="button" data-al="open">Смотреть</button>':''}</div>`).join('')}</div>`:'';
@@ -1810,7 +1818,7 @@ function drawAdmin(){
     return `<div class="dev${x.id===S.uid?' me':''}" data-du="${esc(x.id)}" role="button" tabindex="0"><span class="dico">${DICO[d.type]}<i></i></span><div class="who"><b>${avaHTML(nk,colOf(x),x.ava,'sm')}<span>${esc(nk)}${x.id===S.uid?' (ты)':''}</span></b><small>${esc(d.model)} · ${esc(d.os)}</small><span class="acct">${esc(x.email||'')}</span><span class="pubid">ID ${x.pub||'—'} ${heatChip(x)}</span></div>
     <dl><dt>Браузер</dt><dd>${esc(d.browser)}</dd><dt>Сейчас</dt><dd>${esc(viewName(x.view))}</dd><dt>Баланс</dt><dd>${fmt0(+x.bal)}</dd><dt>Скины</dt><dd>${fmt0(+x.inv)}</dd></dl></div>`};
   const rowHTML=x=>{const d=cleanDev(x.device),nk=nkOf(x);
-    return `<tr data-uid="${esc(x.id)}"><td><b style="display:flex;align-items:center;gap:8px">${avaHTML(nk,colOf(x),x.ava,'sm')}${esc(nk)}${x.banned?' <span class="badge">БАН</span>':''}</b><span class="acct">${esc(x.email||'')}</span><span class="pubid">ID ${x.pub||'—'} ${heatChip(x)}</span></td><td><div class="dchips"><span><b>${esc(d.model)}</b> · ${esc(d.os)}</span></div></td><td class="mono">${fmt0(+x.bal)}</td><td>${esc(ago(x.last_seen?x.last_seen-clockSkew:0))}</td><td><button class="btn ghost sm" type="button">Открыть</button></td></tr>`};
+    return `<tr data-uid="${esc(x.id)}"><td><b style="display:flex;align-items:center;gap:8px">${avaHTML(nk,colOf(x),x.ava,'sm')}${esc(nk)}${x.banned?' <span class="badge">БАН</span>':''}</b><span class="acct">${esc(x.email||'')}</span><span class="pubid">ID ${x.pub||'—'} ${heatChip(x)}${x.steam_id?`<span class="stm24">${STEAM_ICO}${esc(x.steam||'Steam')}</span>`:''}</span></td><td><div class="dchips"><span><b>${esc(d.model)}</b> · ${esc(d.os)}</span></div></td><td class="mono">${fmt0(+x.bal)}</td><td>${esc(ago(x.last_seen?x.last_seen-clockSkew:0))}</td><td><button class="btn ghost sm" type="button">Открыть</button></td></tr>`};
   const bindOpen=()=>{$$('[data-uid],.dev[data-du]',pane).forEach(b=>b.onclick=()=>adminUser(b.dataset.uid||b.dataset.du))};
   if(ADM.tab==='online'){
     pane.innerHTML=online.length?`<div class="devs">${online.map(devCard).join('')}</div>`:'<div class="empty">Сейчас никого нет</div>';bindOpen();
@@ -1818,6 +1826,12 @@ function drawAdmin(){
     if(first)pane.innerHTML=`<input class="inp" id="admQ" type="search" placeholder="Поиск: ник, ID или почта" value="${esc(ADM.q||'')}" style="height:44px"><div class="htable"><table><thead><tr><th>Игрок</th><th>Устройство</th><th>Баланс</th><th>Был</th><th></th></tr></thead><tbody id="admTb"></tbody></table></div>`;
     const tb=$('#admTb');tb.innerHTML=u.map(rowHTML).join('')||'<tr><td colspan="5" class="mute">Пока никого</td></tr>';bindOpen();
     const f=()=>{const q=(ADM.q||'').trim().toLowerCase();$$('tr',tb).forEach(tr=>{tr.hidden=!!q&&!tr.textContent.toLowerCase().includes(q)})};f();$('#admQ').oninput=e=>{ADM.q=e.target.value;f()};
+  }else if(ADM.tab==='steam'){
+    /* 2.4.1: кто привязал Steam — свежие привязки сверху */
+    const L=u.filter(x=>x.steam_id).sort((a,b)=>(+b.steam_at||0)-(+a.steam_at||0));
+    pane.innerHTML=`<div class="panel"><p class="mute" style="margin:0;font-size:14px">Привязали Steam: <b>${L.length}</b> из ${u.length}. Нажми на строку, чтобы открыть игрока.</p></div>
+    ${L.length?`<div class="htable"><table><thead><tr><th>Игрок</th><th>Steam</th><th>Привязал</th><th></th></tr></thead><tbody>${L.map(x=>`<tr data-uid="${esc(x.id)}"><td><b style="display:flex;align-items:center;gap:8px">${avaHTML(nkOf(x),colOf(x),x.ava,'sm')}${esc(nkOf(x))}</b><span class="pubid">ID ${x.pub||'—'}</span></td><td><span class="stm24">${x.steam_ava?`<img src="${esc(x.steam_ava)}" alt="" referrerpolicy="no-referrer">`:STEAM_ICO}<b>${esc(x.steam||'Steam')}</b></span><span class="acct">${esc(x.steam_id)}${x.steam_pub?'':' · скрыт в профиле'}</span></td><td>${esc(ago(x.steam_at?x.steam_at-clockSkew:0))}</td><td><a class="btn ghost sm" href="https://steamcommunity.com/profiles/${encodeURIComponent(x.steam_id)}" target="_blank" rel="noopener noreferrer" data-nouid="1">Steam ↗</a></td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">Пока никто не привязал Steam</div>'}`;
+    bindOpen();$$('[data-nouid]',pane).forEach(a=>a.onclick=e=>e.stopPropagation());
   }else if(ADM.tab==='luck'){
     const L=u.filter(x=>heatInfo(x).k!=='n').sort((a,b)=>(+b.heat||1)-(+a.heat||1));
     pane.innerHTML=`<div class="panel"><p class="mute" style="margin:0;font-size:14px">Сервер сам следит за каждым игроком: считает, сколько он выбил от потраченного за последние игры (старые игры постепенно забываются). Если человеку сильно прёт (возврат выше 150%), шансы на дорогой дроп и в апгрейде мягко остывают. Если долго не прёт (ниже 60%), чуть подкручиваются вверх. Ничего не надо нажимать.</p></div>
@@ -1861,7 +1875,7 @@ async function adminUser(uid){
     :A.tab==='vault'?((x.vault||[]).length?`<div class="grid sm">${x.vault.map(i=>itemBox(i)).join('')}</div>`:'<div class="mute">Витрина пуста</div>')
     :A.tab==='add'?addPane()
     :`<div class="hist">${(x.tx||[]).map(t=>`<div class="hrow"><b>${esc(t.note||t.type)}</b><span class="mono">${fmt2(+t.amount)}</span><small class="mute">${new Date(t.t-clockSkew).toLocaleString('ru-RU')}</small></div>`).join('')||'<div class="mute">Пусто</div>'}</div>`;
-  openModal(`<div class="adm-u"><div class="frow big">${avaHTML(nk,col,x.ava)}<div class="fr-t"><b>${esc(nk)}${x.banned?' <span class="badge">БАН</span>':''}</b><small>${esc(x.email||'')} · ID ${x.pub||'—'}</small></div></div>
+  openModal(`<div class="adm-u"><div class="frow big">${avaHTML(nk,col,x.ava)}<div class="fr-t"><b>${esc(nk)}${x.banned?' <span class="badge">БАН</span>':''}</b><small>${esc(x.email||'')} · ID ${x.pub||'—'}</small>${x.steam_id?`<a class="stm24" href="https://steamcommunity.com/profiles/${encodeURIComponent(x.steam_id)}" target="_blank" rel="noopener noreferrer">${STEAM_ICO}Steam: ${esc(x.steam||x.steam_id)} ↗</a>`:'<small class="mute">Steam не привязан</small>'}</div></div>
     <div class="row adm-ua"><button class="btn acc" type="button" id="admWatch">👁 Экран</button><button class="btn ghost" type="button" id="admProf">Профиль</button><button class="btn ghost" type="button" id="admRen">✏ Сменить ник</button><button class="btn ${x.banned?'ghost':'red'}" type="button" id="admBan">${x.banned?'Разбанить':'Бан'}</button></div>
     ${x.nick_bad&&!x.nick?`<div class="note bad">Ник «${esc(x.nick_old||'')}» запрещён фильтром и скрыт. Игрок не сможет играть, пока не придумает новый.</div>`:''}
     <div class="stats" id="admUS">${stats()}</div>
@@ -1990,7 +2004,8 @@ const NAV3=[['home','Главная',ICONS.home],['cases','Кейсы',ICONS.cas
 function renderNav(){
   $('#navTop').innerHTML=NAV3.map(([k,t,ic])=>`<button type="button" data-go="${k}" title="${t}">${ic}<span>${t}</span><i class="nb" data-badge="${k}" hidden></i></button>`).join('')
     +`<div class="nav-extra"><button type="button" data-go="faq" title="FAQ и правила">${IC3.forum}<span>FAQ и правила</span></button><button type="button" data-go="profile" title="Профиль">${IC3.user}<span>Профиль</span></button><button type="button" data-go="custom" title="Кастомизация">${IC3.brush}<span>Кастомизация</span></button></div>`;
-  $('#navBot').innerHTML=[['home','Главная',ICONS.home],['cases','Кейсы',ICONS.cases],['upgrade','Апгрейд',ICONS.upgrade],['chats','Чаты',IC3.chats]].map(([k,t,ic])=>`<button type="button" data-go="${k}">${ic}<span>${t}</span><i class="nb" data-badge="${k}" hidden></i></button>`).join('')
+  /* 2.4.1: на телефоне инвентарь — сразу в нижнем меню, чаты переехали в «Ещё» */
+  $('#navBot').innerHTML=[['home','Главная',ICONS.home],['cases','Кейсы',ICONS.cases],['upgrade','Апгрейд',ICONS.upgrade],['inv','Инвентарь',PI.inv]].map(([k,t,ic])=>`<button type="button" data-go="${k}">${ic}<span>${t}</span><i class="nb" data-badge="${k}" hidden></i></button>`).join('')
     +`<button type="button" id="moreBtn">${IC3.more}<span>Ещё</span><i class="nb" data-badge="more" hidden></i></button>`;
   $('#moreBtn').onclick=()=>{SFX.click();moreSheet()};
 }
@@ -1998,7 +2013,7 @@ renderNav();
 const BADGE={chats:0,friends:0,forum:0};
 function drawBadges(){
   const set=(k,n)=>$$(`[data-badge="${k}"]`).forEach(el=>{el.hidden=!n;el.textContent=n>99?'99+':n});
-  set('chats',BADGE.chats);set('friends',BADGE.friends);set('forum',BADGE.forum);set('more',BADGE.friends+BADGE.forum);
+  set('chats',BADGE.chats);set('friends',BADGE.friends);set('forum',BADGE.forum);set('more',BADGE.friends+BADGE.forum+BADGE.chats);
 }
 async function pollBadges(){
   if(!authed||document.hidden||!S.nick)return;
@@ -3616,6 +3631,9 @@ renderCases=(f=>function(){
   $('#cfS',v).onclick=e=>{const b=e.target.closest('[data-s]');if(!b)return;CF.sort=b.dataset.s;SFX.click();$$('#cfS button',v).forEach(x=>x.setAttribute('aria-pressed',x===b));draw()};
   $('#cfC',v).onclick=e=>{const b=e.target.closest('[data-c]');if(!b)return;CF.cat=b.dataset.c;SFX.click();$$('#cfC button',v).forEach(x=>x.setAttribute('aria-pressed',x===b));draw()};
 })(renderCases);
+/* 2.4.1: вернулся на «Кейсы» — страница остаётся как была (картинки не грузятся заново, место прокрутки то же) */
+renderCases=(f=>function(){const v=$('#v-cases');const k=CASES.length+'|'+CASES.reduce((a,c)=>a+(+c.price||0),0)+'|'+ST3.lang;
+  if(CKEEP.k===k&&v.querySelector('.cases-head')){CKEEP.kept=true;return}f.apply(this,arguments);CKEEP.k=k})(renderCases);
 VIEWS.cases=renderCases;
 
 /* ===================== МЕНЮ «ЕЩЁ» 2: крупные игры + компактные разделы ===================== */

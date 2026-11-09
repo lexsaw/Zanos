@@ -3243,3 +3243,15 @@ html.lite .tfx23 *{animation:none!important}
 @keyframes kdocSig{to{stroke-dashoffset:0}}
 @keyframes kdocStamp{to{opacity:.92;scale:1}}
 @media (prefers-reduced-motion:reduce){.kdoc,.kdoc-i,.kdoc-sig svg,.kdoc-stamp{animation-duration:.01s!important;animation-delay:0s!important}}
+
+/* ===================== 2.4.1 ===================== */
+/* панели кейсов — в цветах выбранного стиля, без «вшитого» фиолетового */
+.cat-panel{background:radial-gradient(60% 140% at 50% 0%,color-mix(in srgb,var(--cat) 12%,transparent),transparent 70%),linear-gradient(180deg,color-mix(in srgb,var(--surf) 72%,transparent),color-mix(in srgb,var(--bg) 82%,transparent))}
+html.weak9 .cat-panel{background:linear-gradient(180deg,color-mix(in srgb,var(--surf) 72%,transparent),color-mix(in srgb,var(--bg) 82%,transparent))}
+[data-theme="minimal"] .cat-panel{--cat:#d8d8d8}
+/* Steam в админке */
+.stm24{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--fg);text-decoration:none;padding:2px 8px 2px 4px;border-radius:999px;background:color-mix(in srgb,#1b2838 70%,transparent);border:1px solid color-mix(in srgb,#66c0f4 40%,var(--line));margin-left:4px;vertical-align:middle;max-width:100%}
+.stm24 svg{width:14px;height:14px;flex:0 0 auto;color:#66c0f4}
+.stm24 img{width:20px;height:20px;border-radius:50%;flex:0 0 auto}
+.stm24 b{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.adm-u .fr-t .stm24{margin:6px 0 0;align-self:flex-start}
