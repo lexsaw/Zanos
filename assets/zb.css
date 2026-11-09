@@ -3255,3 +3255,6 @@ html.weak9 .cat-panel{background:linear-gradient(180deg,color-mix(in srgb,var(--
 .stm24 img{width:20px;height:20px;border-radius:50%;flex:0 0 auto}
 .stm24 b{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .adm-u .fr-t .stm24{margin:6px 0 0;align-self:flex-start}
+/* 2.4.2: быстрее — то, что за пределами экрана, браузер не рисует */
+.cat-panel{content-visibility:auto;contain-intrinsic-size:auto 520px}
+#v-inv .grid>*,#upInv>*,#upCat>*{content-visibility:auto;contain-intrinsic-size:auto 190px}
