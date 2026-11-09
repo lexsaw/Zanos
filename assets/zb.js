@@ -1839,8 +1839,12 @@ function drawAdmin(){
   }else if(ADM.tab==='manage'){
     if(first)mgPane(pane);
   }else if(ADM.tab==='stats'){
-    if(first){pane.innerHTML=ADM.st?adminStatsHTML(ADM.st):'<div class="panel"><div class="spin"></div></div>';
-      rpc('zb_admin_stats').then(d=>{ADM.st=d;if(cur==='admin'&&ADM.tab==='stats'){pane.innerHTML=adminStatsHTML(d);bindOpen()}}).catch(e=>toast(errMsg(e)))}
+    /* 2.4.1: статистика админки — новая (с 2.4) и старая, переключателем */
+    if(first){const old=!!ADM.stOld,key=old?'stO':'st';
+      const draw=d=>{pane.innerHTML=`<div class="seg" id="admStMode" style="margin-bottom:12px"><button type="button" data-sm="new" aria-pressed="${!old}">Новая статистика</button><button type="button" data-sm="old" aria-pressed="${old}">Старая статистика</button></div>`+(d?adminStatsHTML(d):'<div class="panel"><div class="spin"></div></div>');
+        $('#admStMode',pane).onclick=e=>{const b=e.target.closest('[data-sm]');if(!b||(b.dataset.sm==='old')===old)return;SFX.click();ADM.stOld=b.dataset.sm==='old';ADM.pane=null;drawAdmin()};bindOpen()};
+      draw(ADM[key]);
+      rpc('zb_admin_stats',{p_old:old}).then(d=>{ADM[key]=d;if(cur==='admin'&&ADM.tab==='stats'&&!!ADM.stOld===old)draw(d)}).catch(e=>toast(errMsg(e)))}
     bindOpen();
   }else if(ADM.tab==='alerts'){
     pane.innerHTML=alertsHTML(true);bindOpen();
@@ -2982,17 +2986,19 @@ async function renderStats(){
 VIEWS.stats=renderStats;
 function adminStatsHTML(d){
   const pct=(a,b)=>+b?Math.round(+a/+b*1000)/10+'%':'—';
-  const money=[['Фантиков на балансах',d.balances],['Скинов в инвентарях',d.inv_sum],['Скинов в витринах',d.vault_sum],['Пополнений (всего)',d.dep_sum,d.dep_n+' шт'],['Пополнено сегодня',d.dep_today],['Ежедневные бонусы',d.daily_paid],['Рефералам',d.ref_paid],['Админ выдал фантиков',d.admin_bal],['Админ выдал скинов',d.admin_give],['Продано скинов',d.sold_sum],['Выведено в витрины',d.wd_sum]];
-  return `<div class="panel"><h3 class="ph3">Настоящая отдача (с начала статистики)</h3><div class="st-grid sm">
+  const old=!!d.old,eraD=d.era?new Date(+d.era-clockSkew).toLocaleDateString('ru-RU'):'';
+  const money=[['Фантиков на балансах',d.balances],['Скинов в инвентарях',d.inv_sum],['Скинов в витринах',d.vault_sum],['Пополнений',d.dep_sum,d.dep_n+' шт'],['Пополнено сегодня',d.dep_today],['Ежедневные бонусы',d.daily_paid],['Рефералам',d.ref_paid],['Админ выдал фантиков',d.admin_bal],['Админ выдал скинов',d.admin_give],['Продано скинов',d.sold_sum],['Выведено в витрины',d.wd_sum]].filter(x=>x[1]!=null);
+  return `<div class="note" style="margin:0 0 12px">${old?`Старая статистика: всё, что было до ${eraD||'версии 2.4'}. Балансы и инвентари «сейчас» тут не показываются — тогда их не сохраняли.`:`Новая статистика: с ${eraD||'версии 2.4'} до сегодня.`}</div>
+  <div class="panel"><h3 class="ph3">Настоящая отдача (${old?'до '+(eraD||'2.4'):'с '+(eraD||'2.4')})</h3><div class="st-grid sm">
     <div class="stat"><span class="label">Кейсы: потратили → выбили</span><div class="flow8"><span><small>потратили</small>${fmt0(+d.cases_spent)}</span><span><small>выбили</small>${fmt0(+d.cases_won)}</span></div><small class="mute">возврат ${pct(d.cases_won,d.cases_spent)}</small></div>
     <div class="stat"><span class="label">Апгрейды: ставки → выигрыши</span><div class="flow8"><span><small>ставки</small>${fmt0(+d.up_spent)}</span><span><small>выигрыши</small>${fmt0(+d.up_won)}</span></div><small class="mute">возврат ${pct(d.up_won,d.up_spent)} · удачных ${pct(d.up_win,d.up)}</small></div>
     <div class="stat"><span class="label">Битвы: банк</span><b>${fmt0(+d.battles_sum)}</b><small class="mute">${nfmt(d.battles)} битв</small></div>
-    <div class="stat"><span class="label">Игроки</span><b>${nfmt(d.players)}</b><small class="mute">новых за сутки ${d.new_today} · за неделю заходили ${d.week} · в бане ${d.banned}</small></div></div></div>
+    <div class="stat"><span class="label">${old?'Зарегистрировались до '+(eraD||'2.4'):'Новых игроков с '+(eraD||'2.4')}</span><b>${nfmt(d.reg??d.players)}</b><small class="mute">${old?'всего игроков сейчас '+nfmt(d.players):`всего ${nfmt(d.players)} · за сутки ${d.new_today} · за неделю заходили ${d.week} · в бане ${d.banned}`}</small></div></div></div>
   <div class="panel"><h3 class="ph3">Деньги</h3><div class="st-grid sm">${money.map(([t,v,s])=>`<div class="stat"><span class="label">${t}</span><b>${fmt0(+v||0)}</b>${s?`<small class="mute">${s}</small>`:''}</div>`).join('')}</div></div>
-  ${(d.admin_days||[]).length?`<div class="st-charts"><div class="panel"><h3 class="ph3">Пополнения за 14 дней</h3>${bars(d.admin_days,'dep','#ffd23a')}</div><div class="panel"><h3 class="ph3">Потрачено на кейсы</h3>${bars(d.admin_days,'spent','var(--acc-2)')}</div><div class="panel"><h3 class="ph3">Новые игроки</h3>${bars(d.admin_days,'new','#3ee08c')}</div></div>`:''}
+  ${(d.admin_days||[]).length?`<div class="st-charts"><div class="panel"><h3 class="ph3">${old?'Пополнения: последние 14 дней до '+(eraD||'2.4'):'Пополнения по дням'}</h3>${bars(d.admin_days,'dep','#ffd23a')}</div><div class="panel"><h3 class="ph3">Потрачено на кейсы</h3>${bars(d.admin_days,'spent','var(--acc-2)')}</div><div class="panel"><h3 class="ph3">Новые игроки</h3>${bars(d.admin_days,'new','#3ee08c')}</div></div>`:''}
   <div class="panel"><h3 class="ph3">Кейсы: реальный возврат</h3><div class="htable"><table><thead><tr><th>Кейс</th><th>Открыто</th><th>Потрачено</th><th>Выбито</th><th>Возврат</th></tr></thead><tbody>${(d.case_rt||[]).map(x=>`<tr><td>${esc(CBY[x.c]?.name||x.c)}</td><td class="mono">${nfmt(x.n)}</td><td class="mono">${fmt0(+x.spent)}</td><td class="mono">${fmt0(+x.won)}</td><td class="mono ${+x.won>+x.spent?'neg':'pos'}">${pct(x.won,x.spent)}</td></tr>`).join('')||'<tr><td colspan="5" class="mute">Пока нет данных</td></tr>'}</tbody></table></div><small class="mute">Зелёный: сайт в плюсе, красный: игроки выбили больше, чем потратили. На малом числе открытий цифры прыгают</small></div>
   <div class="panel"><h3 class="ph3">Больше всех пополняли</h3>${(d.spenders||[]).map((x,i)=>`<button type="button" class="brow" data-uid="${esc(x.id)}"><b class="pos-n">${i+1}</b><span class="bn">${esc(x.nick||'—')} · ID ${x.pub}</span><b class="mono">${fmt0(+x.dep)}</b></button>`).join('')||'<div class="mute">Пока никто</div>'}</div>
-  <details class="panel"><summary class="ph3">Общая статистика (её видят все)</summary>${statsPublicHTML(d)}</details>`;
+  <details class="panel"><summary class="ph3">Общая статистика (её видят все)</summary>${statsPublicHTML(d,old)}</details>`;
 }
 
 /* ================= УЛЬТРАШИРОКИЕ МОНИТОРЫ (21:9, 32:9) =================
