@@ -1458,4 +1458,8 @@ StatTrak выйдет, если все скины StatTrak	You get StatTrak if a
 Steam не привязан	Steam not linked
 Версия 2.4.2	Version 2.4.2
 Сайт стал легче: код разбит на части, и после обновлений браузер скачивает заново только то, что поменялось. Страницы со списками скинов и кейсов рисуются быстрее. Исправлены ошибочные цены некоторых скинов с рынка.	The site is lighter: the code is split into parts, and after updates your browser only re-downloads what changed. Pages with lists of skins and cases render faster. Fixed wrong market prices for some skins.
+Версия 2.5	Version 2.5
+Новый облик сайта: тема «Занос 2.5» с живым фоном, новые шапка, кнопки, плитки и окна. Она включена по умолчанию, прежний «Минимализм» возвращается в один клик в «Кастомизации». Новые анимации во всех разделах: свет при выигрыше, вспышки редких дропов, апгрейд, битвы, инвентарь. Все звуки сделаны заново. Сайт работает быстрее, особенно на телефонах и слабых устройствах. Усилена защита аккаунтов и баланса.	A new look: the «Zanos 2.5» theme with a living background, new header, buttons, tiles and windows. It is on by default; the previous «Minimalism» is one click away in «Customization». New animations everywhere: light on a win, flashes for rare drops, upgrade, battles, inventory. All sounds are remade. The site is faster, especially on phones and weak devices. Account and balance protection is stronger.
+Занос 2.5	Zanos 2.5
+Новый облик · живой фон	New look · living background
 `;

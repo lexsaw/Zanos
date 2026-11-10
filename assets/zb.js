@@ -416,9 +416,9 @@ const RF_LIST=Array.from({length:RFN},(_,k)=>'rf:'+(k+1));
 
 
 /* ================= v3 CORE: настройки, темы, экономика, звук, файлы ================= */
-const VER='2.4.2',VER_TAG='',VER_FULL=(VER+' '+VER_TAG).trim();
+const VER='2.5',VER_TAG='',VER_FULL=(VER+' '+VER_TAG).trim();
 const LS3='zanos.v3';
-const ST3=(()=>{let o={};try{o=JSON.parse(localStorage.getItem(LS3)||'{}')||{}}catch(e){}if(!o.th241){if(!o.theme||o.theme==='violet')o.theme='minimal';o.th241=1}return Object.assign({theme:'minimal',nav:'top',vol:.8,seenVer:'',view:'auto',up:'ring',lite:false},o)})();
+const ST3=(()=>{let o={};try{o=JSON.parse(localStorage.getItem(LS3)||'{}')||{}}catch(e){}if(!o.th241){if(!o.theme||o.theme==='violet')o.theme='minimal';o.th241=1}if(!o.th25){if(!o.theme||o.theme==='minimal')o.theme='zanos';o.th25=1}return Object.assign({theme:'zanos',nav:'top',vol:.8,seenVer:'',view:'auto',up:'ring',lite:false},o)})();
 /* компьютерная версия на телефоне: страница рисуется шириной 1280, как на ПК */
 if(ST3.view==='pc'){const vp=document.querySelector('meta[name=viewport]'),touch=matchMedia('(pointer:coarse)').matches;if(vp)vp.content=touch?'width=1100':'width=1280';if(touch)document.documentElement.classList.add('pcm')}
 function setViewMode(m){if(ST3.view===m)return;ST3.view=m;save3();toast(m==='pc'?'Включаю компьютерную версию…':'Возвращаю обычную версию…');setTimeout(()=>location.reload(),400)}
@@ -428,6 +428,7 @@ const save3=()=>{try{localStorage.setItem(LS3,JSON.stringify(ST3))}catch(e){}};
 
 /* ---------- темы ---------- */
 const THEMES={
+  zanos:{n:'Занос 2.5',d:'Новый облик · живой фон',anim:1,v:{bg:'#05050b','bg-2':'#0a0a15',surf:'#10101d','surf-2':'#19192b',line:'#272743',fg:'#f5f4ff',mute:'#9a9bbd',acc:'#7a4dff','acc-2':'#d05cff','acc-ink':'#fff',g1:'rgba(122,77,255,.2)',g2:'rgba(255,77,141,.1)',card1:'#17172b',card2:'#0b0b16',hdr:'rgba(5,5,11,.82)'},art:'radial-gradient(90% 90% at 10% 8%,#6a4bff 0,transparent 55%),radial-gradient(80% 90% at 94% 18%,#ff4d8d 0,transparent 55%),radial-gradient(70% 80% at 50% 112%,#39d9ff 0,transparent 60%),#06060d'},
   violet:{n:'Фиолетовый',d:'Классика Заноса',v:{bg:'#08091a','bg-2':'#0d0f25',surf:'#12142e','surf-2':'#1a1c40',line:'#25285a',fg:'#f2f1ff',mute:'#9799c9',acc:'#7a3cff','acc-2':'#a94dff','acc-ink':'#fff',g1:'rgba(122,60,255,.22)',g2:'rgba(60,40,160,.16)',card1:'#16173c',card2:'#0d0e25',hdr:'rgba(8,9,26,.9)'},art:'radial-gradient(120% 90% at 70% 10%,#a94dff 0,transparent 55%),radial-gradient(90% 80% at 10% 100%,#3c28a0 0,transparent 60%),#0b0920'},
   coal:{n:'Угольный',d:'Чёрный графит',v:{bg:'#0a0a0c','bg-2':'#111114',surf:'#151518','surf-2':'#1d1d22',line:'#2b2b33',fg:'#f1f1f4',mute:'#9b9ba8',acc:'#7b7b8c','acc-2':'#c9c9d6','acc-ink':'#0a0a0c',g1:'rgba(255,255,255,.06)',g2:'rgba(120,120,140,.08)',card1:'#1a1a1f',card2:'#0e0e11',hdr:'rgba(10,10,12,.9)'},art:'conic-gradient(from 210deg at 30% 40%,#2a2a30,#0c0c0e 20%,#3a3a44 32%,#0c0c0e 45%,#26262c 60%,#0c0c0e 75%,#33333b 88%,#2a2a30),#0c0c0e'},
   fire:{n:'Огненный',d:'Лава и угли',v:{bg:'#0f0705','bg-2':'#170b07',surf:'#1d0f0a','surf-2':'#2a150d',line:'#4a2414',fg:'#fff3ec',mute:'#c79a86',acc:'#ff4d1a','acc-2':'#ff9a2e','acc-ink':'#1a0700',g1:'rgba(255,90,20,.22)',g2:'rgba(255,40,20,.14)',card1:'#2a120a',card2:'#140806',hdr:'rgba(15,7,5,.9)'},art:'radial-gradient(80% 70% at 50% 110%,#ff6a00 0,#c41d00 30%,transparent 65%),radial-gradient(60% 50% at 80% 20%,#ff9a2e55 0,transparent 70%),#160604'},
@@ -653,80 +654,111 @@ let MKT=null,MKT_AT=0;
 async function marketMap(force){if(!force&&MKT&&Date.now()-MKT_AT<6e5)return MKT;try{MKT=await rpc('zb_market_prices')||{};MKT_AT=Date.now()}catch(e){MKT=MKT||{}}return MKT}
 
 /* ---------- звук v2: мастер-шина, компрессор, реверб, громкость ---------- */
-/* 2.3.2: звуки 2.0 — в стиле сайта: тёплый синтвейв (расстроенные «хором» голоса через фильтр), деревянные щелчки рулетки,
-   «пузырьки» на кнопках, «тейп-стоп» на проигрыше, «капля» на уведомлениях. Тихо по умолчанию */
+/* 2.5: звуки 3.0 — «стеклянные» колокольчики (FM), щипки, зал с ранними отражениями, эхо слева-справа, лимитер.
+   Щелчок рулетки записан один раз и просто проигрывается с разной высотой: чем медленнее лента, тем ниже и весомее.
+   Тихо по умолчанию; если звук не нужен 30 секунд — движок засыпает и не тратит батарею */
 const SFX=(()=>{
-  let ac=null,master=null,verb=null,nb=null,lt=0,ti=0;
-  const init=()=>{
+  let ac=null,master=null,verb=null,echo=null,nb=null,tb=null,lt=0,ti=0,idle=0;
+  let used=0;
+  const init=()=>{used=performance.now();
     if(!S.sound||ST3.vol<=0)return null;
     try{
-      if(!ac){ac=new (window.AudioContext||window.webkitAudioContext)({latencyHint:'interactive'});
-        const comp=ac.createDynamicsCompressor();comp.threshold.value=-16;comp.ratio.value=3.5;comp.connect(ac.destination);
-        const warm=ac.createBiquadFilter();warm.type='lowpass';warm.frequency.value=8500;warm.connect(comp);
-        master=ac.createGain();master.connect(warm);
-        verb=ac.createConvolver();const L=ac.sampleRate*1.8|0,b=ac.createBuffer(2,L,ac.sampleRate);
-        for(let c=0;c<2;c++){const d=b.getChannelData(c);let lp=0;for(let i=0;i<L;i++){lp=lp*.5+(Math.random()*2-1)*.5;d[i]=lp*Math.pow(1-i/L,3)}}verb.buffer=b;
-        const vg=ac.createGain();vg.gain.value=.25;verb.connect(vg);vg.connect(master);}
-      if(ac.state!=='running')ac.resume();
-      master.gain.value=ST3.vol;return ac;
+      if(!ac){ac=new (window.AudioContext||window.webkitAudioContext)({latencyHint:'interactive'});const sr=ac.sampleRate;
+        const lim=ac.createDynamicsCompressor();lim.threshold.value=-14;lim.knee.value=10;lim.ratio.value=8;lim.attack.value=.004;lim.release.value=.18;lim.connect(ac.destination);
+        const hs=ac.createBiquadFilter();hs.type='highshelf';hs.frequency.value=6500;hs.gain.value=2;hs.connect(lim);
+        const hp=ac.createBiquadFilter();hp.type='highpass';hp.frequency.value=32;hp.connect(hs);
+        master=ac.createGain();master.connect(hp);
+        /* зал: ранние отражения + хвост, верха гаснут быстрее низов */
+        verb=ac.createConvolver();const L=sr*2.4|0,b=ac.createBuffer(2,L,sr),fade=sr*.012;
+        for(let c=0;c<2;c++){const d=b.getChannelData(c);let lp=0;
+          for(let i=0;i<L;i++){const x=i/L,k=.25+.6*x;lp=lp*k+(Math.random()*2-1)*(1-k);d[i]=lp*Math.pow(1-x,2.6)*(i<fade?i/fade:1)}
+          for(let e=0;e<7;e++){const p=(sr*(.011+.013*e+Math.random()*.006))|0;d[p]+=(Math.random()<.5?-1:1)*.5/(e+1)}}
+        verb.buffer=b;const vg=ac.createGain();vg.gain.value=.3;verb.connect(vg);vg.connect(master);
+        /* эхо «пинг-понг» */
+        echo=ac.createGain();const dl=ac.createDelay(1),dr=ac.createDelay(1),fb=ac.createGain(),el=ac.createBiquadFilter(),mg=ac.createChannelMerger(2),eg=ac.createGain();
+        dl.delayTime.value=.17;dr.delayTime.value=.26;fb.gain.value=.3;el.type='lowpass';el.frequency.value=3200;eg.gain.value=.22;
+        echo.connect(dl);dl.connect(dr);dr.connect(el);el.connect(fb);fb.connect(dl);dl.connect(mg,0,0);dr.connect(mg,0,1);mg.connect(eg);eg.connect(master);}
+      if(ac.state!=='running'){const p=ac.resume();if(p&&p.catch)p.catch(()=>{})}
+      clearTimeout(idle);idle=setTimeout(()=>{try{if(ac&&ac.state==='running')ac.suspend()}catch(e){}},30000);
+      master.gain.value=ST3.vol*.85;return ac;
     }catch(e){return null}
   };
   const noise=a=>{if(!nb){nb=a.createBuffer(1,a.sampleRate,a.sampleRate);const d=nb.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1}return nb};
-  const out=(a,node,wet,pan)=>{let n=node;if(pan&&a.createStereoPanner){const p=a.createStereoPanner();p.pan.value=pan;node.connect(p);n=p}n.connect(master);if(wet)n.connect(verb)};
+  const tickBuf=a=>{if(!tb){const sr=a.sampleRate,L=sr*.05|0;tb=a.createBuffer(1,L,sr);const d=tb.getChannelData(0);let pn=0;
+    for(let i=0;i<L;i++){const t=i/sr,n=Math.random()*2-1,h=n-pn;pn=n;d[i]=(Math.sin(6.2832*1180*t)*Math.exp(-t*85)*.55+Math.sin(6.2832*2750*t)*Math.exp(-t*150)*.3+h*Math.exp(-t*520)*.35)*Math.min(1,i/24)}}return tb};
+  const out=(a,node,wet,pan,ech,pan1,t,d)=>{let n=node;if((pan||pan1!=null)&&a.createStereoPanner){const p=a.createStereoPanner();p.pan.value=pan||0;if(pan1!=null){p.pan.setValueAtTime(pan||0,t);p.pan.linearRampToValueAtTime(pan1,t+d)}node.connect(p);n=p}n.connect(master);if(wet)n.connect(verb);if(ech)n.connect(echo)};
   const env=(g,t,v,att,d)=>{g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(Math.max(.0002,v),t+att);g.gain.exponentialRampToValueAtTime(.0001,t+d)};
-  /* синтвейв-голос: два расстроенных пилообразных + фильтр, который раскрывается и закрывается */
-  function pad(f,d=.6,{v=.04,at=0,wet=true,cut=2600,pan=0,det=9}={}){const a=init();if(!a)return;const t=a.currentTime+at,g=a.createGain(),fl=a.createBiquadFilter();
-    fl.type='lowpass';fl.Q.value=2;fl.frequency.setValueAtTime(cut*.25,t);fl.frequency.exponentialRampToValueAtTime(cut,t+d*.25);fl.frequency.exponentialRampToValueAtTime(cut*.3,t+d);
-    [-det,det].forEach(dt=>{const o=a.createOscillator();o.type='sawtooth';o.frequency.value=f;o.detune.value=dt;o.connect(fl);o.start(t);o.stop(t+d+.05)});
-    fl.connect(g);env(g,t,v,.02,d);out(a,g,wet,pan)}
-  /* мягкий тон: синус с лёгким вибрато */
+  /* колокольчик: синус, который «звенит» за счёт второго синуса */
+  function bell(f,d=.5,{v=.04,at=0,r=2,ix=2.2,wet=true,ech=false,pan=0}={}){const a=init();if(!a)return;const t=a.currentTime+at,c=a.createOscillator(),m=a.createOscillator(),mg=a.createGain(),g=a.createGain(),dep=f*ix*Math.min(1,1100/f);
+    c.frequency.value=f;m.frequency.value=f*r;mg.gain.setValueAtTime(dep,t);mg.gain.exponentialRampToValueAtTime(Math.max(1,dep*.04),t+d*.7);m.connect(mg);mg.connect(c.frequency);c.connect(g);env(g,t,v,.004,d);out(a,g,wet,pan,ech);c.start(t);m.start(t);c.stop(t+d+.05);m.stop(t+d+.05)}
+  /* щипок: пила + треугольник октавой выше через фильтр, который быстро закрывается */
+  function pluck(f,d=.3,{v=.04,at=0,cut=4200,wet=true,ech=false,pan=0}={}){const a=init();if(!a)return;const t=a.currentTime+at,o=a.createOscillator(),o2=a.createOscillator(),fl=a.createBiquadFilter(),g=a.createGain();
+    o.type='sawtooth';o.frequency.value=f;o2.type='triangle';o2.frequency.value=f*2;o2.detune.value=6;fl.type='lowpass';fl.Q.value=3;fl.frequency.setValueAtTime(cut,t);fl.frequency.exponentialRampToValueAtTime(Math.max(200,f*1.1),t+d*.6);
+    o.connect(fl);o2.connect(fl);fl.connect(g);env(g,t,v,.003,d);out(a,g,wet,pan,ech);o.start(t);o2.start(t);o.stop(t+d+.05);o2.stop(t+d+.05)}
+  /* подушка: три расстроенные пилы через фильтр, который раскрывается и закрывается */
+  function pad(f,d=.6,{v=.04,at=0,wet=true,cut=2600,pan=0,det=11}={}){const a=init();if(!a)return;const t=a.currentTime+at,g=a.createGain(),fl=a.createBiquadFilter();
+    fl.type='lowpass';fl.Q.value=1.5;fl.frequency.setValueAtTime(cut*.25,t);fl.frequency.exponentialRampToValueAtTime(cut,t+d*.22);fl.frequency.exponentialRampToValueAtTime(cut*.3,t+d);
+    [-det,0,det].forEach(dt=>{const o=a.createOscillator();o.type='sawtooth';o.frequency.value=f;o.detune.value=dt;o.connect(fl);o.start(t);o.stop(t+d+.05)});
+    fl.connect(g);env(g,t,v*.75,.025,d);out(a,g,wet,pan)}
+  /* мягкий тон */
   function tone(f,d=.2,{v=.05,at=0,wet=false,slide=0,type='sine',pan=0}={}){const a=init();if(!a)return;const t=a.currentTime+at,o=a.createOscillator(),g=a.createGain();
     o.type=type;o.frequency.setValueAtTime(f,t);if(slide)o.frequency.exponentialRampToValueAtTime(slide,t+d);o.connect(g);env(g,t,v,.005,d);out(a,g,wet,pan);o.start(t);o.stop(t+d+.05)}
-  /* деревянное «ток»: короткий шум через узкий фильтр + щелчок */
-  function wood(f=1800,{v=.08,at=0,pan=0}={}){const a=init();if(!a)return;const t=a.currentTime+at,s=a.createBufferSource(),fl=a.createBiquadFilter(),g=a.createGain();
-    s.buffer=noise(a);fl.type='bandpass';fl.frequency.value=f;fl.Q.value=9;s.connect(fl);fl.connect(g);env(g,t,v,.001,.045);out(a,g,false,pan);s.start(t);s.stop(t+.06);tone(f*.5,.03,{v:v*.35,at})}
-  /* воздух / свист */
-  function air(d=.5,{v=.05,f0=300,f1=3000,at=0,wet=true}={}){const a=init();if(!a)return;const t=a.currentTime+at,s=a.createBufferSource(),fl=a.createBiquadFilter(),g=a.createGain();
-    s.buffer=noise(a);s.loop=true;fl.type='bandpass';fl.Q.value=1.2;fl.frequency.setValueAtTime(f0,t);fl.frequency.exponentialRampToValueAtTime(f1,t+d);
-    g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+d*.4);g.gain.exponentialRampToValueAtTime(.0001,t+d);s.connect(fl);fl.connect(g);out(a,g,wet);s.start(t);s.stop(t+d+.05)}
-  /* басовый удар */
-  function sub(f=80,d=.4,{v=.2,at=0,to=38}={}){tone(f,d,{v,at,slide:to})}
+  /* шум через фильтр, который едет: воздух, свист, шлепок */
+  function nz(d=.5,{v=.05,f0=300,f1=3000,f2=0,at=0,wet=true,type='bandpass',q=1.2,atk=.4,pan=0,pan1=null}={}){const a=init();if(!a)return;const t=a.currentTime+at,s=a.createBufferSource(),fl=a.createBiquadFilter(),g=a.createGain();
+    s.buffer=noise(a);s.loop=true;fl.type=type;fl.Q.value=q;fl.frequency.setValueAtTime(f0,t);if(f2){fl.frequency.exponentialRampToValueAtTime(f1,t+d*.5);fl.frequency.exponentialRampToValueAtTime(f2,t+d)}else fl.frequency.exponentialRampToValueAtTime(f1,t+d);
+    g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+Math.max(.004,d*atk));g.gain.exponentialRampToValueAtTime(.0001,t+d);s.connect(fl);fl.connect(g);out(a,g,wet,pan,false,pan1,t,d);s.start(t,Math.random()*.5);s.stop(t+d+.05)}
+  /* удар: синус падает вниз */
+  function kick(f=90,d=.35,{v=.2,at=0,to=38}={}){tone(f,d,{v,at,slide:to})}
+  /* «сдулось»: пила уходит вниз, фильтр закрывается */
+  function drop(f=110,d=.55,{v=.035,at=0,wet=true}={}){const a=init();if(!a)return;const t=a.currentTime+at,o=a.createOscillator(),g=a.createGain(),fl=a.createBiquadFilter();
+    o.type='sawtooth';o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(f*.36,t+d);fl.type='lowpass';fl.frequency.setValueAtTime(1500,t);fl.frequency.exponentialRampToValueAtTime(180,t+d);o.connect(fl);fl.connect(g);env(g,t,v,.01,d+.05);out(a,g,wet);o.start(t);o.stop(t+d+.1)}
+  /* готовый щелчок с нужной высотой */
+  function tk(rate=1,v=.07,pan=0,at=0){const a=init();if(!a)return;const s=a.createBufferSource(),g=a.createGain();s.buffer=tickBuf(a);s.playbackRate.value=rate;g.gain.value=v;s.connect(g);out(a,g,false,pan);s.start(a.currentTime+at)}
   const N=(base,semi)=>base*Math.pow(2,semi/12);
-  /* аккорды в ля-миноре / до-мажоре — звучат «по-клубному» и не режут слух */
-  const CH={c:[0],i:[0,7],b:[0,3,7],p:[0,3,7,10],k:[0,4,7,11],r:[0,4,7,11,14],g:[0,4,7,11,14,19]};
+  const CH={c:[0],i:[0,7],b:[0,3,7],p:[0,3,7,10],k:[0,4,7,11],r:[0,4,7,11,14],g:[0,4,7,11,14,19]},LV='cibpkrg';
   return{
     unlock(){init()},
-    click(){tone(420,.05,{v:.035,slide:1300})},                         /* «пузырёк» */
-    soft(){tone(660,.06,{v:.025,slide:990})},
-    tick(rate=1){const n=performance.now();if(n-lt<36)return;lt=n;ti^=1;wood(ti?1900:1500,{v:.06+Math.min(.04,rate*.02),pan:ti?.15:-.15})},
-    open(){sub(110,.3,{v:.18,to:50});air(.55,{v:.05,f0:250,f1:4500,at:.02});[0,7,12].forEach((s,k)=>pad(N(220,s),.7,{v:.022,at:.06+k*.05,cut:3200}))},
-    reveal(r){
-      const ch=CH[r]||CH.c,base=r==='g'?196:r==='r'?220:261.6,long=r==='g'?1.6:r==='r'?1.2:.7;
-      if(r==='g'||r==='r'){sub(70,.9,{v:.22,to:32});air(1.2,{v:.04,f0:5000,f1:11000,at:.12})}
-      ch.forEach((s,k)=>pad(N(base,s),long,{v:.03,at:k*.07,cut:r==='g'?5000:3200,pan:k%2?.3:-.3}));
-      if('kgr'.includes(r))ch.forEach((s,k)=>tone(N(base*2,s),.25,{v:.02,at:.25+k*.06,wet:true,type:'triangle'}))},
-    coin(){tone(1568,.08,{v:.03,type:'square',slide:2093});tone(2637,.25,{v:.02,at:.07,wet:true})},
-    cash(){[0,4,7,12,16].forEach((s,k)=>tone(N(1046,s),.18,{v:.022,at:k*.045,type:'triangle',wet:true,pan:(k-2)*.15}));air(.35,{v:.025,f0:6000,f1:10000,at:.05})},
-    win(){[0,4,7,11].forEach((s,k)=>pad(N(261.6,s),.9,{v:.03,at:k*.06,cut:4200}));sub(90,.4,{v:.12,to:45})},
-    /* проигрыш: «тейп-стоп» — аккорд замедляется и уходит вниз */
-    lose(){const a=init();if(!a)return;[0,3,7].forEach(s=>{const t=a.currentTime,o=a.createOscillator(),g=a.createGain(),fl=a.createBiquadFilter();o.type='sawtooth';o.frequency.setValueAtTime(N(220,s),t);o.frequency.exponentialRampToValueAtTime(N(220,s)*.3,t+.6);
-      fl.type='lowpass';fl.frequency.setValueAtTime(2200,t);fl.frequency.exponentialRampToValueAtTime(300,t+.6);o.connect(fl);fl.connect(g);env(g,t,.025,.01,.65);out(a,g,false);o.start(t);o.stop(t+.7)})},
-    whoosh(){air(.55,{v:.07,f0:200,f1:3800})},
-    join(){tone(523,.08,{v:.04,slide:784});tone(1046,.2,{v:.025,at:.07,wet:true})},
-    round(){sub(100,.25,{v:.16,to:50});wood(1200,{v:.06,at:.02})},
-    stamp(){sub(85,.3,{v:.24,to:40});wood(700,{v:.08})},
-    /* 2.4: новые звуки */
-    pen(){for(let k=0;k<7;k++)air(.07+Math.random()*.05,{v:.022,f0:2500+k*300,f1:5200,at:k*.09,wet:false})},   /* росчерк ручкой */
-    mark(win){if(win){[0,7,12].forEach((s,k)=>tone(N(1318.5,s),.22,{v:.026,at:k*.07,type:'triangle',wet:true}));tone(N(2637,7),.5,{v:.012,at:.22,wet:true})}
-      else{tone(196,.18,{v:.06,type:'square',slide:150});tone(147,.28,{v:.06,at:.14,type:'square',slide:98})}},
-    stopN(i=0){wood(1100+i*220,{v:.07});tone(N(523,i*4),.14,{v:.02,at:.01,type:'triangle',wet:true})},     /* лента встала — каждая выше */
-    st(){[0,1,2,3].forEach(k=>tone(2200+k*140,.03,{v:.018,at:k*.055,type:'square'}));tone(3300,.14,{v:.014,at:.24,wet:true})},           /* счётчик StatTrak */
-    spinStart(d=2){air(Math.min(3,Math.max(.6,d)),{v:.03,f0:180,f1:1600});pad(N(110,0),Math.min(2.4,d),{v:.012,cut:1400,wet:false})},
-    upWin(){sub(60,.9,{v:.22,to:32});[0,4,7,11,14].forEach((s,k)=>pad(N(261.6,s),1.1,{v:.03,at:k*.06,cut:4800,pan:k%2?.25:-.25}));air(.9,{v:.03,f0:6000,f1:11000,at:.1})},
-    upLose(){SFX.lose()},
-    msg(){tone(880,.12,{v:.035,slide:440})},                            /* «капля» */
-    notify(){tone(1175,.1,{v:.035,slide:587});tone(1568,.18,{v:.025,at:.09,wet:true})},
-    error(){sub(140,.12,{v:.12,to:90});sub(110,.16,{v:.12,at:.11,to:70})}
+    click(){tk(1.5,.05);tone(740,.045,{v:.02,slide:1180})},
+    soft(){tone(587,.06,{v:.02,slide:880})},
+    /* рулетка: сама меряет паузу между щелчками — быстро = выше и тише, медленно = ниже и весомее */
+    tick(){const n=performance.now(),dt=n-lt;if(dt<34)return;lt=n;ti^=1;const sp=Math.max(0,Math.min(1,(220-dt)/190));tk(.88+sp*.26+(ti?.03:0),.085-sp*.03,ti?.18:-.18)},
+    open(){kick(120,.32,{v:.2,to:46});tk(.7,.11,-.2);tk(.62,.1,.2,.07);nz(.5,{v:.045,f0:400,f1:6500,at:.03});[0,7,12,19].forEach((s,k)=>pluck(N(220,s),.35,{v:.026,at:.08+k*.055,ech:k===3,pan:(k-1.5)*.2}))},
+    /* выпал скин: чем реже — тем богаче. Ширпотреб — один колокольчик, золото — удар, аккорд и каскад на две октавы */
+    reveal(r){const ch=CH[r]||CH.c,lvl=Math.max(0,LV.indexOf(r)),base=r==='g'?196:r==='r'?220:261.6;
+      if(lvl<=1){ch.forEach((s,k)=>bell(N(base*2,s),.5,{v:.035,at:k*.08,pan:k?.2:-.2}));return}
+      if(lvl<=3){ch.forEach((s,k)=>pluck(N(base,s),.45,{v:.03,at:k*.065,pan:k%2?.25:-.25,ech:k===ch.length-1}));bell(N(base*2,ch[ch.length-1]),.7,{v:.028,at:ch.length*.065});return}
+      const big=lvl-3,run=big===3?[...ch,...ch.map(s=>s+12)]:ch,stp=big===3?.055:.07;
+      kick(big>1?75:95,.5+big*.2,{v:.14+big*.035,to:34});
+      nz(.5+big*.3,{v:.03+big*.006,f0:3000,f1:11000,at:.05,type:'highpass',q:.7});
+      ch.forEach((s,k)=>pad(N(base,s),.8+big*.35,{v:.022+big*.003,at:k*.03,cut:3000+big*900,pan:k%2?.35:-.35}));
+      run.forEach((s,k)=>bell(N(base*2,s),.55+big*.15,{v:.026,at:.1+k*stp,pan:((k%3)-1)*.4,ech:k===run.length-1}));
+      if(big===3){bell(N(base*8,7),1.4,{v:.014,at:.18+run.length*stp,r:3.5,ix:1.2,ech:true});nz(1.1,{v:.018,f0:7000,f1:12000,at:.5,type:'highpass',q:.7})}},
+    coin(){bell(1976,.12,{v:.03,r:3.01,ix:1.4,wet:false});bell(2637,.4,{v:.028,at:.065,r:3.01,ix:1.2})},
+    cash(){[0,4,7,12].forEach((s,k)=>bell(N(1046.5,s),.2,{v:.022,at:k*.04,pan:(k-1.5)*.2,wet:false}));nz(.09,{v:.04,f0:5000,f1:9000,at:.15,type:'highpass',q:.7,wet:false,atk:.1});
+      bell(N(1046.5,16),.7,{v:.03,at:.17,r:3.5,ix:1.3,ech:true});bell(N(1046.5,19),.6,{v:.016,at:.2,r:3.5,ix:1})},
+    win(){kick(95,.4,{v:.13,to:44});[0,4,7,11].forEach((s,k)=>pad(N(261.6,s),1,{v:.024,at:k*.03,cut:4200,pan:k%2?.3:-.3}));[0,4,7,12,16].forEach((s,k)=>bell(N(523.25,s),.6,{v:.024,at:.08+k*.07,ech:k===4,pan:(k-2)*.2}))},
+    lose(){pluck(N(220,3),.3,{v:.03,cut:1800,wet:false});pluck(220,.4,{v:.03,at:.13,cut:1500});drop(110,.55,{v:.035,at:.24})},
+    whoosh(){nz(.5,{v:.06,f0:250,f1:4200,f2:900,pan:-.5,pan1:.5})},
+    join(){pluck(523.25,.18,{v:.03,wet:false});bell(783.99,.4,{v:.028,at:.08,ech:true})},
+    round(){kick(105,.26,{v:.16,to:48});tk(.8,.08,0,.02);bell(392,.3,{v:.018,at:.02,wet:false})},
+    stamp(){kick(80,.34,{v:.24,to:36});nz(.09,{v:.07,f0:900,f1:300,type:'lowpass',atk:.05});tk(.5,.1)},
+    pen(){for(let k=0;k<7;k++)nz(.07+Math.random()*.05,{v:.022,f0:2500+k*300,f1:5200,at:k*.09,wet:false})},   /* росчерк ручкой */
+    mark(win){if(win){[0,7,12].forEach((s,k)=>bell(N(1318.5,s),.3,{v:.024,at:k*.065,ix:1.2,pan:(k-1)*.25}));bell(N(2637,7),.6,{v:.01,at:.21,ech:true})}
+      else{tone(196,.16,{v:.05,type:'triangle',slide:150});tone(147,.26,{v:.05,at:.13,type:'triangle',slide:98});nz(.12,{v:.03,f0:500,f1:200,type:'lowpass',wet:false,atk:.05})}},
+    stopN(i=0){tk(.62+i*.05,.1);kick(110,.14,{v:.09,to:60});bell(N(523.25,[0,2,4,7,9][i%5]),.3,{v:.022,at:.01,pan:(i-2)*.2})},     /* лента встала — каждая выше */
+    st(){[0,1,2,3].forEach(k=>tone(2200+k*150,.028,{v:.016,at:k*.055,type:'square'}));bell(3520,.25,{v:.012,at:.24,ix:.6})},           /* счётчик StatTrak */
+    spinStart(d=2){nz(Math.min(3,Math.max(.6,d)),{v:.028,f0:160,f1:1500,atk:.25});nz(.35,{v:.05,f0:300,f1:5000,pan:-.4,pan1:.4,wet:false});pad(110,Math.min(2.4,d),{v:.014,cut:1400,wet:false})},
+    upWin(){kick(62,.9,{v:.22,to:30});nz(.9,{v:.03,f0:5000,f1:12000,at:.08,type:'highpass',q:.7});[0,4,7,11,14].forEach((s,k)=>pad(N(261.6,s),1.3,{v:.024,at:k*.03,cut:4800,pan:k%2?.3:-.3}));
+      [0,4,7,11,14,19,24].forEach((s,k)=>bell(N(523.25,s),.7,{v:.024,at:.12+k*.06,pan:((k%3)-1)*.4,ech:k===6}))},
+    upLose(){kick(70,.5,{v:.2,to:30});nz(.35,{v:.06,f0:2400,f1:200,type:'lowpass',atk:.03});drop(165,.7,{v:.04});pluck(N(220,-2),.4,{v:.025,at:.1,cut:1200})},
+    msg(){tone(620,.09,{v:.04,slide:1240});tone(1240,.12,{v:.016,at:.05,wet:true})},                            /* «капля» */
+    notify(){bell(1174.7,.25,{v:.03,ix:1});bell(1568,.5,{v:.028,at:.1,ix:1,ech:true})},
+    error(){[0,.12].forEach((at,k)=>{tone(k?123:147,.11,{v:.07,at,type:'triangle'});tone(k?246:294,.09,{v:.018,at,type:'square'})})},
+    /* 2.5: новые */
+    pop(){tone(330,.08,{v:.028,slide:660});nz(.12,{v:.012,f0:1500,f1:5000,wet:false})},                          /* открылось окно */
+    lock(){tk(.55,.11);kick(120,.16,{v:.1,to:60})},                                                              /* лента встала на скин */
+    idle(ms){return performance.now()-used>ms},                                                                  /* давно ли был звук или нажатие */
+    rise(d=1){nz(d,{v:.03,f0:500,f1:7000,atk:.9,type:'bandpass',q:2});tone(220,d,{v:.02,slide:660,wet:true})}    /* нарастание перед развязкой */
   };
 })();
 /* браузеры глушат звук до первого касания и после ухода со вкладки — будим его на каждом касании */
@@ -842,7 +874,7 @@ async function skinModal(n,{w=null,st=false,item=null}={}){
 }
 
 /* ---------- что нового ---------- */
-const NEWS=[['Версия 2.4.2','Сайт стал легче: код разбит на части, и после обновлений браузер скачивает заново только то, что поменялось. Страницы со списками скинов и кейсов рисуются быстрее. Исправлены ошибочные цены некоторых скинов с рынка.'],['Версия 2.4.1','Апгрейд больше не зависает, если быстро менять проценты. Скин под нужный процент подбирается точнее, в списке все износы. На телефоне инвентарь теперь в нижнем меню, а «Кейсы» не перезагружаются, когда возвращаешься. Стиль по умолчанию — «Минимализм». В официальных кейсах CS2 появились недостающие ножи и перчатки. В контрактах видно, до скольки можно выбить.'],['Версия 2.4','Новая эпоха: статистика сайта и профилей идёт с нуля, старая доступна по кнопке «Старая статистика». Сотни новых скинов, все агенты, ножи и перчатки, Doppler Ruby, Sapphire, Black Pearl и Emerald. Четыре новые капсулы наклеек. Контракты как в CS2: флоат результата — средний флоат вложенных, StatTrak, если все скины StatTrak. Открытие 2–4 кейсов лентами, StatTrak и флоат видно сразу, новые звуки. Пополнение — до 20 000 ₽ в час.'],['Версия 2.3.2','Сайт стал быстрее: он разбит на части, браузер запоминает их и не качает заново. Новые звуки, плавное открытие нескольких кейсов колонками, разделы «Ножи и перчатки» и «Оружейные», переделанные темы «Гроза», «Океан», RGB, «1-бит», «Алые лепестки», 7 новых достижений и новые промокоды.'],['Вход через Steam','Входи на сайт через Steam в один клик. Привяжи Steam в настройках: скоро вход будет только через него.'],['Задания дня','Каждый день три задания и сундук дня на главной.'],['Терминалы как в CS2','Genesis и Dead Hand теперь открываются как терминал: три предложения по очереди, назад вернуться нельзя.'],['Новый апгрейдер и звуки','Колесо крупнее, стрелку можно выбрать в «Стиле». Звуки новые, по умолчанию тихо.'],['English','Сайт можно переключить на английский в меню «Ещё» и в настройках.']];
+const NEWS=[['Версия 2.5','Новый облик сайта: тема «Занос 2.5» с живым фоном, новые шапка, кнопки, плитки и окна. Она включена по умолчанию, прежний «Минимализм» возвращается в один клик в «Кастомизации». Новые анимации во всех разделах: свет при выигрыше, вспышки редких дропов, апгрейд, битвы, инвентарь. Все звуки сделаны заново. Сайт работает быстрее, особенно на телефонах и слабых устройствах. Усилена защита аккаунтов и баланса.'],['Версия 2.4.2','Сайт стал легче: код разбит на части, и после обновлений браузер скачивает заново только то, что поменялось. Страницы со списками скинов и кейсов рисуются быстрее. Исправлены ошибочные цены некоторых скинов с рынка.'],['Версия 2.4.1','Апгрейд больше не зависает, если быстро менять проценты. Скин под нужный процент подбирается точнее, в списке все износы. На телефоне инвентарь теперь в нижнем меню, а «Кейсы» не перезагружаются, когда возвращаешься. Стиль по умолчанию — «Минимализм». В официальных кейсах CS2 появились недостающие ножи и перчатки. В контрактах видно, до скольки можно выбить.'],['Версия 2.4','Новая эпоха: статистика сайта и профилей идёт с нуля, старая доступна по кнопке «Старая статистика». Сотни новых скинов, все агенты, ножи и перчатки, Doppler Ruby, Sapphire, Black Pearl и Emerald. Четыре новые капсулы наклеек. Контракты как в CS2: флоат результата — средний флоат вложенных, StatTrak, если все скины StatTrak. Открытие 2–4 кейсов лентами, StatTrak и флоат видно сразу, новые звуки. Пополнение — до 20 000 ₽ в час.'],['Версия 2.3.2','Сайт стал быстрее: он разбит на части, браузер запоминает их и не качает заново. Новые звуки, плавное открытие нескольких кейсов колонками, разделы «Ножи и перчатки» и «Оружейные», переделанные темы «Гроза», «Океан», RGB, «1-бит», «Алые лепестки», 7 новых достижений и новые промокоды.'],['Вход через Steam','Входи на сайт через Steam в один клик. Привяжи Steam в настройках: скоро вход будет только через него.'],['Задания дня','Каждый день три задания и сундук дня на главной.'],['Терминалы как в CS2','Genesis и Dead Hand теперь открываются как терминал: три предложения по очереди, назад вернуться нельзя.'],['Новый апгрейдер и звуки','Колесо крупнее, стрелку можно выбрать в «Стиле». Звуки новые, по умолчанию тихо.'],['English','Сайт можно переключить на английский в меню «Ещё» и в настройках.']];
 const NEWS_22=[['Версия 2.2','Сайт обновился до версии 2.2.']];
 const NEWS_21=[
   ['Достижения','29 достижений: базовые, редкие, эпические и засекреченные. Засекреченные скрыты, пока не получишь. Под каждым видно, у какой доли игроков оно есть. Раздел «Достижения» в профиле, всплывашка, когда получаешь новое.'],
@@ -2123,7 +2155,7 @@ function challenge(x){BT.invite={pub:x.pub,nick:x.nick,col:x.col,ava:x.ava};BT.t
 
 /* ================= ПРОФИЛЬ (свой и чужой) ================= */
 function profileHTML(P,isMe){
-  const L=lvlInfo(P.won_sum,P.opened),rank=RANKS.find(r=>L.L>=r[0])[1],th=THEMES[P.theme]||THEMES.violet;
+  const L=lvlInfo(P.won_sum,P.opened),rank=RANKS.find(r=>L.L>=r[0])[1],th=THEMES[P.theme]||THEMES.zanos;
   const cst=(P.cstats||[]).filter(x=>CBY[x.c]),fav=cst[0]?CBY[cst[0].c]:null,best=P.best&&SK[P.best.n]?P.best:null;
   return `<div class="pf">
   <div class="pf-main">
@@ -2572,6 +2604,8 @@ async function enter(tries=0){
     S.uid=user.id;
     applyState(await rpc('zb_state'));
     await loadPrices();
+    /* 2.5: тема хранится и на сервере — «Минимализм» один раз меняем на новый облик (вернуть можно в Кастомизации) */
+    if(S.theme==='minimal'&&!ST3.th25s){S.theme='zanos';try{await rpc('zb_set_theme',{p_theme:'zanos'});ST3.th25s=1;save3()}catch(e){}}
     if(S.theme&&S.theme!==ST3.theme){ST3.theme=S.theme;save3();applyTheme(S.theme)}
     authed=true;$('#gate').hidden=true;
     const h=(location.hash||'').slice(1)||'home';go(h,false);
@@ -3456,8 +3490,7 @@ go=(f=>function(){RV_T=performance.now();return f.apply(this,arguments)})(go);
 })();
 
 /* --- кнопки: волна от нажатия --- */
-document.addEventListener('pointerdown',e=>{if(LITE7())return;const b=e.target.closest('.btn.acc,.btn.lg,#openBtn');if(!b||b.disabled)return;
-  const r=b.getBoundingClientRect(),s=document.createElement('i');s.className='rip7';s.style.left=e.clientX-r.left+'px';s.style.top=e.clientY-r.top+'px';b.appendChild(s);setTimeout(()=>s.remove(),650)},{passive:true});
+/* (волна переехала в блок 2.5 — теперь она у всех кнопок) */
 
 
 /* ===================== 1.7: ЛОГОТИП, ТЕХРАБОТЫ 2.0, ПОДДЕРЖКА ===================== */
@@ -3646,19 +3679,21 @@ async function openCase(c,n){
   drops.forEach(d=>{S.inv.unshift(d);if(!S.best||d.p>S.best.p)S.best={...d}});gotItems(drops);S.bal=+r.bal;updBal();S.opened+=n;
   const hero=$('#bigCrate'),st=$('#stage');
   /* без «появления» сундука: сразу рулетка на его месте, вспышка в момент старта */
-  if(hero&&!LITE7()){const [x,y]=ctr(hero);FX7.burst(x,y,c.col&&c.col[0]||'#a94dff',{p:.6,n:40,smoke:8,ring:false})}
+  if(st)FX25.flare(st,c.col&&c.col[0]||'#a94dff',1.7);
   /* 2.4: 2–4 кейса — горизонтальные ленты друг под другом, как один кейс; 5 и 10 — колонки */
   const multi=n>=5,hz=n>1&&n<5,Wn=multi?26:44,show=n>1?drops.slice(0,10):drops.slice(0,1);
   if(st){st.style.minHeight=st.offsetHeight+'px';st.classList.add('rolling')}
-  const rl=$('#rolls');rl.hidden=false;rl.classList.toggle('multi',multi);rl.classList.toggle('hz24',hz);rl.classList.toggle('compact24',hz&&show.length>2);rl.classList.toggle('two-rows',show.length>5);rl.style.setProperty('--cols',Math.min(5,show.length));
+  const rl=$('#rolls');rl.hidden=false;rl.classList.remove('flood25');rl.style.removeProperty('--wc');rl.classList.toggle('multi',multi);rl.classList.toggle('hz24',hz);rl.classList.toggle('compact24',hz&&show.length>2);rl.classList.toggle('two-rows',show.length>5);rl.style.setProperty('--cols',Math.min(5,show.length));
   rl.innerHTML=show.map(d=>`<div class="roul${multi?' vcol':''} rv7" style="--rc:${RCOL[SK[d.n].rar]}"><div class="track">${reelItems(c,d,Wn+6,Wn).map(x=>card(x,{fx:false,sm:multi})).join('')}</div><i class="mark"></i></div>`).join('');
   const dur=S.fast?SPEED.caseF:SPEED.caseN;
   const left=await leave23(Promise.all($$('#rolls .roul').map((w,i)=>spin(w,Wn,dur+i*(multi?140:hz?170:220),multi,i===0).then(()=>{if(n>1&&i<5)SFX.stopN(i)}))),'case');
   if(!left)$$('#rolls .roul').forEach((w,i)=>{const d=show[i],win=w.querySelector('.track>.win');if(!win||!d)return;w.classList.add('won7');const rr=SK[d.n].rar;
     if('grk'.includes(rr)){const [x,y]=ctr(win);FX7.burst(x,y,RCOL[rr],{p:rr==='g'?1.1:.7,n:rr==='g'?90:45,smoke:6})}});
+  /* 2.5: сцена заливается цветом лучшего выигрыша, у редких — свет по краям экрана */
+  if(!left&&!LITE7()){const br=RORD.find(k=>show.some(d=>SK[d.n].rar===k))||'b';rl.style.setProperty('--wc',RCOL[br]);rl.classList.add('flood25');if('grk'.includes(br))FX25.edge(RCOL[br],br==='g'?1.1:.8)}
   CBUSY=false;if($('#openBtn'))$('#openBtn').disabled=false;document.body.classList.remove('opening');
   if(cur!=='case'){const best=drops.reduce((a,d)=>d.p>a.p?d:a,drops[0]);toast(`Кейс «${c.name}» открыт: ${ruName(SK[best.n])[1]} за ${fmt0(best.p)}${drops.length>1?' и ещё '+(drops.length-1):''}`);pollFeed();return}
-  await sleep7(LITE7()||S.fast?0:380);
+  await sleep7(LITE7()||S.fast?0:drops.some(d=>'grk'.includes(SK[d.n].rar))?680:420);
   showResult(drops,cost);pollFeed();
 }
 /* сундук больше не дёргает страницу прокруткой */
@@ -4080,7 +4115,7 @@ renderSettings=(f=>function(){const r=f.apply(this,arguments);const v=$('#v-sett
     $('#sBn9',v).onchange=e=>{ST3.bnote=e.target.checked;save3()};$('#sSup9',v).onclick=()=>supportSheet()}
   return r})(renderSettings);
 VIEWS.settings=renderSettings;
-if(window.__zb)Object.assign(window.__zb,{supportSheet,notesSheet,popNote,pollBadges,NT9,seedData});
+if(window.__zb)Object.assign(window.__zb,{SFX,supportSheet,notesSheet,popNote,pollBadges,NT9,seedData});
 
 /* скины без StatTrak в CS2 (коллекции: только сувенирные/обычные) */
 const NOST9=new Set(["AK-47 | B the Monster", "AK-47 | Black Laminate", "AK-47 | Gold Arabesque", "AK-47 | Midnight Laminate", "AK-47 | Safari Mesh", "AK-47 | VariCamo Grey", "AK-47 | Wild Lotus", "AUG | Akihabara Accept", "AUG | Amber Fade", "AUG | Flame Jörmungandr", "AUG | Hot Rod", "AUG | Midnight Lily", "AWP | Black Box", "AWP | Black Nile", "AWP | Dragon Lore", "AWP | Fade", "AWP | Gungnir", "AWP | Medusa", "AWP | Pink DDPAT", "AWP | Pit Viper", "AWP | Safari Mesh", "AWP | Sovereign Flame", "AWP | Sun in Leo", "CZ75-Auto | Midnight Palm", "CZ75-Auto | Pink Pearl", "CZ75-Auto | Silver", "Desert Eagle | Blaze", "Desert Eagle | Heat Treated", "Desert Eagle | Midnight Storm", "Desert Eagle | Night", "Desert Eagle | Night Heist", "Desert Eagle | Urban DDPAT", "Desert Eagle | Urban Rubble", "Dual Berettas | Pyre", "Dual Berettas | Rose Nacre", "Dual Berettas | Silver Pour", "Dual Berettas | Twin Turbo", "FAMAS | Dark Water", "FAMAS | Grey Ghost", "FAMAS | Night Borre", "Five-SeveN | Candy Apple", "Five-SeveN | Crimson Blossom", "Five-SeveN | Forest Night", "Five-SeveN | Heat Treated", "Five-SeveN | Midnight Paintover", "Five-SeveN | Neon Kimono", "Five-SeveN | Silver Quartz", "G3SG1 | Arctic Camo", "G3SG1 | Chronos", "G3SG1 | Polar Camo", "Galil AR | Amber Fade", "Galil AR | Cerberus", "Galil AR | Grey Smoke", "Galil AR | Phoenix Blacklight", "Galil AR | Urban Rubble", "Glock-18 | Candy Apple", "Glock-18 | Coral Bloom", "Glock-18 | Fade", "Glock-18 | Gamma Doppler", "Glock-18 | Night", "Glock-18 | Pink DDPAT", "Glock-18 | Twilight Galaxy", "M249 | Midnight Palm", "M4A1-S | Blue Phosphor", "M4A1-S | Fade", "M4A1-S | Hot Rod", "M4A1-S | Icarus Fell", "M4A1-S | Knight", "M4A1-S | Master Piece", "M4A1-S | Rose Hex", "M4A1-S | Welcome to the Jungle", "M4A4 | Aeolian Dark", "M4A4 | Dark Blossom", "M4A4 | Dark Operative", "M4A4 | Mainframe", "M4A4 | Poseidon", "M4A4 | Urban DDPAT", "MAC-10 | Amber Fade", "MAC-10 | Candy Apple", "MAC-10 | Fade", "MAC-10 | Silver", "MAC-10 | Snow Splash", "MAC-10 | Urban DDPAT", "MAG-7 | Bulldozer", "MAG-7 | Carbon Fiber", "MAG-7 | Silver", "MP5-SD | Neon Squeezer", "MP5-SD | Snow Splash", "MP7 | Fade", "MP7 | Whiteout", "MP9 | Arctic Tri-Tone", "MP9 | Dark Age", "MP9 | Hot Rod", "MP9 | Pandora's Box", "MP9 | Wild Lily", "Negev | Mjölnir", "Negev | Phoenix Stencil", "Nova | Blaze Orange", "Nova | Candy Apple", "Nova | Polar Mesh", "P2000 | Amber Fade", "P2000 | Silver", "P250 | Black & Tan", "P250 | Crimson Kimono", "P250 | Dark Filigree", "P250 | Forest Night", "P250 | Whiteout", "P90 | Ash Wood", "PP-Bizon | Candy Apple", "PP-Bizon | Carbon Fiber", "PP-Bizon | Night Ops", "PP-Bizon | Urban Dashed", "R8 Revolver | Amber Fade", "R8 Revolver | Blaze", "R8 Revolver | Dark Chamber", "R8 Revolver | Night", "R8 Revolver | Phoenix Marker", "SCAR-20 | Arctic Camo Panels", "SCAR-20 | Carbon Fiber", "SCAR-20 | Emerald", "SG 553 | Candy Apple", "SG 553 | Night Camo", "SSG 08 | Acid Fade", "SSG 08 | Carbon Fiber", "SSG 08 | Grey Smoke", "Sawed-Off | Amber Fade", "Sawed-Off | Bamboo Shadow", "Sawed-Off | Crimson Batik", "Tec-9 | Nuclear Threat", "Tec-9 | Phoenix Chalk", "Tec-9 | Urban DDPAT", "Tec-9 | Whiteout", "UMP-45 | Blaze", "UMP-45 | Carbon Fiber", "UMP-45 | Crimson Foil", "UMP-45 | Facility Dark", "UMP-45 | Fade", "UMP-45 | Late Night Transit", "UMP-45 | Urban DDPAT", "USP-S | Night Ops", "USP-S | Road Rash", "USP-S | Whiteout", "XM1014 | Black Site", "XM1014 | Blaze Orange", "XM1014 | Frost Borre", "XM1014 | Monster Melt", "XM1014 | Urban Perforated"]);
@@ -4376,6 +4411,7 @@ delete THEMES.blade;delete PBD['bg:d-blade'];delete PBGS['bg:d-blade'];
 if(ST3.theme==='blade'){ST3.theme='violet';save3()}
 const R23=(n,f)=>Array.from({length:n},(_,i)=>f(i)).join('');
 const TFX23={
+  zanos:()=>'<i class="zb z1"></i><i class="zb z2"></i><i class="zb z3"></i><i class="zgrid"></i><i class="zvg"></i>',
   storm:()=>'<i class="sk c1"></i><i class="sk c2"></i><i class="sk c3"></i><i class="sk c4"></i><i class="rn r1"></i><i class="rn r2"></i><i class="rn r3"></i><i class="fl"></i>'
     +'<svg class="bt" viewBox="0 0 120 400" preserveAspectRatio="none"><path d="M70 0 52 90l18 4-34 96 22 6-40 204 66-226-22-6 30-92-18-6 20-76z"/><path class="br" d="M52 92 22 150l12 2-16 52"/><path class="br" d="M60 198 90 252l-12 2 20 48"/></svg><i class="gl"></i>',
   ocean:()=>'<i class="dp"></i>'+R23(5,i=>`<i class="ray" style="--x:${8+i*20}%;--d:-${(i*2.1).toFixed(1)}s;--w:${70+(i*37)%80}px"></i>`)+'<i class="cau"></i>'
@@ -4402,6 +4438,89 @@ confetti=()=>{};
 /* 2.3: темы 2.x (лепестки, вихрь, пиксельный дым, 1-бит, волна) подключаются ниже первого applyTheme — применяем выбранную ещё раз,
    иначе после перезагрузки сайт ставил фиолетовую и тему приходилось выбирать заново */
 applyTheme(ST3.theme);
+
+/* ===================== 2.5: АНИМАЦИИ — свет, кольца и волны в цвет редкости =====================
+   Без искр и конфетти: свечение, лучи, кольца. Двигаются только transform и opacity — их рисует видеокарта, страница не тормозит.
+   В облегчённом режиме и при настройке «меньше движения» слой выключен целиком. */
+const FX25=(()=>{let lay=null;
+  const add=(cls,css,ms,txt)=>{if(LITE7()||document.hidden)return null;
+    if(!lay||!lay.isConnected){lay=document.createElement('div');lay.id='fx25';lay.setAttribute('aria-hidden','true');document.body.appendChild(lay)}
+    if(lay.childElementCount>26)return null;
+    const e=document.createElement('i');e.className=cls;e.style.cssText=css;if(txt)e.textContent=txt;lay.appendChild(e);setTimeout(()=>e.remove(),ms);return e};
+  const at=el=>{if(!el||!el.isConnected)return null;const r=el.getBoundingClientRect();return r.width&&r.height?[r.left+r.width/2,r.top+r.height/2,r]:null};
+  return{mk:null,
+    /* свечение по краям экрана */
+    edge(col,pw=1){add('fx25-edge',`--c:${col};--pw:${pw}`,1300)},
+    /* кольца-волны от элемента */
+    ring(el,col,n=1,size=1){const p=at(el);if(!p)return;for(let i=0;i<n;i++)add('fx25-ring',`left:${p[0]}px;top:${p[1]}px;--c:${col};--s:${(size*(1+i*.4)).toFixed(2)};--d:${i*130}ms`,1000+i*130)},
+    /* мягкая вспышка света */
+    flare(el,col,size=1){const p=at(el);if(p)add('fx25-flare',`left:${p[0]}px;top:${p[1]}px;--c:${col};--s:${size}`,900)},
+    /* столб света сквозь ленту */
+    beam(el,col){const p=at(el);if(p)add('fx25-beam',`left:${p[0]}px;top:${Math.round(p[2].top-110)}px;height:${Math.round(p[2].height+220)}px;--c:${col}`,1000)},
+    /* «+500 ₽» под балансом */
+    tag(txt,x,y,cls){if(lay)lay.querySelectorAll('.fx25-tag').forEach(e=>e.remove());add('fx25-tag '+cls,`left:${Math.round(x)}px;top:${Math.round(y)}px`,1500,txt)}}})();
+
+/* рулетка: маркер вздрагивает на каждом щелчке */
+SFX.tick=(f=>{let lk=0;return function(){f.apply(this,arguments);const m=FX25.mk;if(!m)return;const n=performance.now();if(n-lk<70)return;lk=n;
+  for(const e of m)if(e.animate)e.animate([{transform:'scale(1.9)'},{transform:'none'}],{duration:130,easing:'ease-out'})}})(SFX.tick);
+
+/* рулетка (кейсы и битвы): блик во время прокрутки, напряжение на замедлении, а на остановке — прожектор на выигрыш, кольцо и свет в цвет редкости */
+spin=(f=>function(wrap,winIdx,dur,vertical,ticks){const p=f.apply(this,arguments);
+  if(LITE7()||!wrap)return p;
+  const box=wrap.closest('#rolls,#arena')||wrap.parentElement;
+  wrap.classList.remove('land25','hot25','slow25');wrap.classList.add('spin25');
+  if(ticks){const ms=$$('.mark,.vmark',box);FX25.mk=ms.length<=4?ms:null}
+  const slow=setTimeout(()=>wrap.classList.add('slow25'),dur*.58);
+  return p.then(v=>{clearTimeout(slow);if(ticks)FX25.mk=null;wrap.classList.remove('spin25','slow25');
+    const win=wrap.querySelector('.track>.win');if(!win||!wrap.isConnected)return v;
+    const rr=(win.className.match(/(?:^|\s)r-([a-z])(?:\s|$)/)||[])[1]||'b',col=RCOL[rr]||RCOL.b,hot='grk'.includes(rr);
+    wrap.style.setProperty('--rc',col);wrap.classList.add('land25');if(hot)wrap.classList.add('hot25');
+    if(ticks&&$$('.roul,.vreel',box).length===1)SFX.lock();
+    FX25.ring(win,col,hot?2:1,vertical?.8:1.15);
+    if(hot){FX25.flare(win,col,vertical?1:1.5);if(!vertical)FX25.beam(wrap,col)}
+    return v})})(spin);
+
+/* окно выигрыша: фон заливает цвет редкости, у редких — лучи за окном, кольца и свет по краям; цена набегает от нуля */
+showResult=(f=>function(drops,cost){f(drops,cost);if(LITE7())return;
+  const sh=$('#sheet'),m=$('#modal');if(!sh||!m||m.hidden)return;
+  const bestR=RORD.find(k=>drops.some(d=>SK[d.n].rar===k))||'b',col=RCOL[bestR],hot='grk'.includes(bestR);
+  m.style.setProperty('--rc',col);m.classList.add('flood25');
+  if(hot){m.classList.add('hotf25');setTimeout(()=>m.classList.remove('hotf25'),2900);FX25.edge(col,bestR==='g'?1.2:.9)}
+  const pr=drops.length===1&&$('.pill.price',sh);if(pr)setTimeout(()=>{if(pr.isConnected)tweenNum(pr,0,drops[0].p,hot?1100:750,v=>fmt2(r2(v)))},300);
+  if('pkrg'.includes(bestR))setTimeout(()=>{const a=$('.drop-img',sh)||$('.res-grid .item.r-'+bestR,sh);if(a)FX25.ring(a,col,hot?3:1,hot?2.6:1.9)},220);
+})(showResult);
+
+/* окна: цветная заливка от прошлого выигрыша не переезжает в следующее окно; тихий «поп», если окно открылось само, а не по нажатию */
+openModal=(f=>function(){const m=$('#modal');if(m)m.classList.remove('flood25','hotf25');const q=SFX.idle(260),r=f.apply(this,arguments);if(q)SFX.pop();return r})(openModal);
+
+/* баланс: рядом всплывает, сколько пришло или ушло */
+updBal=(f=>function(){const from=prevBal;f();if(from==null||LITE7())return;const d=r2(S.bal-from);if(Math.abs(d)<.01)return;
+  const ch=$('#balChip'),r=ch&&ch.getBoundingClientRect();if(!r||!r.width)return;
+  FX25.tag((d>0?'+':'−')+(Math.abs(d)<10?fmt2:fmt0)(Math.abs(d)),r.left+r.width/2,r.bottom+6,d>0?'up':'down')})(updBal);
+
+/* апгрейд и битвы: победа — золотые кольца и зелёный свет по краям, проигрыш — красный */
+SFX.upWin=(f=>function(){f.apply(this,arguments);const w=$('#wheel');FX25.ring(w,RCOL.g,3,2.6);FX25.flare(w,RCOL.g,1.6);FX25.edge('var(--good)',1.1)})(SFX.upWin);
+SFX.upLose=(f=>function(){f.apply(this,arguments);FX25.edge('var(--bad)',.9)})(SFX.upLose);
+SFX.win=(f=>function(){f.apply(this,arguments);FX25.edge(RCOL.g,1.2)})(SFX.win);
+SFX.lose=(f=>function(){f.apply(this,arguments);FX25.edge('var(--bad)',.7)})(SFX.lose);
+
+/* ===================== 2.5: новый облик — волна от нажатия на кнопку ===================== */
+document.addEventListener('pointerdown',e=>{if(LITE7())return;const b=e.target.closest?.('.btn');if(!b||b.disabled)return;
+  const r=b.getBoundingClientRect(),d=Math.max(r.width,r.height)*2.2,w=document.createElement('span');w.className='rp25';w.setAttribute('aria-hidden','true');
+  w.style.cssText=`left:${e.clientX-r.left}px;top:${e.clientY-r.top}px;width:${d}px;height:${d}px`;b.appendChild(w);setTimeout(()=>w.remove(),620)},{passive:true});
+
+/* лента на главной: новый дроп влетает со вспышкой в цвет редкости */
+feedPush=(f=>function(x,animate){f.apply(this,arguments);if(!animate||LITE7()||cur!=='home')return;const c=$('#wins>.wc');if(c)c.classList.add('in25')})(feedPush);
+
+/* 2.5: если устройство не тянет живой фон, он сам замирает до конца визита (настройки не трогаем) */
+(()=>{if(LITE7())return;let n=0,bad=0,t0=0,left=4;
+  const fr=t=>{if(document.hidden||!document.hasFocus()){n=0;t0=0;setTimeout(()=>requestAnimationFrame(fr),2000);return}
+    if(!t0)t0=t;n++;
+    if(t-t0>=1500){bad=n*1000/(t-t0)<26?bad+1:0;n=0;t0=0;
+      if(bad>=2){document.documentElement.classList.add('weak25');return}
+      if(--left<=0)return}
+    requestAnimationFrame(fr)};
+  setTimeout(()=>requestAnimationFrame(fr),6000)})();
 
 userUI();
 if(!sb)authScreen('nocfg');

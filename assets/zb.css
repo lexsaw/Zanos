@@ -4,7 +4,7 @@
   --fg:#f2f1ff; --mute:#9799c9; --acc:#7a3cff; --acc-2:#a94dff; --acc-ink:#fff; --coin:#ffc53a;
   --good:#3ee08c; --bad:#ff4d63;
   --r-c:#b0c3d9; --r-i:#5e98d9; --r-b:#4b69ff; --r-p:#8847ff; --r-k:#d32ce6; --r-r:#eb4b4b; --r-g:#e4ae39;
-  --f-logo:'Lobster',cursive;
+  --f-logo:'Rubik',sans-serif;
   --f-disp:'Rubik','Arial Black',system-ui,sans-serif;
   --f-body:'Manrope',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --f-mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
@@ -3258,3 +3258,268 @@ html.weak9 .cat-panel{background:linear-gradient(180deg,color-mix(in srgb,var(--
 /* 2.4.2: быстрее — то, что за пределами экрана, браузер не рисует */
 .cat-panel{content-visibility:auto;contain-intrinsic-size:auto 520px}
 #v-inv .grid>*,#upInv>*,#upCat>*{content-visibility:auto;contain-intrinsic-size:auto 190px}
+
+/* ===================== 2.5: анимации — свет, кольца и волны в цвет редкости =====================
+   Слой поверх сайта. Двигаются только transform и opacity. Искр и конфетти нет. */
+#fx25{position:fixed;inset:0;z-index:9990;pointer-events:none;overflow:hidden;contain:strict}
+#fx25>i{position:absolute;display:block;font-style:normal;will-change:transform,opacity}
+.fx25-edge{inset:0;background:radial-gradient(ellipse at 50% 50%,transparent 50%,color-mix(in srgb,var(--c) 32%,transparent) 100%);box-shadow:inset 0 0 calc(70px*var(--pw,1)) calc(6px*var(--pw,1)) color-mix(in srgb,var(--c) 55%,transparent);opacity:0;animation:edge25 1.2s ease-out both}
+@keyframes edge25{0%{opacity:0}12%{opacity:1}36%{opacity:.5}52%{opacity:.8}100%{opacity:0}}
+.fx25-ring{width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;border:2px solid var(--c);box-shadow:0 0 26px 2px color-mix(in srgb,var(--c) 70%,transparent),inset 0 0 26px 2px color-mix(in srgb,var(--c) 55%,transparent);opacity:0;animation:ring25 .85s cubic-bezier(.15,.7,.25,1) var(--d,0ms) both}
+@keyframes ring25{0%{opacity:.95;transform:scale(.25)}100%{opacity:0;transform:scale(calc(var(--s,1)*2.2))}}
+.fx25-flare{width:360px;height:360px;margin:-180px 0 0 -180px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.9) 0,color-mix(in srgb,var(--c) 75%,transparent) 14%,color-mix(in srgb,var(--c) 38%,transparent) 40%,transparent 72%);opacity:0;animation:flare25 .75s ease-out both}
+@keyframes flare25{0%{opacity:0;transform:scale(.2)}18%{opacity:.9}100%{opacity:0;transform:scale(calc(var(--s,1)*1.5))}}
+.fx25-beam{width:260px;margin-left:-130px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--c) 34%,transparent) 36%,color-mix(in srgb,var(--c) 60%,transparent) 50%,color-mix(in srgb,var(--c) 34%,transparent) 64%,transparent);-webkit-mask:linear-gradient(180deg,transparent,#000 36%,#000 64%,transparent);mask:linear-gradient(180deg,transparent,#000 36%,#000 64%,transparent);opacity:0;animation:beam25 .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes beam25{0%{opacity:0;transform:scaleX(.05)}20%{opacity:.95;transform:scaleX(1)}100%{opacity:0;transform:scaleX(.35)}}
+.fx25-tag{padding:3px 9px;border-radius:9px;font-weight:800;font-size:13px;line-height:1.25;white-space:nowrap;font-variant-numeric:tabular-nums;background:color-mix(in srgb,var(--surf) 90%,transparent);border:1px solid currentColor;box-shadow:0 6px 22px -8px currentColor;animation:tag25 1.4s cubic-bezier(.2,.8,.2,1) both}
+.fx25-tag.up{color:var(--good)}
+.fx25-tag.down{color:var(--bad)}
+@keyframes tag25{0%{opacity:0;transform:translate(-50%,-10px) scale(.7)}14%{opacity:1;transform:translate(-50%,4px) scale(1.06)}24%{transform:translate(-50%,2px) scale(1)}75%{opacity:1;transform:translate(-50%,2px) scale(1)}100%{opacity:0;transform:translate(-50%,16px) scale(1)}}
+
+/* рулетка: блик бежит по ленте, пока она крутится */
+.roul.spin25::after,.vreel.spin25::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(100deg,transparent 32%,color-mix(in srgb,var(--c1,var(--acc-2)) 15%,transparent) 50%,transparent 68%);animation:sw25 .9s linear infinite;transition:opacity .5s}
+.roul.vcol.spin25::after,.vreel.spin25::after{background:linear-gradient(190deg,transparent 32%,color-mix(in srgb,var(--c1,var(--acc-2)) 15%,transparent) 50%,transparent 68%);animation-name:swv25}
+.spin25.slow25::after{opacity:0}
+@keyframes sw25{from{transform:translateX(-70%)}to{transform:translateX(70%)}}
+@keyframes swv25{from{transform:translateY(-70%)}to{transform:translateY(70%)}}
+/* прожектор: на замедлении края темнеют, на остановке светится только выигрыш */
+.roul::before,.vreel::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .45s;background:linear-gradient(90deg,rgba(3,3,10,.74) 0,rgba(3,3,10,.74) calc(50% - 236px),transparent calc(50% - 84px),transparent calc(50% + 84px),rgba(3,3,10,.74) calc(50% + 236px),rgba(3,3,10,.74) 100%)}
+.roul.vcol::before,.vreel::before{background:linear-gradient(180deg,rgba(3,3,10,.74) 0,rgba(3,3,10,.74) calc(50% - 150px),transparent calc(50% - 60px),transparent calc(50% + 60px),rgba(3,3,10,.74) calc(50% + 150px),rgba(3,3,10,.74) 100%)}
+.slow25::before{opacity:.45}
+.land25::before{opacity:1}
+/* маркер: горит на прокрутке, пульсирует на замедлении, на остановке вспыхивает цветом редкости */
+.spin25 .mark,.spin25 .vmark{box-shadow:0 0 22px 3px var(--acc-2)}
+.slow25 .mark,.slow25 .vmark{animation:mkp25 .42s ease-in-out infinite alternate}
+@keyframes mkp25{to{opacity:.5}}
+.land25 .mark,.land25 .vmark{background:var(--rc);box-shadow:0 0 20px 4px var(--rc);animation:mkl25 .55s cubic-bezier(.2,1.5,.4,1)}
+.land25 .mark::before{border-top-color:var(--rc)}
+.land25 .mark::after{border-bottom-color:var(--rc)}
+.land25 .vmark::before{border-left-color:var(--rc)}
+.land25 .vmark::after{border-right-color:var(--rc)}
+@keyframes mkl25{0%{transform:scale(2.6)}100%{transform:none}}
+/* рамка света внутри ленты; у редких она дышит */
+.roul.land25::after,.vreel.land25::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:inherit;box-shadow:inset 0 0 46px -4px var(--rc),inset 0 0 0 1px color-mix(in srgb,var(--rc) 65%,transparent);animation:lf25 .9s ease-out both}
+@keyframes lf25{0%{opacity:0}18%{opacity:1}100%{opacity:.6}}
+.roul.hot25.land25::after,.vreel.hot25.land25::after{animation:lfh25 1s ease-in-out infinite alternate}
+@keyframes lfh25{from{opacity:.5}to{opacity:1}}
+.hot25 .track>.win{box-shadow:0 0 0 2px var(--rc),0 0 46px 2px var(--rc)}
+/* сцена кейса: дышит цветом кейса, пока крутится, и заливается цветом лучшего выигрыша */
+.cp7-rolls::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;background:radial-gradient(75% 110% at 50% 50%,color-mix(in srgb,var(--wc,var(--c1,var(--acc))) 28%,transparent),transparent 72%);box-shadow:0 0 70px -14px var(--wc,var(--c1,var(--acc))),inset 0 0 0 1px color-mix(in srgb,var(--wc,var(--c1,var(--acc))) 55%,transparent);transition:opacity .5s}
+body.opening .cp7-rolls::before{animation:br25 1.2s ease-in-out infinite alternate}
+.cp7-rolls.flood25::before{opacity:.8;animation:fl25 1.4s ease-out}
+@keyframes br25{from{opacity:.25}to{opacity:.7}}
+@keyframes fl25{0%{opacity:0}16%{opacity:1}100%{opacity:.8}}
+
+/* окно выигрыша: фон заливает цвет редкости, у редких за окном расходятся лучи */
+#modal.flood25::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(70% 55% at 50% 42%,color-mix(in srgb,var(--rc) 36%,transparent),transparent 72%);opacity:.55;animation:mfl25 2.4s ease-out}
+@keyframes mfl25{0%{opacity:0}12%{opacity:1}100%{opacity:.55}}
+#modal.hotf25{overflow:hidden}
+#modal.hotf25::after{content:"";position:absolute;left:50%;top:42%;width:min(150vmin,1300px);height:min(150vmin,1300px);margin:calc(min(150vmin,1300px)/-2) 0 0 calc(min(150vmin,1300px)/-2);pointer-events:none;border-radius:50%;background:repeating-conic-gradient(from 0deg,color-mix(in srgb,var(--rc) 26%,transparent) 0 5deg,transparent 5deg 18deg);-webkit-mask:radial-gradient(closest-side,#000 30%,transparent 78%);mask:radial-gradient(closest-side,#000 30%,transparent 78%);opacity:0;animation:mry25 2.8s ease-out both}
+@keyframes mry25{0%{opacity:0;transform:scale(.5) rotate(0deg)}15%{opacity:1}100%{opacity:0;transform:scale(1.1) rotate(40deg)}}
+
+/* окна и страницы появляются мягче, с лёгким подъёмом */
+.sheet{animation:sheet25 .44s cubic-bezier(.16,1.12,.3,1)}
+@keyframes sheet25{from{opacity:0;transform:translateY(28px) scale(.94)}}
+main>section:not([hidden]){animation:view25 .5s cubic-bezier(.16,1,.3,1)}
+@keyframes view25{from{opacity:0;transform:translateY(16px) scale(.988)}}
+
+/* главные кнопки: блик при наведении */
+.btn.acc::before{content:"";position:absolute;top:0;bottom:0;left:0;width:46%;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,255,255,.36),transparent);transform:translateX(-130%) skewX(-18deg)}
+@media (hover:hover){
+.btn.acc:not(:disabled):hover::before{transform:translateX(330%) skewX(-18deg);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+}
+/* баланс: волна от плашки, когда деньги пришли или ушли */
+.balchip.up{animation:balup25 .7s ease-out}
+.balchip.down{animation:baldn25 .7s ease-out}
+@keyframes balup25{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--good) 70%,transparent)}100%{box-shadow:0 0 0 14px transparent}}
+@keyframes baldn25{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--bad) 70%,transparent)}100%{box-shadow:0 0 0 14px transparent}}
+
+html.lite #fx25,html.lite .cp7-rolls::before,html.lite .roul::before,html.lite .vreel::before,html.lite .btn.acc::before{display:none}
+html.lite .sheet,html.lite main>section:not([hidden]),html.lite .balchip{animation:none}
+@media (prefers-reduced-motion:reduce){
+#fx25,.cp7-rolls::before,.roul::before,.vreel::before,.btn.acc::before{display:none}
+.sheet,main>section:not([hidden]),.balchip{animation:none}
+}
+
+/* ===================== 2.5: новый облик =====================
+   Один слой поверх всех тем: стекло вместо глухих плашек, крупные скругления, свет под кнопками и карточками.
+   Цвета берутся из темы, поэтому работает с любой. Новая тема по умолчанию — «Занос 2.5». */
+:root{--zg:linear-gradient(110deg,var(--acc),var(--acc-2));--z3:var(--acc-2);--z4:var(--acc-2)}
+html[data-theme="zanos"]{--zg:linear-gradient(110deg,#6a4bff,#b44dff 52%,#ff4d8d);--z3:#ff4d8d;--z4:#39d9ff;--crown:#ffd76a}
+html{scrollbar-color:color-mix(in srgb,var(--acc) 60%,var(--line)) transparent}
+::selection{background:color-mix(in srgb,var(--acc) 62%,transparent);color:#fff}
+
+/* живой фон темы «Занос 2.5»: три цветных пятна медленно плывут над сеткой */
+.tfx23-zanos{background:radial-gradient(120% 70% at 50% -10%,#15103a 0,transparent 62%),#05050b}
+.tfx23-zanos .zb{width:74vmax;height:74vmax;border-radius:50%;will-change:transform}
+.tfx23-zanos .z1{left:-28vmax;top:-34vmax;background:radial-gradient(closest-side,rgba(106,75,255,.42),rgba(106,75,255,.12) 55%,transparent);animation:zb1 38s ease-in-out infinite alternate}
+.tfx23-zanos .z2{right:-32vmax;top:-18vmax;background:radial-gradient(closest-side,rgba(255,77,141,.26),rgba(255,77,141,.07) 55%,transparent);animation:zb2 46s ease-in-out infinite alternate}
+.tfx23-zanos .z3{left:16vw;bottom:-52vmax;background:radial-gradient(closest-side,rgba(57,217,255,.2),rgba(57,217,255,.05) 55%,transparent);animation:zb3 54s ease-in-out infinite alternate}
+@keyframes zb1{to{transform:translate(20vw,14vh) scale(1.15)}}
+@keyframes zb2{to{transform:translate(-24vw,22vh) scale(.9)}}
+@keyframes zb3{to{transform:translate(14vw,-20vh) scale(1.2)}}
+.tfx23-zanos .zgrid{inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:56px 56px;-webkit-mask:radial-gradient(95% 75% at 50% 0,#000,transparent 78%);mask:radial-gradient(95% 75% at 50% 0,#000,transparent 78%)}
+.tfx23-zanos .zvg{inset:0;background:radial-gradient(120% 90% at 50% 38%,transparent 55%,rgba(0,0,0,.5))}
+@media (max-width:760px){.tfx23-zanos .z3{display:none}}
+
+/* шапка: стекло и цветная нить снизу */
+.hdr{background:color-mix(in srgb,var(--bg) 82%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6);border-bottom-color:color-mix(in srgb,var(--line) 55%,transparent)}
+.hdr::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent,var(--acc) 22%,var(--acc-2) 50%,var(--z3) 78%,transparent);opacity:.7}
+.nav-top button{position:relative;border-radius:12px;transition:color .2s,background-color .25s,box-shadow .25s}
+.nav-top button:hover{background:color-mix(in srgb,var(--fg) 6%,transparent)}
+.nav-top button[aria-current="true"]{background:linear-gradient(180deg,color-mix(in srgb,var(--acc) 26%,transparent),color-mix(in srgb,var(--acc) 8%,transparent));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--acc-2) 36%,transparent),0 10px 24px -16px var(--acc)}
+.nav-top button[aria-current="true"]::after{content:"";position:absolute;left:24%;right:24%;bottom:-1px;height:2px;border-radius:2px;background:var(--zg);box-shadow:0 0 12px 1px var(--acc-2);animation:navln25 .4s cubic-bezier(.2,.9,.3,1.3)}
+@keyframes navln25{from{transform:scaleX(0)}}
+.icbtn,.balchip,.userchip{border-radius:14px;background:color-mix(in srgb,var(--surf) 76%,transparent);border-color:color-mix(in srgb,var(--fg) 11%,transparent);transition:border-color .25s,background-color .25s,transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+.balchip{border-color:color-mix(in srgb,var(--gold) 34%,transparent);background:linear-gradient(180deg,color-mix(in srgb,var(--gold) 10%,transparent),transparent),color-mix(in srgb,var(--surf) 76%,transparent)}
+.icbtn:active{transform:scale(.92)}
+.livebar{background:color-mix(in srgb,var(--bg) 66%,transparent);border-bottom-color:color-mix(in srgb,var(--line) 55%,transparent)}
+
+/* кнопки: градиент темы, свет под кнопкой, подъём при наведении, волна от нажатия */
+.btn{border-radius:14px;transition:transform .18s cubic-bezier(.2,.8,.2,1),filter .2s,opacity .2s,box-shadow .25s,border-color .25s,background-color .25s}
+.btn.lg{border-radius:16px}
+.btn:not(:disabled):active{transform:scale(.96)}
+.btn.acc{background:var(--zg);box-shadow:0 12px 30px -14px var(--acc),0 4px 16px -8px var(--z3),inset 0 1px 0 rgba(255,255,255,.3),inset 0 -2px 0 rgba(0,0,0,.16)}
+.btn.acc:hover:not(:disabled){box-shadow:0 16px 38px -12px var(--acc),0 6px 24px -8px var(--z3),inset 0 1px 0 rgba(255,255,255,.42),inset 0 -2px 0 rgba(0,0,0,.16);filter:brightness(1.08)}
+.btn.ghost{background:color-mix(in srgb,var(--surf-2) 68%,transparent);border-color:color-mix(in srgb,var(--fg) 13%,transparent)}
+.btn.ghost:hover:not(:disabled){border-color:color-mix(in srgb,var(--acc-2) 60%,transparent);background:color-mix(in srgb,var(--acc) 16%,var(--surf-2))}
+.btn.green{box-shadow:0 12px 28px -14px #22b86a,inset 0 1px 0 rgba(255,255,255,.35)}
+.btn.acc.lg:not(:disabled)::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 0 2px rgba(255,255,255,.5),inset 0 0 22px rgba(255,255,255,.3);opacity:0;animation:cta25 2.6s ease-in-out infinite}
+@keyframes cta25{0%,60%,100%{opacity:0}80%{opacity:.9}}
+.rp25{position:absolute;border-radius:50%;pointer-events:none;background:radial-gradient(closest-side,rgba(255,255,255,.5),rgba(255,255,255,.12) 60%,transparent);transform:translate(-50%,-50%) scale(0);animation:rp25 .6s ease-out forwards}
+@keyframes rp25{to{transform:translate(-50%,-50%) scale(1);opacity:0}}
+
+/* переключатели, поля, фильтры */
+.seg{border-radius:13px;background:color-mix(in srgb,var(--bg-2) 78%,transparent)}
+.seg button{border-radius:10px;transition:background-color .2s,color .2s,box-shadow .25s}
+.seg button[aria-pressed="true"]{background:var(--zg);box-shadow:0 6px 16px -8px var(--acc),inset 0 1px 0 rgba(255,255,255,.26)}
+.inp{border-radius:14px;background:color-mix(in srgb,var(--bg-2) 80%,transparent);transition:border-color .2s,box-shadow .2s}
+.inp:focus{border-color:var(--acc-2);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 30%,transparent)}
+.chip7{transition:border-color .2s,background-color .2s,color .2s,box-shadow .25s}
+.chip7:hover{border-color:color-mix(in srgb,var(--acc-2) 50%,var(--line));color:var(--fg)}
+.chip7[aria-pressed="true"]{background:linear-gradient(110deg,color-mix(in srgb,var(--acc) 36%,transparent),color-mix(in srgb,var(--z3) 22%,transparent));border-color:color-mix(in srgb,var(--acc-2) 65%,transparent);box-shadow:0 6px 18px -10px var(--acc)}
+
+/* панели: полупрозрачное стекло, блик сверху, мягкая тень */
+.panel,.acct-side,.cp7-side,.slot,.stat{background:linear-gradient(180deg,color-mix(in srgb,var(--surf-2) 60%,transparent),color-mix(in srgb,var(--surf) 88%,transparent));border-color:color-mix(in srgb,var(--fg) 9%,transparent);box-shadow:inset 0 1px 0 color-mix(in srgb,var(--fg) 7%,transparent),0 24px 48px -34px #000}
+.panel{border-radius:22px}
+.slot,.stat{border-radius:18px}
+.acct-side{border-radius:22px}
+.cat-panel{border-radius:24px;box-shadow:inset 0 1px 0 color-mix(in srgb,var(--cat) 34%,transparent),0 34px 60px -46px var(--cat)}
+html[data-theme="zanos"] .cat-panel:nth-of-type(3n+1){--cat:#8a6cff}
+html[data-theme="zanos"] .cat-panel:nth-of-type(3n+2){--cat:#ff5c98}
+html[data-theme="zanos"] .cat-panel:nth-of-type(3n){--cat:#39d9ff}
+.sec-h h2::after,.cat-h h3::after{width:46px;background:var(--zg);box-shadow:0 0 14px -2px var(--acc-2)}
+.hero8{border-color:color-mix(in srgb,var(--acc-2) 36%,transparent);box-shadow:0 44px 80px -54px var(--acc),inset 0 1px 0 rgba(255,255,255,.08)}
+.odd{border-radius:11px;background:color-mix(in srgb,var(--surf) 76%,transparent)}
+.pc{border-radius:14px;transition:transform .18s cubic-bezier(.2,.8,.2,1),border-color .2s,box-shadow .25s}
+.k-slot{border-radius:14px}
+
+/* плитки кейсов и карточки скинов: поднимаются и светятся своим цветом */
+.case-tile.t16{border-radius:18px}
+.case-tile.t16:active{transform:translateY(-2px) scale(.98)}
+.item{border-radius:14px}
+button.item{transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .25s,border-color .25s}
+button.item.rv:not(.rv-in){transition:opacity .5s ease var(--rvd,0ms),transform .6s cubic-bezier(.2,.8,.2,1) var(--rvd,0ms)}
+.wc{border-radius:14px;transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+@media (hover:hover){
+.btn:not(:disabled):hover{transform:translateY(-2px)}
+.btn:not(:disabled):active{transform:scale(.96)}
+.icbtn:hover,.userchip:hover{border-color:color-mix(in srgb,var(--acc-2) 55%,transparent);transform:translateY(-1px);box-shadow:0 10px 22px -14px var(--acc)}
+.case-tile.t16:hover{transform:translateY(-6px);border-color:var(--c1);box-shadow:0 24px 44px -18px color-mix(in srgb,var(--c1) 75%,transparent),0 0 0 1px color-mix(in srgb,var(--c1) 45%,transparent)}
+button.item:hover{transform:translateY(-4px);box-shadow:0 16px 30px -16px var(--rc);border-color:color-mix(in srgb,var(--rc) 70%,transparent)}
+.wc:hover{transform:translateY(-3px);box-shadow:0 14px 26px -16px var(--rc,var(--acc))}
+.pc:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--acc-2) 55%,transparent);box-shadow:0 12px 24px -16px var(--acc)}
+.th:hover{transform:translateY(-3px)}
+}
+
+/* окна и уведомления */
+.sheet{border-radius:24px;border-color:color-mix(in srgb,var(--acc-2) 22%,var(--line));box-shadow:0 40px 100px -20px #000,0 0 90px -40px var(--acc),inset 0 1px 0 color-mix(in srgb,var(--fg) 8%,transparent)}
+.toast{border-radius:14px;border-color:color-mix(in srgb,var(--acc-2) 60%,transparent);background:linear-gradient(180deg,var(--surf-2),var(--surf));box-shadow:0 18px 40px -16px #000,0 0 30px -12px var(--acc)}
+
+/* нижнее меню на телефоне */
+.nav-bot{background:color-mix(in srgb,var(--bg) 86%,transparent);border-top-color:color-mix(in srgb,var(--fg) 9%,transparent)}
+.nav-bot button[aria-current="true"]::before{content:"";position:absolute;top:0;left:30%;right:30%;height:2px;border-radius:0 0 3px 3px;background:var(--zg);box-shadow:0 0 14px 1px var(--acc-2);animation:navln25 .4s cubic-bezier(.2,.9,.3,1.3)}
+html[data-theme="zanos"] .nav-bot button[aria-current="true"] svg{color:var(--acc-2)}
+html[data-theme="zanos"] .nav-top button[aria-current="true"]{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--acc-2) 36%,transparent),0 10px 24px -16px var(--acc)}
+
+html.lite .btn.acc.lg::after,html.lite .rp25{display:none}
+html.lite .nav-top button[aria-current="true"]::after,html.lite .nav-bot button[aria-current="true"]::before{animation:none}
+@media (prefers-reduced-motion:reduce){
+.btn.acc.lg::after,.rp25{display:none}
+.tfx23-zanos .zb,.nav-top button[aria-current="true"]::after,.nav-bot button[aria-current="true"]::before{animation:none}
+}
+
+/* ===================== 2.5: анимации во всех разделах =====================
+   Двигаются только transform и opacity (плюс короткие вспышки тени). В облегчённом режиме всё выключено. */
+/* окна: фон проявляется, меню игрока выезжает */
+.modal:not([hidden]){animation:mbg25 .28s ease-out}
+@keyframes mbg25{from{opacity:0}}
+.umenu{transform-origin:100% 0;animation:um25 .26s cubic-bezier(.2,1.2,.3,1)}
+@keyframes um25{from{opacity:0;transform:translateY(-8px) scale(.94)}}
+.umenu>*{animation:umi25 .3s cubic-bezier(.2,.8,.2,1) backwards}
+.umenu>:nth-child(2){animation-delay:30ms}.umenu>:nth-child(3){animation-delay:60ms}.umenu>:nth-child(4){animation-delay:90ms}.umenu>:nth-child(5){animation-delay:120ms}.umenu>:nth-child(n+6){animation-delay:150ms}
+@keyframes umi25{from{opacity:0;transform:translateX(10px)}}
+/* подсказка внизу: пружинит */
+.toast{transition:opacity .25s,transform .5s cubic-bezier(.2,1.6,.35,1)}
+.toast:not(.on){transition:opacity .2s,transform .2s ease-in}
+/* нижнее меню: значок подпрыгивает при переходе */
+.nav-bot button[aria-current="true"] svg{animation:nb25 .42s cubic-bezier(.2,1.6,.35,1)}
+@keyframes nb25{0%{transform:translateY(5px) scale(.7)}100%{transform:none}}
+
+/* главная: полоски заданий наполняются, готовое задание подсвечено, новый дроп в ленте влетает */
+.dq23-bar i{transform-origin:0 50%;animation:dqf25 .9s cubic-bezier(.2,.8,.2,1) .15s backwards}
+@keyframes dqf25{from{transform:scaleX(0)}}
+.dq23-q.ok{animation:dqok25 1.6s ease-in-out infinite alternate}
+@keyframes dqok25{from{box-shadow:0 0 0 0 transparent}to{box-shadow:0 0 22px -6px var(--good),inset 0 0 0 1px color-mix(in srgb,var(--good) 55%,transparent)}}
+.wc.in25{animation:wcin25 .6s cubic-bezier(.2,1.25,.3,1)}
+@keyframes wcin25{0%{opacity:0;transform:translateY(-16px) scale(.86);box-shadow:0 0 0 2px var(--rc),0 0 34px 0 var(--rc)}55%{opacity:1}100%{transform:none;box-shadow:0 0 0 0 transparent}}
+
+/* инвентарь: выбранный предмет пружинит, галочка впрыгивает */
+#invGrid .item.sel{animation:sel25 .34s cubic-bezier(.2,1.5,.4,1)}
+@keyframes sel25{0%{transform:scale(.92)}60%{transform:scale(1.035)}100%{transform:none}}
+.item.sel::before{animation:chk25 .34s cubic-bezier(.2,1.7,.4,1)}
+@keyframes chk25{from{transform:scale(0) rotate(-40deg)}}
+
+/* апгрейд: проигрыш — встряска, победа — цель загорается золотом */
+.up-wheelbox:has(.wheel.lost){animation:shk25 .5s cubic-bezier(.36,.07,.19,.97) both}
+@keyframes shk25{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-7px)}40%,60%{transform:translateX(7px)}}
+.up-stage:has(.wheel.won)>.up-slot:last-child{border-color:var(--gold);animation:upw25 1.1s ease-in-out 3 alternate}
+@keyframes upw25{from{box-shadow:0 0 0 0 transparent}to{box-shadow:0 0 0 1px var(--gold),0 0 46px -6px var(--gold)}}
+.up-stage:has(.wheel.won)>.up-slot:last-child .item{animation:upi25 .6s cubic-bezier(.2,1.5,.4,1)}
+@keyframes upi25{0%{transform:scale(.86)}100%{transform:none}}
+.up-stage:has(.wheel.lost)>.up-slot:first-child .item{animation:upl25 .7s ease-out both}
+@keyframes upl25{to{opacity:.35;transform:scale(.94);filter:grayscale(1)}}
+
+/* битвы: текущий раунд пульсирует, новый дроп падает со вспышкой, лидер светится, итог впрыгивает */
+#bRounds .rd.on{animation:rd25 .9s ease-in-out infinite alternate}
+@keyframes rd25{from{box-shadow:0 0 0 0 transparent}to{box-shadow:0 0 18px 0 var(--acc-2);transform:scale(1.08)}}
+#bRounds .rd.done{animation:rdd25 .35s ease-out}
+@keyframes rdd25{from{transform:scale(1.25)}}
+#v-battle .drops>:first-child{animation:bd25 .55s cubic-bezier(.2,1.2,.3,1)}
+@keyframes bd25{0%{opacity:0;transform:translateY(-22px) scale(.8)}45%{opacity:1;box-shadow:0 0 0 2px var(--rc,var(--acc-2)),0 0 30px 0 var(--rc,var(--acc-2))}100%{transform:none;box-shadow:0 0 0 0 transparent}}
+.ph.lead{animation:lead25 1.3s ease-in-out infinite alternate}
+@keyframes lead25{to{box-shadow:0 0 0 1px var(--coin),0 0 34px -4px var(--coin)}}
+.jp-ptr{box-shadow:0 0 14px 2px #fff,0 0 30px 6px var(--acc-2)}
+.bt-res h2{animation:brh25 .7s cubic-bezier(.2,1.5,.35,1) both}
+@keyframes brh25{0%{opacity:0;transform:scale(.4)}60%{opacity:1}100%{transform:none}}
+.bt-res>*:not(h2){animation:bri25 .5s cubic-bezier(.2,.8,.2,1) .25s backwards}
+@keyframes bri25{from{opacity:0;transform:translateY(14px)}}
+
+
+html.lite .modal,html.lite .umenu,html.lite .umenu>*,html.lite .nav-bot svg,html.lite .dq23-bar i,html.lite .dq23-q,html.lite .wc,html.lite .item,html.lite .item::before,html.lite .up-wheelbox,html.lite .up-slot,html.lite .up-slot .item,html.lite .rd,html.lite #v-battle .drops>*,html.lite .ph,html.lite .bt-res *{animation:none!important}
+@media (prefers-reduced-motion:reduce){
+.modal,.umenu,.umenu>*,.nav-bot svg,.dq23-bar i,.dq23-q,.wc,.item,.item::before,.up-wheelbox,.up-slot,.up-slot .item,.rd,#v-battle .drops>*,.ph,.bt-res *{animation:none!important}
+}
+
+/* ===================== 2.5: скорость =====================
+   Живой фон замирает, пока крутится рулетка или открыто окно: видеокарта занята главным.
+   На телефонах шапка и окна без размытия — оно самое тяжёлое. Слабое устройство (weak25) — фон стоит до конца визита. */
+body.opening #themeFx *,body:has(>#modal:not([hidden])) #themeFx *,html.weak25 #themeFx *{animation-play-state:paused!important}
+html.weak25 .hdr,html.weak25 .modal{-webkit-backdrop-filter:none;backdrop-filter:none}
+html.weak25 .hdr{background:color-mix(in srgb,var(--bg) 96%,transparent)}
+@media (max-width:760px){
+.hdr{-webkit-backdrop-filter:none;backdrop-filter:none;background:color-mix(in srgb,var(--bg) 96%,transparent)}
+.modal{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(4,4,14,.88)}
+}
+/* вместо фигурного шрифта — фирменный жирный Rubik (на один файл шрифта меньше) */
+.logo .l1,.fr b,.flip i b{font-weight:900}
