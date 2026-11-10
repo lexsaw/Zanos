@@ -114,7 +114,7 @@ Steam скрыт от других	Steam hidden from others
 Базовый	Basic
 Баланс	Balance
 Баланс пополнен на	Balance topped up by
-Банк думает. Габен думает. Все думают.	The bank is thinking. Gaben is thinking. Everyone is thinking.
+Банк думает. Секундочку.	The bank is thinking. Just a second.
 Банк:	Pot:
 Без ника	No nick
 Без свечения	No glow
@@ -235,7 +235,7 @@ Steam скрыт от других	Steam hidden from others
 Выйти из аккаунта	Sign out
 Выйти из группы	Leave the group
 Выпало на	Dropped worth
-Габен проверяет чек…	Gaben is checking the receipt…
+Проверяем чек…	Checking the receipt…
 Гг, вп. Ну почти вп	Gg, wp. Well, almost wp
 Где статистика сайта?	Where are the site stats?
 Где:	Where:
@@ -515,7 +515,7 @@ Steam скрыт от других	Steam hidden from others
 Меню на компьютере	Menu on desktop
 Микросхема	Circuit
 Микрофон переключён	Microphone switched
-Мимо. Скины ушли Габену на новую яхту	Miss. The skins went to Gaben's new yacht
+Мимо. Скины сгорели в кольце	Miss. The skins burned in the ring
 Минимализм	Minimalism
 Минимум 50 ₽	Minimum 50 ₽
 Минус вайб	Bad vibe
@@ -611,7 +611,7 @@ Steam скрыт от других	Steam hidden from others
 Новый кейс	New case
 Нож	Knife
 Нож или хлам	Knife or Junk
-Нож?! Скриншоть, пока Габен не забрал	A knife?! Screenshot it before Gaben takes it
+Нож! Невероятный дроп	A knife! Incredible drop
 Ножевой	Knife Case
 Ножей и перчаток	Knives and gloves
 Ножи	Knives
@@ -634,7 +634,7 @@ Steam скрыт от других	Steam hidden from others
 Океан	Ocean
 Окуп +	Profit +
 Окуп! Изи катка	Profit! Easy game
-Окуп. Габен одобряет	Profit. Gaben approves
+Окуп. Ровно в плюс	Profit. Right in the green
 Олигарх	Oligarch
 Онлайн	Online
 Онлайн с друзьями	Online with friends
@@ -1462,4 +1462,6 @@ Steam не привязан	Steam not linked
 Новый облик сайта: тема «Занос 2.5» с живым фоном, новые шапка, кнопки, плитки и окна. Она включена по умолчанию, прежний «Минимализм» возвращается в один клик в «Кастомизации». Новые анимации во всех разделах: свет при выигрыше, вспышки редких дропов, апгрейд, битвы, инвентарь. Все звуки сделаны заново. Сайт работает быстрее, особенно на телефонах и слабых устройствах. Усилена защита аккаунтов и баланса.	A new look: the «Zanos 2.5» theme with a living background, new header, buttons, tiles and windows. It is on by default; the previous «Minimalism» is one click away in «Customization». New animations everywhere: light on a win, flashes for rare drops, upgrade, battles, inventory. All sounds are remade. The site is faster, especially on phones and weak devices. Account and balance protection is stronger.
 Занос 2.5	Zanos 2.5
 Новый облик · живой фон	New look · living background
+Версия 2.5.1	Version 2.5.1
+Картинки скинов грузятся быстрее и надёжнее: если один из серверов Steam у тебя не отвечает, сайт сам переключается на другой. Обновили подписи после открытия кейса.	Skin images load faster and more reliably: if one of the Steam servers does not answer for you, the site switches to another one by itself. We updated the captions after opening a case.
 `;

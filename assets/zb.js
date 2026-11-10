@@ -324,7 +324,7 @@ function fxLoop(){ctx.clearRect(0,0,innerWidth,innerHeight);parts=parts.filter(p
 
 /* ================= ART v2: настоящие картинки ================= */
 /* картинки Steam: если один сервер Steam не отвечает (бывает у провайдеров и на Linux), берём следующий */
-const IMG_HOSTS=['https://community.akamai.steamstatic.com','https://community.fastly.steamstatic.com','https://community.cloudflare.steamstatic.com','https://steamcommunity-a.akamaihd.net'];
+const IMG_HOSTS=['https://community.akamai.steamstatic.com','https://community.fastly.steamstatic.com','https://community.cloudflare.steamstatic.com','https://steamcommunity-a.akamaihd.net','https://community.steamstatic.com'];
 const imghSave=i=>{try{localStorage.setItem('zb-imgh2',JSON.stringify({i,t:Date.now()}))}catch(e){}};
 let IMGH=(()=>{try{const v=JSON.parse(localStorage.getItem('zb-imgh2')||'null');return v&&v.i>=0&&v.i<IMG_HOSTS.length?v.i:0}catch(e){return 0}})();
 const IMGFAIL=IMG_HOSTS.map(()=>0);
@@ -343,6 +343,10 @@ window.zbImgErr=function(el){
   const s=SK[el.getAttribute('data-n')];
   if(s){const sp=document.createElement('span');sp.className='skfb';sp.innerHTML=iconSvg(s,false);el.replaceWith(sp)}else el.style.visibility='hidden';
 };
+/* 2.5.1: если сервер Steam «молчит» (картинка висит, а ошибка не приходит), через 3,5 с берём следующий сервер */
+setInterval(()=>{if(document.hidden)return;const vh=innerHeight,n=performance.now();
+  for(const el of document.querySelectorAll('img[data-h]')){if(el.complete)continue;const r=el.getBoundingClientRect();if(!r.width||r.bottom<-60||r.top>vh+60)continue;
+    if(!el._t0){el._t0=n;continue}if(n-el._t0>3500){el._t0=n;zbImgErr(el)}}},1000);
 const imgAttr=(h,sz,fb)=>`src="${imgUrl(h,sz)}" data-h="${h}" data-sz="${sz}" data-hi="${IMGH}"${fb?` data-fb="${fb}"`:''} onerror="zbImgErr(this)"`;
 function icon(s,fx=true,o={}){
   if(s.cls==='sticker'&&typeof STKI!=='undefined'&&STKI[s.name]){const [f,x,y,cw,rh]=STKI[s.name];return `<svg class="skimg stk" viewBox="${x*160} ${y*120} 160 120" data-n="${esc(s.name)}"><image href="stk-${f}.webp" width="${cw*160}" height="${rh*120}"/></svg>`}
@@ -393,7 +397,7 @@ for(const o of CC){if(have.has(o.id))continue;
 
 /* ================= «Мемы»: 40 нарисованных мемных аватарок с подписями ================= */
 const RFN=40;
-const MEME_CAP=[['СУКА','ТЫ НЕ ВЫКУПАЕШЬ'],['','ЖИЗА'],['НУ И','КТО ТЫ'],['','Я В ШОКЕ'],['','ОКУП'],['','НЕ ОКУП'],['','ДЕПНУЛ'],['СЛОВИЛ','ЗАНОС'],['ГАБЕН','ДАЙ НОЖ'],['','МИНУС ВАЙБ'],
+const MEME_CAP=[['СУКА','ТЫ НЕ ВЫКУПАЕШЬ'],['','ЖИЗА'],['НУ И','КТО ТЫ'],['','Я В ШОКЕ'],['','ОКУП'],['','НЕ ОКУП'],['','ДЕПНУЛ'],['СЛОВИЛ','ЗАНОС'],['','МИНУС ВАЙБ'],
  ['','ХАРОШ'],['','АУФ'],['','БАЗА'],['','КРИНЖ'],['','СКУФ'],['ГДЕ МОЙ','ОКУП'],['','СИГМА'],['','ГИГАЧАД'],['МНЕ','ПОХУЙ'],['','ЧЁ ТЫ'],
  ['','ДА ЛАДНО'],['ЭТО','ПРОВАЛ'],['','ГГ ВП'],['','ИЗИ'],['','ТИЛЬТ'],['','ОРУ'],['','ЖЕСТЬ'],['','ЛЕГЕНДА'],['НЮХАЙ','БЕБРУ'],['','АБОБА'],
  ['','ГЕНИЙ'],['','КРАСАВЧИК'],['','ЗАБАНЬТЕ'],['','ЛАГАЕТ'],['ПРОСТИ','МАМ'],['КУПИ','НОЖ'],['ВСЁ','НА ЗЕРО'],['','ДЕД ИНСАЙД'],['','НЕ ВЫВОЖУ'],['','БЛЯ...']];
@@ -416,7 +420,7 @@ const RF_LIST=Array.from({length:RFN},(_,k)=>'rf:'+(k+1));
 
 
 /* ================= v3 CORE: настройки, темы, экономика, звук, файлы ================= */
-const VER='2.5',VER_TAG='',VER_FULL=(VER+' '+VER_TAG).trim();
+const VER='2.5.1',VER_TAG='',VER_FULL=(VER+' '+VER_TAG).trim();
 const LS3='zanos.v3';
 const ST3=(()=>{let o={};try{o=JSON.parse(localStorage.getItem(LS3)||'{}')||{}}catch(e){}if(!o.th241){if(!o.theme||o.theme==='violet')o.theme='minimal';o.th241=1}if(!o.th25){if(!o.theme||o.theme==='minimal')o.theme='zanos';o.th25=1}return Object.assign({theme:'zanos',nav:'top',vol:.8,seenVer:'',view:'auto',up:'ring',lite:false},o)})();
 /* компьютерная версия на телефоне: страница рисуется шириной 1280, как на ПК */
@@ -874,7 +878,7 @@ async function skinModal(n,{w=null,st=false,item=null}={}){
 }
 
 /* ---------- что нового ---------- */
-const NEWS=[['Версия 2.5','Новый облик сайта: тема «Занос 2.5» с живым фоном, новые шапка, кнопки, плитки и окна. Она включена по умолчанию, прежний «Минимализм» возвращается в один клик в «Кастомизации». Новые анимации во всех разделах: свет при выигрыше, вспышки редких дропов, апгрейд, битвы, инвентарь. Все звуки сделаны заново. Сайт работает быстрее, особенно на телефонах и слабых устройствах. Усилена защита аккаунтов и баланса.'],['Версия 2.4.2','Сайт стал легче: код разбит на части, и после обновлений браузер скачивает заново только то, что поменялось. Страницы со списками скинов и кейсов рисуются быстрее. Исправлены ошибочные цены некоторых скинов с рынка.'],['Версия 2.4.1','Апгрейд больше не зависает, если быстро менять проценты. Скин под нужный процент подбирается точнее, в списке все износы. На телефоне инвентарь теперь в нижнем меню, а «Кейсы» не перезагружаются, когда возвращаешься. Стиль по умолчанию — «Минимализм». В официальных кейсах CS2 появились недостающие ножи и перчатки. В контрактах видно, до скольки можно выбить.'],['Версия 2.4','Новая эпоха: статистика сайта и профилей идёт с нуля, старая доступна по кнопке «Старая статистика». Сотни новых скинов, все агенты, ножи и перчатки, Doppler Ruby, Sapphire, Black Pearl и Emerald. Четыре новые капсулы наклеек. Контракты как в CS2: флоат результата — средний флоат вложенных, StatTrak, если все скины StatTrak. Открытие 2–4 кейсов лентами, StatTrak и флоат видно сразу, новые звуки. Пополнение — до 20 000 ₽ в час.'],['Версия 2.3.2','Сайт стал быстрее: он разбит на части, браузер запоминает их и не качает заново. Новые звуки, плавное открытие нескольких кейсов колонками, разделы «Ножи и перчатки» и «Оружейные», переделанные темы «Гроза», «Океан», RGB, «1-бит», «Алые лепестки», 7 новых достижений и новые промокоды.'],['Вход через Steam','Входи на сайт через Steam в один клик. Привяжи Steam в настройках: скоро вход будет только через него.'],['Задания дня','Каждый день три задания и сундук дня на главной.'],['Терминалы как в CS2','Genesis и Dead Hand теперь открываются как терминал: три предложения по очереди, назад вернуться нельзя.'],['Новый апгрейдер и звуки','Колесо крупнее, стрелку можно выбрать в «Стиле». Звуки новые, по умолчанию тихо.'],['English','Сайт можно переключить на английский в меню «Ещё» и в настройках.']];
+const NEWS=[['Версия 2.5.1','Картинки скинов грузятся быстрее и надёжнее: если один из серверов Steam у тебя не отвечает, сайт сам переключается на другой. Обновили подписи после открытия кейса.'],['Версия 2.5','Новый облик сайта: тема «Занос 2.5» с живым фоном, новые шапка, кнопки, плитки и окна. Она включена по умолчанию, прежний «Минимализм» возвращается в один клик в «Кастомизации». Новые анимации во всех разделах: свет при выигрыше, вспышки редких дропов, апгрейд, битвы, инвентарь. Все звуки сделаны заново. Сайт работает быстрее, особенно на телефонах и слабых устройствах. Усилена защита аккаунтов и баланса.'],['Версия 2.4.2','Сайт стал легче: код разбит на части, и после обновлений браузер скачивает заново только то, что поменялось. Страницы со списками скинов и кейсов рисуются быстрее. Исправлены ошибочные цены некоторых скинов с рынка.'],['Версия 2.4.1','Апгрейд больше не зависает, если быстро менять проценты. Скин под нужный процент подбирается точнее, в списке все износы. На телефоне инвентарь теперь в нижнем меню, а «Кейсы» не перезагружаются, когда возвращаешься. Стиль по умолчанию — «Минимализм». В официальных кейсах CS2 появились недостающие ножи и перчатки. В контрактах видно, до скольки можно выбить.'],['Версия 2.4','Новая эпоха: статистика сайта и профилей идёт с нуля, старая доступна по кнопке «Старая статистика». Сотни новых скинов, все агенты, ножи и перчатки, Doppler Ruby, Sapphire, Black Pearl и Emerald. Четыре новые капсулы наклеек. Контракты как в CS2: флоат результата — средний флоат вложенных, StatTrak, если все скины StatTrak. Открытие 2–4 кейсов лентами, StatTrak и флоат видно сразу, новые звуки. Пополнение — до 20 000 ₽ в час.'],['Версия 2.3.2','Сайт стал быстрее: он разбит на части, браузер запоминает их и не качает заново. Новые звуки, плавное открытие нескольких кейсов колонками, разделы «Ножи и перчатки» и «Оружейные», переделанные темы «Гроза», «Океан», RGB, «1-бит», «Алые лепестки», 7 новых достижений и новые промокоды.'],['Вход через Steam','Входи на сайт через Steam в один клик. Привяжи Steam в настройках: скоро вход будет только через него.'],['Задания дня','Каждый день три задания и сундук дня на главной.'],['Терминалы как в CS2','Genesis и Dead Hand теперь открываются как терминал: три предложения по очереди, назад вернуться нельзя.'],['Новый апгрейдер и звуки','Колесо крупнее, стрелку можно выбрать в «Стиле». Звуки новые, по умолчанию тихо.'],['English','Сайт можно переключить на английский в меню «Ещё» и в настройках.']];
 const NEWS_22=[['Версия 2.2','Сайт обновился до версии 2.2.']];
 const NEWS_21=[
   ['Достижения','29 достижений: базовые, редкие, эпические и засекреченные. Засекреченные скрыты, пока не получишь. Под каждым видно, у какой доли игроков оно есть. Раздел «Достижения» в профиле, всплывашка, когда получаешь новое.'],
@@ -1191,10 +1195,10 @@ let CS={n:1};
 const evOf=c=>c.items.reduce((a,x)=>a+x.w*expP(SK[x.n]),0);
 function verdict(total,cost,drops){
   const knife=drops.some(d=>SK[d.n].rar==='g'),ratio=total/cost;
-  if(knife)return['Нож?! Скриншоть, пока Габен не забрал','hot'];
+  if(knife)return['Нож! Невероятный дроп','hot'];
   if(ratio>=10)return['Занос века','hot'];
   if(ratio>=2)return['Окуп! Изи катка','hot'];
-  if(ratio>=1)return['Окуп. Габен одобряет','hot'];
+  if(ratio>=1)return['Окуп. Ровно в плюс','hot'];
   if(ratio>=.4)return['Почти окуп. Ещё разок?','cold'];
   return[pick(['Не окуп. Классика','Ну, хоть не пустой','Минус вайб','Это был разогрев']),'cold'];
 }
@@ -1322,7 +1326,7 @@ function openDeposit(){
         try{const ok=await depScene($('#depBody',sh),DEP.m,DEP.amt);if(!ok)return;
           const r=await rpc('zb_deposit',{p_amount:DEP.amt,p_method:METHODS[DEP.m][0]});
           $('#depBody',sh).innerHTML='<div class="steps" id="stp"></div>';
-          for(const t of ['Создаём платёж…','Габен проверяет чек…','Зачисляем фантики…']){$('#stp',sh)?.insertAdjacentHTML('beforeend',`<div>${t} <b>ок</b></div>`);SFX.click();await sleep(300)}
+          for(const t of ['Создаём платёж…','Проверяем чек…','Зачисляем фантики…']){$('#stp',sh)?.insertAdjacentHTML('beforeend',`<div>${t} <b>ок</b></div>`);SFX.click();await sleep(300)}
           applyState(r.state);SFX.cash();confetti(['#3ee08c','#ffc53a','#fff','#a94dff']);closeModal();toast(`Баланс пополнен на ${fmt2(+r.amount)}`)
         }catch(err){go_.disabled=false;toast(errMsg(err))}
       }
@@ -1356,7 +1360,7 @@ function depScene(box,m,amt){
         svg=`<svg viewBox="-2 -2 ${n+4} ${n+4}"><rect x="-2" y="-2" width="${n+4}" height="${n+4}" fill="#fff"/><g fill="#000">${r}</g></svg>`}
       box.innerHTML=`<div class="qrbox"><div class="qr">${svg}</div><b>Отсканируй QR-код</b><span class="mute">Сумма ${fmt0(amt)}.</span><div class="qr-t">Код действует <b id="qrT">5:00</b></div><button class="btn acc" type="button" id="qrOk" style="width:100%">Я оплатил</button></div>`;
       let t=300;const tm=setInterval(()=>{if(!alive()){clearInterval(tm);return}t--;const q=$('#qrT',box);if(!q){clearInterval(tm);return}q.textContent=Math.floor(t/60)+':'+String(t%60).padStart(2,'0')},1000);
-      $('#qrOk',box).onclick=async()=>{clearInterval(tm);box.innerHTML=`<div class="sms"><b>Ищем платёж…</b><div class="spin"></div><span class="mute">Банк думает. Габен думает. Все думают.</span></div>`;await sleep(1400);res(alive())};
+      $('#qrOk',box).onclick=async()=>{clearInterval(tm);box.innerHTML=`<div class="sms"><b>Ищем платёж…</b><div class="spin"></div><span class="mute">Банк думает. Секундочку.</span></div>`;await sleep(1400);res(alive())};
     }else if(m===3){
       box.innerHTML=`<div class="pig-s"><div class="pig" id="pig">${PIG_SVG}<i class="crack c1"></i><i class="crack c2"></i><i class="crack c3"></i></div><b id="pigT">Бей копилку! Осталось 3 удара</b><button class="btn acc" type="button" id="pigH">🔨 Ударить</button></div>`;
       let hits=0;$('#pigH',box).onclick=async e=>{hits++;const pg=$('#pig',box);pg.classList.remove('hit');void pg.offsetWidth;pg.classList.add('hit','h'+hits);SFX.error();
@@ -1564,7 +1568,7 @@ async function doUpgrade(){
   try{preRes();wh.classList.remove('spinning');wh.classList.add(r.win?'won':'lost')}catch(e){}
   if(cur!=='upgrade'){U.sel.clear();U.bal=0;U.target=null;busy=false;toast(r.win?`Апгрейд зашёл: ${wonName()} за ${fmt0(wonIt.p)}`:'Апгрейд не зашёл');if(r.win)pollFeed();return}
   try{if(r.win){const it=wonIt;SFX.upWin();setTimeout(()=>{try{SFX.reveal((SK[it.n]||{}).rar||'k')}catch(e){}},250);confetti();toast(`Апнул! ${wonName()} за ${fmt0(it.p)}`);pollFeed()}
-  else{SFX.upLose();toast(pick(['Мимо. Скины ушли Габену на новую яхту','Не зашло. Бывает раз в жизни, каждый день','Почти! (нет)','Кольцо сегодня против тебя']))}}catch(e){}
+  else{SFX.upLose();toast(pick(['Мимо. Скины сгорели в кольце','Не зашло. Бывает раз в жизни, каждый день','Почти! (нет)','Кольцо сегодня против тебя']))}}catch(e){}
   U.sel.clear();U.bal=0;U.target=null;
   await sleep(1600);busy=false;if(cur==='upgrade')renderUpgrade();
 }
