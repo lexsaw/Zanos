@@ -1464,4 +1464,6 @@ Steam не привязан	Steam not linked
 Новый облик · живой фон	New look · living background
 Версия 2.5.1	Version 2.5.1
 Картинки скинов грузятся быстрее и надёжнее: если один из серверов Steam у тебя не отвечает, сайт сам переключается на другой. Обновили подписи после открытия кейса.	Skin images load faster and more reliably: if one of the Steam servers does not answer for you, the site switches to another one by itself. We updated the captions after opening a case.
+Версия 2.5.2	Version 2.5.2
+Сайт открывается заметно быстрее, особенно на телефонах: запуск ускорен примерно в десять раз, шрифты и скрипты больше не задерживают первый экран. Шансы и цены кейсов не менялись.	The site opens much faster, especially on phones: startup is about ten times quicker, and fonts and scripts no longer hold up the first screen. Case odds and prices were not changed.
 `;
